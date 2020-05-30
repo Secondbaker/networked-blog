@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_30_220335) do
+ActiveRecord::Schema.define(version: 2020_05_30_222141) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,10 @@ ActiveRecord::Schema.define(version: 2020_05_30_220335) do
   create_table "internal_links", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "source_id"
+    t.bigint "destination_id"
+    t.index ["destination_id"], name: "index_internal_links_on_destination_id"
+    t.index ["source_id"], name: "index_internal_links_on_source_id"
   end
 
 end
