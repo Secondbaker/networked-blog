@@ -1,0 +1,2 @@
+class InternalLink < ApplicationRecord
+end
