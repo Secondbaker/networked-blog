@@ -28,6 +28,7 @@ class BlogPostsController < ApplicationController
       @graph_data.push data_hash
     end
     gon.graph_data = @graph_data
+    gon.blog_posts = @blog_posts
   end
 
   # GET /blog_posts/new

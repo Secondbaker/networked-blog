@@ -29,8 +29,11 @@ var cy = cytoscape({
     ],
   
     layout: {
-      name: 'grid',
-      rows: 15
+      name: 'grid'
     }
   
   });
+
+gon.blog_posts.forEach(element => {
+  cy.elements('node#' + element.id)[0].style('background-color', element.name);
+});
