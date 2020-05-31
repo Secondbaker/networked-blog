@@ -13,7 +13,7 @@ class BlogPostsController < ApplicationController
   end
 
   def graph
-    @blog_posts = BlogPost.all
+    @blog_posts = BlogPost.order(:internal_links_count)
     @internal_links = InternalLink.all
     @graph_data = []
     @blog_posts.each do |blog_post|
