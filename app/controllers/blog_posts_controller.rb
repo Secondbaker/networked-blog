@@ -14,6 +14,19 @@ class BlogPostsController < ApplicationController
 
   def graph
     @blog_posts = BlogPost.all
+    @internal_links = InternalLink.all
+    @graph_data = []
+    @blog_posts.each do |blog_post|
+      data_hash = { data: { id: blog_post.id } }
+      @graph_data.push data_hash
+    end
+    @internal_links.each do |internal_link|
+      data_id = internal_link.source_id.to_s + '' + internal_link.destination_id.to_s
+      source_id = internal_link.source_id
+      target_id = internal_link.destination_id
+      data_hash = { data: { id: data_id, source: source_id, target: target_id }}
+      @graph_data.push data_hash
+    end
   end
 
   # GET /blog_posts/new
