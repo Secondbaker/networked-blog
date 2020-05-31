@@ -5,17 +5,7 @@ var cy = cytoscape({
 
     container: $('#cy'), // container to render in
   
-    elements: [ // list of graph elements to start with
-      { // node a
-        data: { id: 'a' }
-      },
-      { // node b
-        data: { id: 'b' }
-      },
-      { // edge ab
-        data: { id: 'ab', source: 'a', target: 'b' }
-      }
-    ],
+    elements: gon.graph_data,
   
     style: [ // the stylesheet for the graph
       {
@@ -33,14 +23,14 @@ var cy = cytoscape({
           'line-color': '#ccc',
           'target-arrow-color': '#ccc',
           'target-arrow-shape': 'triangle',
-          'curve-style': 'bezier'
+          'curve-style': 'line'
         }
       }
     ],
   
     layout: {
       name: 'grid',
-      rows: 1
+      rows: 15
     }
   
   });
