@@ -20,6 +20,12 @@
         <td><%= link_to 'Edit', edit_blog_post_path(blog_post) %></td>
         <td><%= link_to 'Destroy', blog_post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
+      <tr>
+        <td>Linked posts:  <% blog_post.destinations.each do |destination| %>
+          <%= link_to destination.name, destination %>
+          <% end %>
+        </td>
+      </tr>
     <% end %>
   </tbody>
 </table>
