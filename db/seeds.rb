@@ -9,3 +9,6 @@
 InternalLink.destroy_all
 BlogPost.destroy_all
 
+150.times do
+    post = BlogPost.create()
+end
