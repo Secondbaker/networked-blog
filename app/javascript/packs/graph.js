@@ -1,3 +1,5 @@
+var cytoscape = require("cytoscape");
+var $ = require("jquery")
 console.log ('here');
 var cy = cytoscape({
 
