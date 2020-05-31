@@ -12,6 +12,10 @@ class BlogPostsController < ApplicationController
   def show
   end
 
+  def graph
+    @blog_posts = BlogPost.all
+  end
+
   # GET /blog_posts/new
   def new
     @blog_post = BlogPost.new
