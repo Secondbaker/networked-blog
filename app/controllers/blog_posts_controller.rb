@@ -29,6 +29,7 @@ class BlogPostsController < ApplicationController
     end
     gon.graph_data = @graph_data
     gon.blog_posts = @blog_posts
+    gon.internal_links = @internal_links
   end
 
   # GET /blog_posts/new
