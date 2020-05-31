@@ -1,3 +1,4 @@
+console.log ('here');
 var cy = cytoscape({
 
     container: $('#cy'), // container to render in
