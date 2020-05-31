@@ -5,9 +5,12 @@ class BlogPost < ApplicationRecord
 
     def link(other)
         if other.is_a? BlogPost
-            puts 'this worked.'
+            self.destinations << other
+            other.destinations << self
+            true
         else
             puts 'this didn\'t work but that is right.'
+            false
         end
     end
 end
