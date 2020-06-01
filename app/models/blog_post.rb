@@ -24,10 +24,10 @@ class BlogPost < ApplicationRecord
     end
 
     def self.min_body_length
-        BlogPost.limit(1).order("MIN(CHAR_LENGTH(body)) desc").group(:id).pluck(:body)
+        BlogPost.order("LENGTH(body) asc").first.body.length
     end
 
     def self.max_body_length
-        BlogPost.limit(1).order("MAX(CHAR_LENGTH(body)) desc").group(:id).pluck(:body)
+        BlogPost.order("LENGTH(body) desc").first.body.length
     end
 end
