@@ -8,6 +8,8 @@
 
 verbose = true
 
+BLOG_POST_TARGET = 20
+
 if verbose
     puts 'Destroying InternalLink'
 end
@@ -17,7 +19,7 @@ if verbose
 end
 BlogPost.destroy_all
 
-150.times do
+BLOG_POST_TARGET.times do
     name = Faker::Color.unique.hex_color
     if verbose
         puts name
@@ -30,7 +32,7 @@ BlogPost.destroy_all
         puts body
     end
     post = BlogPost.create(name: name, body: body)
-    rand(0..[5, BlogPost.all.size].min).times do
+    rand(0..[(BLOG_POST_TARGET / 10.0).round, BlogPost.all.size].min).times do
         post.link BlogPost.order('RANDOM()').where.not(id: post.id).first
     end
 end
