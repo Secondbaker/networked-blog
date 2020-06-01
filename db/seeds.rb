@@ -8,7 +8,9 @@
 
 verbose = true
 
-BLOG_POST_TARGET = 20
+BLOG_POST_TARGET = 200
+BLOG_POST_MIN_SIZE = 0
+BLOG_POST_MAX_SIZE = 30
 
 if verbose
     puts 'Destroying InternalLink'
@@ -25,7 +27,7 @@ BLOG_POST_TARGET.times do
         puts name
     end
     body = ''
-    rand(1..15).times do
+    rand(BLOG_POST_MIN_SIZE..BLOG_POST_MAX_SIZE).times do
         body += Faker::Games::Pokemon.name + ' '
     end
     if verbose

@@ -12,11 +12,9 @@ var body_range = gon.max_body_length - gon.min_body_length;
 var sat = 65
 var lum = 50
 
-console.log(link_range);
-
 function standardize_color(str) { var c = document.createElement('canvas').getContext('2d'); c.fillStyle = str; return c.fillStyle; }
 
-var layout = 'dagre'
+var layout = 'cose'
 
 if(layout == 'cose')
 {
@@ -153,7 +151,7 @@ else if (layout == 'dagre')
   gon.blog_posts.forEach(element => {
     var hue = element.internal_links_count * 315 / link_range;
     sat = element.body.length * 100 / body_range;
-    lum = element.body.length * 100 / body_range;
+    lum = sat;
     var color = 'hsl(' + hue + ', ' + sat + '%, ' + lum + '%)';
     console.log(color);
     cy.elements('node#' + element.id)[0].style('background-color', color);
