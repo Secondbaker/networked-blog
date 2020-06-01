@@ -1,4 +1,8 @@
 var cytoscape = require("cytoscape");
+var coseBilkent = require("cytoscape-cose-bilkent");
+
+cytoscape.use( coseBilkent );
+
 var $ = require("jquery")
 var link_range = gon.max_links - gon.min_links;
 
