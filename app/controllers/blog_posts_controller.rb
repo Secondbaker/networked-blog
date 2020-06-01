@@ -32,6 +32,8 @@ class BlogPostsController < ApplicationController
     gon.internal_links = @internal_links
     gon.max_links = BlogPost.max_links
     gon.min_links = BlogPost.min_links
+    gon.max_body_length = BlogPost.max_body_length
+    gon.min_body_length = BlogPost.min_body_length
   end
 
   # GET /blog_posts/new

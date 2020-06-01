@@ -7,6 +7,7 @@ cytoscape.use( dagre ); // register extension
 
 var $ = require("jquery")
 var link_range = gon.max_links - gon.min_links;
+var body_range = gon.max_body_length - gon.min_body_length;
 
 var sat = 65
 var lum = 50
@@ -151,7 +152,8 @@ else if (layout == 'dagre')
 
   gon.blog_posts.forEach(element => {
     var hue = element.internal_links_count * 315 / link_range;
-    sat = element.body.length;
+    sat = element.body.length * 100 / body_range;
+    lum = element.body.length * 100 / body_range;
     var color = 'hsl(' + hue + ', ' + sat + '%, ' + lum + '%)';
     console.log(color);
     cy.elements('node#' + element.id)[0].style('background-color', color);
