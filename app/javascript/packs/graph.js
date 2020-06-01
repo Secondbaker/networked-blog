@@ -8,7 +8,7 @@ cytoscape.use( dagre ); // register extension
 var $ = require("jquery")
 var link_range = gon.max_links - gon.min_links;
 
-var sat = 75
+var sat = 65
 var lum = 50
 
 console.log(link_range);
@@ -150,7 +150,8 @@ else if (layout == 'dagre')
 }
 
   gon.blog_posts.forEach(element => {
-    var hue = element.internal_links_count * 360 / link_range;
+    var hue = element.internal_links_count * 315 / link_range;
+    sat = element.body.length;
     var color = 'hsl(' + hue + ', ' + sat + '%, ' + lum + '%)';
     console.log(color);
     cy.elements('node#' + element.id)[0].style('background-color', color);
@@ -164,7 +165,7 @@ gon.internal_links.forEach(element => {
       return true
     }
   });
-  var hue = firstNode.internal_links_count * 360 / link_range;
+  var hue = firstNode.internal_links_count * 315 / link_range;
   var firstColor = 'hsl(' + hue + ' ' + sat + '% ' + lum + '%)';
   var firstColor = standardize_color(firstColor)
   //cy.elements('node#' + firstNode.id)[0].style('background-color', firstColor);
@@ -174,7 +175,7 @@ gon.internal_links.forEach(element => {
       return true
     }
   });
-  var hue = secondNode.internal_links_count * 360 / link_range;
+  var hue = secondNode.internal_links_count * 315 / link_range;
   var secondColor = 'hsl(' + hue + ' ' + sat + '% ' + lum + '%)';
   var secondColor = standardize_color(secondColor)
   //cy.elements('node#' + secondNode.id)[0].style('background-color', secondColor);

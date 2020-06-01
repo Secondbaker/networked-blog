@@ -7,6 +7,7 @@ class BlogPost < ApplicationRecord
         if other.is_a? BlogPost
             self.destinations << other
             other.destinations << self
+            other.internal_links_count += 1
             true
         else
             puts 'this didn\'t work but that is right.'
@@ -20,5 +21,13 @@ class BlogPost < ApplicationRecord
 
     def self.max_links
         BlogPost.order(internal_links_count: :desc).limit(1).first.internal_links_count
+    end
+
+    def self.min_body_length
+        BlogPost.limit(1).order("MIN(CHAR_LENGTH(body)) desc").group(:id).pluck(:body)
+    end
+
+    def self.max_body_length
+        BlogPost.limit(1).order("MAX(CHAR_LENGTH(body)) desc").group(:id).pluck(:body)
     end
 end
