@@ -30,7 +30,7 @@ BlogPost.destroy_all
         puts body
     end
     post = BlogPost.create(name: name, body: body)
-    rand(0..[15, BlogPost.all.size].min).times do
+    rand(0..[5, BlogPost.all.size].min).times do
         post.link BlogPost.order('RANDOM()').where.not(id: post.id).first
     end
 end

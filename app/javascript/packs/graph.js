@@ -32,14 +32,14 @@ var cy = cytoscape({
     ],
   
     layout: {
-      name: 'grid'
+      name: 'cose'
     }
   
   });
 
   gon.blog_posts.forEach(element => {
     var hue = element.internal_links_count * 360 / link_range;
-    var color = 'hsl(' + hue + ', 100%, 50%)';
+    var color = 'hsl(' + hue + ', 75%, 50%)';
     console.log(color);
     cy.elements('node#' + element.id)[0].style('background-color', color);
   });
