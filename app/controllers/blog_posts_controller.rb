@@ -13,7 +13,7 @@ class BlogPostsController < ApplicationController
   end
 
   def graph
-    @blog_posts = BlogPost.order(:internal_links_count)
+    @blog_posts = BlogPost.all
     @internal_links = InternalLink.all
     @graph_data = []
     @blog_posts.each do |blog_post|
@@ -30,6 +30,8 @@ class BlogPostsController < ApplicationController
     gon.graph_data = @graph_data
     gon.blog_posts = @blog_posts
     gon.internal_links = @internal_links
+    gon.max_links = BlogPost.max_links
+    gon.min_links = BlogPost.min_links
   end
 
   # GET /blog_posts/new

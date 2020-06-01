@@ -13,4 +13,12 @@ class BlogPost < ApplicationRecord
             false
         end
     end
+
+    def self.min_links
+        BlogPost.order(internal_links_count: :asc).limit(1).first.internal_links_count
+    end
+
+    def self.max_links
+        BlogPost.order(internal_links_count: :desc).limit(1).first.internal_links_count
+    end
 end
