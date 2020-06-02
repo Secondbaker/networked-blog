@@ -2352,6 +2352,13 @@ cytoscape-dagre@^2.2.2:
   dependencies:
     dagre "^0.8.2"
 
+cytoscape-fcose@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/cytoscape-fcose/-/cytoscape-fcose-1.2.3.tgz#185ca64482ca003874c95d1f34a3ffb79661bbfd"
+  integrity sha512-khXpYM3SST8nZIjG1nItJUxgBE8ke2uKxx+CpDQa+zna9jnmKVdJtECuKRt57sD3JyJVx5wFp+6Fvs+p3supdg==
+  dependencies:
+    cose-base "^1.0.0"
+
 cytoscape@^3.15.0:
   version "3.15.0"
   resolved "https://registry.yarnpkg.com/cytoscape/-/cytoscape-3.15.0.tgz#213871e5efc0aae12abc0287421934feb706db42"
