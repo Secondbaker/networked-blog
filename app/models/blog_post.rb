@@ -5,10 +5,14 @@ class BlogPost < ApplicationRecord
     
     def link(other)
         if other.is_a? BlogPost
-            self.destinations << other
-            other.destinations << self
-            other.internal_links_count += 1
-            true
+            if !self.destinations.include? other
+                self.destinations << other
+                other.destinations << self
+                other.internal_links_count += 1
+                true
+            else
+                false
+            end
         else
             puts 'this didn\'t work but that is right.'
             false

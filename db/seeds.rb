@@ -8,9 +8,10 @@
 
 verbose = true
 
-BLOG_POST_TARGET = 250
+BLOG_POST_TARGET = 100
 BLOG_POST_MIN_SIZE = 0
 BLOG_POST_MAX_SIZE = 30
+MAX_LINKS_PER_POST = 2
 
 if verbose
     puts 'Destroying InternalLink'
@@ -34,7 +35,7 @@ BLOG_POST_TARGET.times do
         puts body
     end
     post = BlogPost.create(name: name, body: body)
-    rand(0..[(BLOG_POST_TARGET / 10.0).round, BlogPost.all.size].min).times do
+    rand(0..[MAX_LINKS_PER_POST, BlogPost.all.size].min).times do
         post.link BlogPost.order('RANDOM()').where.not(id: post.id).first
     end
 end
