@@ -10,6 +10,8 @@ class BlogPostsController < ApplicationController
   # GET /blog_posts/1
   # GET /blog_posts/1.json
   def show
+    @internal_links = @blog_post.internal_links
+    @related_posts = @blog_post.destinations
   end
 
   def graph
