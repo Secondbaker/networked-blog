@@ -20,7 +20,8 @@ elements = elements.concat(gon.related_posts);
 elements.push(gon.blog_post);
 elements = elements.concat(gon.internal_links);
 
-console.log(elements);
+console.log(elements[0]);
+console.log(blogPostToCyNodeArray(elements[0]));
 console.log(gon.related_posts);
 
 var cy = cytoscape({
@@ -29,4 +30,5 @@ var cy = cytoscape({
 });
 
 console.log(conversions);
+console.log(cy.elements()[0]);
 console.log(blogPostToCyNodeArray(cy.elements()[0]));
