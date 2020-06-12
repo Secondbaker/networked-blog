@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class BlogPostsController < ApplicationController
-  before_action :set_blog_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_blog_post, only: %i[show edit update destroy]
 
   # GET /blog_posts
   # GET /blog_posts.json
@@ -11,7 +13,16 @@ class BlogPostsController < ApplicationController
   # GET /blog_posts/1.json
   def show
     @internal_links = @blog_post.internal_links
+
     @related_posts = @blog_post.destinations
+    destinations = @blog_post.destinations
+    @related_posts.each do |related_post|
+      @internal_links = @internal_links.merge related_post.internal_links
+      destinations = destinations.merge related_post.destinations
+    end
+
+    @related_posts = destinations
+
     gon.related_posts = @related_posts
     gon.blog_post = @blog_post
     gon.internal_links = @internal_links
@@ -29,7 +40,7 @@ class BlogPostsController < ApplicationController
       data_id = internal_link.source_id.to_s + '' + internal_link.destination_id.to_s
       source_id = internal_link.source_id
       target_id = internal_link.destination_id
-      data_hash = { data: { id: data_id, source: source_id, target: target_id }}
+      data_hash = { data: { id: data_id, source: source_id, target: target_id } }
       @graph_data.push data_hash
     end
     gon.graph_data = @graph_data
@@ -47,8 +58,7 @@ class BlogPostsController < ApplicationController
   end
 
   # GET /blog_posts/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /blog_posts
   # POST /blog_posts.json
@@ -91,13 +101,14 @@ class BlogPostsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_blog_post
-      @blog_post = BlogPost.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def blog_post_params
-      params.require(:blog_post).permit(:name, :body)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_blog_post
+    @blog_post = BlogPost.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def blog_post_params
+    params.require(:blog_post).permit(:name, :body)
+  end
 end

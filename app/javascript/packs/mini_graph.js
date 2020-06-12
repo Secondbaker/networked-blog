@@ -1,4 +1,4 @@
-import { blogPostToCyNodeArray } from 'conversions';
+import { blogPostToCyNodeArray, internalLinkToCyEdgeArray } from 'conversions';
 
 var cytoscape = require('cytoscape');
 var coseBilkent = require('cytoscape-cose-bilkent');
@@ -11,16 +11,19 @@ cytoscape.use(dagre); // register extension
 
 var $ = require('jquery');
 
-var allPosts = [];
-allPosts.concat(gon.related_posts);
-allPosts.push(gon.blog_post);
-
 var elements = [];
+elements.push(blogPostToCyNodeArray(gon.blog_post));
 gon.related_posts.forEach(function (post) {
-	console.log(post);
+	elements.push(blogPostToCyNodeArray(post));
+	console.log(post.id);
 });
-elements.push(gon.blog_post);
-elements = elements.concat(gon.internal_links);
+gon.internal_links.forEach(function (internalLink) {
+	console.log(internalLink.source_id);
+	console.log(internalLink.destination_id);
+	elements.push(internalLinkToCyEdgeArray(internalLink));
+});
+
+elements = elements.concat();
 
 console.log(elements[0]);
 console.log(blogPostToCyNodeArray(elements[0]));
@@ -34,3 +37,9 @@ var cy = cytoscape({
 console.log(conversions);
 console.log(cy.elements()[0]);
 console.log(blogPostToCyNodeArray(cy.elements()[0]));
+
+cy.on('tap', 'node', function (evt) {
+	var node = evt.target;
+	console.log('tapped ' + node.id());
+	location.href = '/blog_posts/' + node.id();
+});
