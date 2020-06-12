@@ -16,7 +16,9 @@ allPosts.concat(gon.related_posts);
 allPosts.push(gon.blog_post);
 
 var elements = [];
-elements = elements.concat(gon.related_posts);
+gon.related_posts.forEach(function (post) {
+	console.log(post);
+});
 elements.push(gon.blog_post);
 elements = elements.concat(gon.internal_links);
 
