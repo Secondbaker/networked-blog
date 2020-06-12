@@ -1,8 +1,10 @@
+import { blogPostToCyNodeArray } from 'conversions';
+
 var cytoscape = require('cytoscape');
 var coseBilkent = require('cytoscape-cose-bilkent');
 let dagre = require('cytoscape-dagre');
 var fcose = require('cytoscape-fcose');
-
+var conversions = require('conversions');
 cytoscape.use(fcose);
 cytoscape.use(coseBilkent);
 cytoscape.use(dagre); // register extension
@@ -26,6 +28,5 @@ var cy = cytoscape({
 	elements: elements,
 });
 
-console.log(cy.data());
-
-console.log(blogPostToCyNodeArray(cy.data()[0]));
+console.log(conversions);
+console.log(blogPostToCyNodeArray(cy.elements()[0]));
