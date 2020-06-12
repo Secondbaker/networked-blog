@@ -12,6 +12,9 @@ class BlogPostsController < ApplicationController
   def show
     @internal_links = @blog_post.internal_links
     @related_posts = @blog_post.destinations
+    gon.related_posts = @related_posts
+    gon.blog_post = @blog_post
+    gon.internal_links = @internal_links
   end
 
   def graph
