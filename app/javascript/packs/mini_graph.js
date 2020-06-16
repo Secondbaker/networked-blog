@@ -107,6 +107,18 @@ let style = [
 			'background-color': 'red',
 		}
 	},
+	{
+		selector: '.source',
+		style: {
+			'background-color': 'blue',
+		}
+	},
+	{
+		selector: '.main',
+		style: {
+			'background-color': 'black',
+		}
+	},
 ];
 
 var cy = cytoscape({
@@ -124,7 +136,7 @@ gon.internal_links.forEach(function (internalLink) {
 	cy.add(internalLinkToCyEdgeArray(internalLink));
 });
 
-console.log(cy.elements('node.destination'));
+console.log(cy.elements('node.main'));
 
 cy.style(style).update();
 let layoutRunner = cy.layout({name: 'dagre'});
