@@ -89,7 +89,7 @@ var cy = cytoscape({
 		{
 			selector: 'node',
 			style: {
-				'background-color': '#666',
+				'background-color': 'data(label)',
 				label: 'data(label)',
 			},
 		},
@@ -107,8 +107,11 @@ var cy = cytoscape({
 	],
 });
 
-cy.add(blogPostToCyNodeArray(gon.blog_post));
-gon.related_posts.forEach(function (post) {
+cy.add(blogPostToCyNodeArray(gon.blog_post, {nodeType: 'main'}));
+gon.destinations.forEach(function (post) {
+	cy.add(blogPostToCyNodeArray(post));
+});
+gon.sources.forEach(function (post) {
 	cy.add(blogPostToCyNodeArray(post));
 });
 console.log(cy.elements());
@@ -116,8 +119,10 @@ gon.internal_links.forEach(function (internalLink) {
 	cy.add(internalLinkToCyEdgeArray(internalLink));
 });
 
-let layoutRunner = cy.layout(defaultfCoseOptions);
+let layoutRunner = cy.layout({name: 'dagre'});
 let hasRun = layoutRunner.run();
+
+console.log(cy.elements().contains(blogPostToCyNodeArray(gon.blog_post)));
 
 cy.on('tap', 'node', function (evt) {
 	var node = evt.target;
