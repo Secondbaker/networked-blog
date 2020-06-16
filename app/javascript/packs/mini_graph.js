@@ -82,30 +82,35 @@ var defaultfCoseOptions = {
 	stop: () => {}, // on layoutstop
 };
 
+let style = [
+	// the stylesheet for the graph
+	{
+		selector: 'node',
+		style: {
+			label: 'data(label)',
+		},
+	},
+
+	{
+		selector: 'edge',
+		style: {
+			width: 1,
+			'line-color': '#ccc',
+			'line-fill': 'linear-gradient',
+			'target-arrow-color': '#ccc',
+			'target-arrow-shape': 'triangle',
+		},
+	},
+	{
+		selector: '.destination',
+		style: {
+			'background-color': 'red',
+		}
+	},
+];
+
 var cy = cytoscape({
 	container: $('#cy'),
-	style: [
-		// the stylesheet for the graph
-		{
-			selector: 'node',
-			style: {
-				'background-color': 'data(label)',
-				label: 'data(label)',
-			},
-		},
-
-		{
-			selector: 'edge',
-			style: {
-				width: 1,
-				'line-color': '#ccc',
-				'line-fill': 'linear-gradient',
-				'target-arrow-color': '#ccc',
-				'target-arrow-shape': 'triangle',
-			},
-		},
-		
-	],
 });
 
 cy.add(blogPostToCyNodeArray(gon.blog_post, 'main'));
@@ -115,15 +120,15 @@ gon.destinations.forEach(function (post) {
 gon.sources.forEach(function (post) {
 	cy.add(blogPostToCyNodeArray(post, 'source'));
 });
-console.log(cy.elements());
 gon.internal_links.forEach(function (internalLink) {
 	cy.add(internalLinkToCyEdgeArray(internalLink));
 });
 
+console.log(cy.elements('node.destination'));
+
+cy.style(style).update();
 let layoutRunner = cy.layout({name: 'dagre'});
 let hasRun = layoutRunner.run();
-
-console.log(cy.elements('.main').contains(blogPostToCyNodeArray(gon.blog_post)));
 
 cy.on('tap', 'node', function (evt) {
 	var node = evt.target;
