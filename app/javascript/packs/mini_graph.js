@@ -84,6 +84,27 @@ var defaultfCoseOptions = {
 
 var cy = cytoscape({
 	container: $('#cy'),
+	style: [
+		// the stylesheet for the graph
+		{
+			selector: 'node',
+			style: {
+				'background-color': '#666',
+				label: 'data(label)',
+			},
+		},
+
+		{
+			selector: 'edge',
+			style: {
+				width: 1,
+				'line-color': '#ccc',
+				'line-fill': 'linear-gradient',
+				'target-arrow-color': '#ccc',
+				'target-arrow-shape': 'triangle',
+			},
+		},
+	],
 });
 
 cy.add(blogPostToCyNodeArray(gon.blog_post));
@@ -93,15 +114,6 @@ gon.related_posts.forEach(function (post) {
 console.log(cy.elements());
 gon.internal_links.forEach(function (internalLink) {
 	cy.add(internalLinkToCyEdgeArray(internalLink));
-});
-
-cy.style({
-	style: {
-		selector: 'node[label]',
-		style: {
-			label: 'data(label)',
-		},
-	},
 });
 
 let layoutRunner = cy.layout(defaultfCoseOptions);
