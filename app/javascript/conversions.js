@@ -3,15 +3,21 @@ console.log('hello from conversions');
 //takes in a BlogPost
 //returns an EleObj https://js.cytoscape.org/#notation/elements-json
 
-export const blogPostToCyNodeArray = function (blogPost, customData = {}) {
-	console.log(customData);
-	return {
+export const blogPostToCyNodeArray = function (blogPost, nodeClass = '') {
+	console.log({
 		data: {
 			label: blogPost.name,
 			id: blogPost.id,
-			
 		},
-	};
+		class: nodeClass
+	});
+	return ({
+		data: {
+			label: blogPost.name,
+			id: blogPost.id,
+		},
+		class: nodeClass
+	});	
 };
 export const internalLinkToCyEdgeArray = function (internalLink) {
 	return {
