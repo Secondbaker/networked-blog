@@ -43,4 +43,11 @@ class BlogPost < ApplicationRecord
     def self.max_body_length
         BlogPost.order("LENGTH(body) desc").first.body.length
     end
+
+    private
+    
+    def internal_link_regex
+        /\[\[.*\]\]/
+    end
+
 end
