@@ -3,12 +3,19 @@ class BlogPost < ApplicationRecord
     has_many :sources, through: :internal_links, foreign_key: 'source_id', class_name: 'BlogPost'
     has_many :destinations, through: :internal_links, foreign_key: 'destination_id', class_name: 'BlogPost'
     
+    def create_link(post_name)
+        if !BlogPost.find_by name: post_name
+            other = BlogPost.create(name: post_name)
+        else
+            other = BlogPost.find_by(name: post_name)
+        end
+        self.link other
+    end
+
     def link(other)
         if other.is_a? BlogPost
             if !self.destinations.include? other
                 self.destinations << other
-                other.destinations << self
-                other.internal_links_count += 1
                 true
             else
                 false

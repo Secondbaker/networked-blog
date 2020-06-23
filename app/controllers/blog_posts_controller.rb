@@ -12,13 +12,16 @@ class BlogPostsController < ApplicationController
   # GET /blog_posts/1
   # GET /blog_posts/1.json
   def show
-    @internal_links = @blog_post.internal_links
+    
+    @internal_links = InternalLink.where(destination_id: @blog_post.id) + InternalLink.where(source_id: @blog_post.id)
+    @destinations = []
+    @sources = []
+    @internal_links.each do |internal_link|
+      @destinations.push internal_link.destination
+      @sources.push internal_link.source
+    end
 
-    @destinations = @blog_post.destinations
-
-    @sources = @blog_post.sources
-
-    @related_posts = @sources & @destinations
+    @related_posts = @destinations
 
     gon.destinations = @destinations
     gon.sources = @sources

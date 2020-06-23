@@ -11,7 +11,7 @@ verbose = true
 BLOG_POST_TARGET = 100
 BLOG_POST_MIN_SIZE = 0
 BLOG_POST_MAX_SIZE = 30
-MAX_LINKS_PER_POST = 2
+MAX_LINKS_PER_POST = 5
 
 if verbose
     puts 'Destroying InternalLink'
