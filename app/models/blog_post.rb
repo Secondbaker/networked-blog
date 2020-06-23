@@ -2,6 +2,8 @@ class BlogPost < ApplicationRecord
     has_many :internal_links, foreign_key: 'source_id', dependent: :destroy
     has_many :sources, through: :internal_links, foreign_key: 'source_id', class_name: 'BlogPost'
     has_many :destinations, through: :internal_links, foreign_key: 'destination_id', class_name: 'BlogPost'
+
+    validates_uniqueness_of :name
     
     def create_link(post_name)
         if !BlogPost.find_by name: post_name
