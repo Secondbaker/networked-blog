@@ -72,6 +72,9 @@ jQuery(function ($) {
 
     };
 
+    $('#panelToggle').on('click', function(e) {
+        console.log('panelToggle');
+    });
     $('.panelNav').each(function (i) {
 
         var $panelNav = $(this),

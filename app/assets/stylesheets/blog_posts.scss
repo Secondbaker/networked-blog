@@ -22,11 +22,19 @@
     background-color: lightgrey;
 }
 
+#cy {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background-color: lightgreen;
+}
+
 .app-body {
   height: calc(100% - var(--header-height));
-  margin-top: var(--header-height);
+  top: var(--header-height);
   overflow-y: scroll;
   position: absolute;
+  background-color: lightpink;
 }
 
 .switch {
@@ -110,7 +118,6 @@ Make sure to set `overflow:hidden` onto the wrapper. */
 .panelWrapper {
   width: 100%;
   
-  border: 1px solid #464646;
 }
 
 .panel {
@@ -118,13 +125,7 @@ Make sure to set `overflow:hidden` onto the wrapper. */
   left: 0;
   right: 0;
   top: 0;
-  bottom: 0;
-  
-  text-align: center;
-  line-height: 200px;
-  font-size: 100px;
-  color: #FFF;
-  
+  bottom: 0; 
   /*
   Prevent flickering of the screen when starting an animation
   @url http://blog.teamtreehouse.com/increase-your-sites-performance-with-hardware-accelerated-css

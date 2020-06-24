@@ -6,14 +6,14 @@
     <h1>Blog Posts</h1>
     <label>View posts</label>
     <label class="switch">
-      <input type="checkbox">
+      <input type="checkbox" id='panelToggle'>
       <span class="slider round"></span>
     </label>
     <label>View graph</label>
   </div>
 
   <div class='panelWrapper app-body'>
-    <div id='text-posts'>
+    <div id='text-posts' class='panel current'>
       
 
       <table>
@@ -48,7 +48,7 @@
       </table>
 
     </div>
-    <div id='cy'></div>
+    <div id='cy' class='panel'></div>
   </div>
 
 </div>
