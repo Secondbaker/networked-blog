@@ -17,7 +17,8 @@ var lum = 50
 function standardize_color(str) { var c = document.createElement('canvas').getContext('2d'); c.fillStyle = str; return c.fillStyle; }
 
 var layout = 'cosedas'
-var layoutRunner
+
+let shown = false;
 
 // Select the node that will be observed for mutations
 const targetNode = $('#cy').get(0);
@@ -29,8 +30,10 @@ const config = { attributes: true, childList: true, subtree: true };
 const callback = function (mutationsList, observer) {
   // Use traditional 'for loops' for IE 11
   for (let mutation of mutationsList) {
-    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-      console.log('class changed');
+    if(!shown && mutation.type === 'attributes' && mutation.attributeName === 'class' && $(mutation.target).hasClass('current')) {
+        layoutRunner = cy.layout(defaultfCoseOptions);
+        hasRun = layoutRunner.run();
+        shown = true;
     }
   }
 };
@@ -297,9 +300,7 @@ gon.internal_links.forEach(element => {
 
   var eles = cy.add(newLink);
 });
-layoutRunner = cy.layout(defaultfCoseOptions);
-hasRun = layoutRunner.run();
-console.log(hasRun);
+
 function colorNodes() {
   gon.blog_posts.forEach(element => {
     var size = element.internal_links_count * 20 / link_range + 10;
