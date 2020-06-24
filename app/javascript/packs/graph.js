@@ -7,7 +7,7 @@ cytoscape.use( fcose );
 cytoscape.use( coseBilkent );
 cytoscape.use( dagre ); // register extension
 
-var $ = require("jquery")
+
 var link_range = gon.max_links - gon.min_links;
 var body_range = gon.max_body_length - gon.min_body_length;
 
