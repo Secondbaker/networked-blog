@@ -8,25 +8,6 @@ jQuery(function ($) {
 
     };
 
-    var updatePanelNav = function ($panelNav, $panelContainer, $panelToSlideIn, numPanels) {
-
-        // Find index of $panelToSlideIn in the $panelContainer
-        var idx = $panelToSlideIn.index('#' + $panelContainer.attr('id') + ' > .panel');
-
-        if (idx === 0) {
-            $panelNav.find('a[href="#prev"]').addClass('inactive');
-        } else {
-            $panelNav.find('a[href="#prev"]').removeClass('inactive');
-        }
-
-        if (idx == numPanels - 1) {
-            $panelNav.find('a[href="#next"]').addClass('inactive');
-        } else {
-            $panelNav.find('a[href="#next"]').removeClass('inactive');
-        }
-
-    };
-
     var stopAnimation = function ($panelContainer, $panels, $panelToSlideIn) {
 
         // Fix for browsers who fire this handler for both prefixed and unprefixed events (looking at you, Chrome): remove any listeners

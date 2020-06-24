@@ -13,48 +13,16 @@
   </div>
 
   <div class='panelWrapper app-body'>
-    <div id='text-posts' class=''>
+    <div id='text-posts'>
       
 
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Body</th>
-            <th colspan="3"></th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <% @blog_posts.each do |blog_post| %>
-            <tr>
-              <td><%= blog_post.name %></td>
-              <td><%= blog_post.body %></td>
-              <td><%= link_to 'Show', blog_post %></td>
-              <td><%= link_to 'Edit', edit_blog_post_path(blog_post) %></td>
-              <td><%= link_to 'Destroy', blog_post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-            </tr>
-            <tr>
-              <td>Linked posts:</td><% blog_post.destinations.each do |destination| %>
-                <td><%= link_to destination.name, destination %></td>
-                <% end %>
-            </tr>
-            <tr>
-              <td>id:  <%= blog_post.id %></td>
-              <td>internal_links_count:  <%= blog_post.internal_links_count %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-
     </div>
-    <div id='cy' class='panel' data-enter='slideright' data-exit='slideright'></div>
+    <div id='cy' class='panel' data-enter='slideleft' data-exit='slideright'></div>
   </div>
 
 </div>
 
-
-
 <%= link_to 'New Blog Post', new_blog_post_path %>
 
 <%= javascript_pack_tag 'panels' %>
+<%= javascript_pack_tag 'graph' %>
