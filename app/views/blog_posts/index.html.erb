@@ -1,57 +1,60 @@
 <%= include_gon %>
 
 <p id="notice"><%= notice %></p>
+<div id='app'>
+  <div id='header'>
+    <h1>Blog Posts</h1>
+    <label>View posts</label>
+    <label class="switch">
+      <input type="checkbox">
+      <span class="slider round"></span>
+    </label>
+    <label>View graph</label>
+  </div>
 
-<div id='header'>
-  <h1>Blog Posts</h1>
-  <label>View posts</label>
-  <label class="switch">
-    <input type="checkbox">
-    <span class="slider round"></span>
-  </label>
-  <label>View graph</label>
+  <div class='panelWrapper app-body'>
+    <div id='text-posts'>
+      
+
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Body</th>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @blog_posts.each do |blog_post| %>
+            <tr>
+              <td><%= blog_post.name %></td>
+              <td><%= blog_post.body %></td>
+              <td><%= link_to 'Show', blog_post %></td>
+              <td><%= link_to 'Edit', edit_blog_post_path(blog_post) %></td>
+              <td><%= link_to 'Destroy', blog_post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            </tr>
+            <tr>
+              <td>Linked posts:</td><% blog_post.destinations.each do |destination| %>
+                <td><%= link_to destination.name, destination %></td>
+                <% end %>
+            </tr>
+            <tr>
+              <td>id:  <%= blog_post.id %></td>
+              <td>internal_links_count:  <%= blog_post.internal_links_count %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+    </div>
+    <div id='cy'></div>
+  </div>
+
 </div>
-
-<div id='text-posts'>
-  
-
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Body</th>
-        <th colspan="3"></th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @blog_posts.each do |blog_post| %>
-        <tr>
-          <td><%= blog_post.name %></td>
-          <td><%= blog_post.body %></td>
-          <td><%= link_to 'Show', blog_post %></td>
-          <td><%= link_to 'Edit', edit_blog_post_path(blog_post) %></td>
-          <td><%= link_to 'Destroy', blog_post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-        <tr>
-          <td>Linked posts:</td><% blog_post.destinations.each do |destination| %>
-            <td><%= link_to destination.name, destination %></td>
-            <% end %>
-        </tr>
-        <tr>
-          <td>id:  <%= blog_post.id %></td>
-          <td>internal_links_count:  <%= blog_post.internal_links_count %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-
-</div>
-
-
-
-<div id='cy'></div>
 
 <%= javascript_pack_tag 'graph' %>
 
 <%= link_to 'New Blog Post', new_blog_post_path %>
+
+<%= javascript_pack_tag 'panels' %>

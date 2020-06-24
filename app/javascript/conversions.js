@@ -1,5 +1,3 @@
-console.log('hello from conversions');
-
 //takes in a BlogPost
 //returns an EleObj https://js.cytoscape.org/#notation/elements-json
 
