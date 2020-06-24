@@ -19,6 +19,30 @@ function standardize_color(str) { var c = document.createElement('canvas').getCo
 var layout = 'cosedas'
 var layoutRunner
 
+// Select the node that will be observed for mutations
+const targetNode = $('#cy').get(0);
+
+// Options for the observer (which mutations to observe)
+const config = { attributes: true, childList: true, subtree: true };
+
+// Callback function to execute when mutations are observed
+const callback = function (mutationsList, observer) {
+  // Use traditional 'for loops' for IE 11
+  for (let mutation of mutationsList) {
+    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+      console.log('class changed');
+    }
+  }
+};
+
+// Create an observer instance linked to the callback function
+const observer = new MutationObserver(callback);
+
+// Start observing the target node for configured mutations
+observer.observe(targetNode, config);
+
+
+
 var defaultfCoseOptions = {
 
   name: 'fcose',
@@ -256,7 +280,6 @@ else
 });
 }
 
-var counter = 0;
 gon.internal_links.forEach(element => {
   var newLink = [];
 
@@ -273,8 +296,6 @@ gon.internal_links.forEach(element => {
   newLink.push({ group: 'edges', data: { id: element.source_id +  '' + element.destination_id, source: element.source_id, target: element.destination_id } });
 
   var eles = cy.add(newLink);
-  console.log(counter);
-  counter++;
 });
 layoutRunner = cy.layout(defaultfCoseOptions);
 hasRun = layoutRunner.run();
