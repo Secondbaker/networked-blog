@@ -87,7 +87,7 @@ jQuery(function ($) {
         $panelToSlideOut = $panels.filter('.current');
 
         // Define the the panel to slide in
-        $panelToSlideIn = $panels.filter('.current');
+        $panelToSlideIn = $('.panel:not(.current)');
 
         // Define animations to use
         enterAnimation = $panelToSlideIn.data('enter') || $panelContainer.data('enter');
@@ -108,7 +108,7 @@ jQuery(function ($) {
         // Stop the animation after a while
         setTimeout(function () {
             stopAnimation($panelContainer, $panels, $panelToSlideIn);
-        }, animationDuration);
+        }, 300);
     });
     $('.panelNav').each(function (i) {
 
