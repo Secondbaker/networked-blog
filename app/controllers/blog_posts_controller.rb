@@ -6,7 +6,27 @@ class BlogPostsController < ApplicationController
   # GET /blog_posts
   # GET /blog_posts.json
   def index
-    @blog_posts = BlogPost.order('LENGTH(body) asc')
+    @blog_posts = BlogPost.all
+    @internal_links = InternalLink.all
+    @graph_data = []
+    @blog_posts.each do |blog_post|
+      data_hash = { data: { id: blog_post.id } }
+      @graph_data.push data_hash
+    end
+    @internal_links.each do |internal_link|
+      data_id = internal_link.source_id.to_s + '' + internal_link.destination_id.to_s
+      source_id = internal_link.source_id
+      target_id = internal_link.destination_id
+      data_hash = { data: { id: data_id, source: source_id, target: target_id } }
+      @graph_data.push data_hash
+    end
+    gon.graph_data = @graph_data
+    gon.blog_posts = @blog_posts
+    gon.internal_links = @internal_links
+    gon.max_links = BlogPost.max_links
+    gon.min_links = BlogPost.min_links
+    gon.max_body_length = BlogPost.max_body_length
+    gon.min_body_length = BlogPost.min_body_length
   end
 
   # GET /blog_posts/1
