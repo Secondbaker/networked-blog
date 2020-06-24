@@ -74,6 +74,41 @@ jQuery(function ($) {
 
     $('#panelToggle').on('click', function(e) {
         console.log('panelToggle');
+
+        $panelContainer = $('.app-body');
+        $panels = $('.panel');
+        // Local vars
+        var $panelToSlideIn, $panelToSlideOut, enterAnimation, exitAnimation;
+
+        // Don't do anything if we are currently animating
+        if ($panelContainer.is('.animating')) return false;
+
+        // Define the panel to slideOut
+        $panelToSlideOut = $panels.filter('.current');
+
+        // Define the the panel to slide in
+        $panelToSlideIn = $panels.filter('.current');
+
+        // Define animations to use
+        enterAnimation = $panelToSlideIn.data('enter') || $panelContainer.data('enter');
+        exitAnimation = $panelToSlideOut.data('exit') || $panelContainer.data('exit');
+
+        // Set the exit panel
+        setExitPanel($panelToSlideOut, exitAnimation);
+
+        // Set the enter panel
+        setEnterPanel($panelContainer, $panels, $panelToSlideIn, enterAnimation);
+
+        // Start the animation (immediately)
+        // @note: using a setTimeout because "it solves everything", dixit @rem
+        setTimeout(function () {
+            startAnimation($panelContainer);
+        }, 0);
+
+        // Stop the animation after a while
+        setTimeout(function () {
+            stopAnimation($panelContainer, $panels, $panelToSlideIn);
+        }, animationDuration);
     });
     $('.panelNav').each(function (i) {
 
