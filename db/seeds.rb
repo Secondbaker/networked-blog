@@ -6,12 +6,12 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-verbose = true
+verbose = false
 
 BLOG_POST_TARGET = 100
 BLOG_POST_MIN_SIZE = 0
 BLOG_POST_MAX_SIZE = 30
-MAX_LINKS_PER_POST = 5
+MAX_LINKS_PER_POST = 1
 
 if verbose
     puts 'Destroying InternalLink'
