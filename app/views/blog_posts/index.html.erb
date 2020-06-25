@@ -14,7 +14,11 @@
 
   <div class='panelWrapper app-body'>
     <div id='text-posts'>
-      
+      <% @blog_posts.each do |blog_post|%>
+        <div>
+          <%= render blog_post %>
+        </div>
+      <% end %>
 
     </div>
     <div id='cy' class='panel' data-enter='slideleft' data-exit='slideright'></div>

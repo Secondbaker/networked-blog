@@ -334,7 +334,7 @@ function colorNodes() {
     sat = element.body.length * 100 / body_range;
     lum = sat / 2;
     var color = 'hsl(' + hue + ', ' + sat + '%, ' + lum + '%)';
-    cy.elements('node#' + element.id)[0].style({'background-color': color, 'width': size, 'height': size});
+    //cy.elements('node#' + element.id)[0].style({'background-color': color, 'width': size, 'height': size});
   });
 }
 
@@ -364,9 +364,9 @@ function colorEdges() {
     lum = sat / 2;
     var secondColor = 'hsl(' + hue + ' ' + sat + '% ' + lum + '%)';
     var secondColor = standardize_color(secondColor)
-    //cy.elements('node#' + secondNode.id)[0].style('background-color', secondColor);
+    cy.elements('node#' + secondNode.id)[0].style('background-color', secondColor);
     gradientColors = firstColor + " " + secondColor;
-    cy.elements('edge#' + element.source_id + '' + element.destination_id)[0].style('line-gradient-stop-colors', gradientColors);
+    //cy.elements('edge#' + element.source_id + '' + element.destination_id)[0].style('line-gradient-stop-colors', gradientColors);
   });
 }
 cy.on('tap', 'node', function(evt){
