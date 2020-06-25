@@ -29,13 +29,26 @@
   background-color: lightgreen;
 }
 
+.post-partial {
+  height: 20vh;
+  overflow: hidden;
+}
+
+#text-posts {
+  overflow-y: scroll;
+  height: 100%;
+  width: 80%;
+  margin: auto;
+  align-self: center;
+}
+
 .app-body {
   height: calc(100% - var(--header-height));
-  top: var(--header-height);
-  overflow-y: scroll;
+  top: var(--header-height);  
   position: absolute;
   background-color: lightpink;
   overflow-x: none;
+  overflow-y: hidden;
 }
 
 .switch {
