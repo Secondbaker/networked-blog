@@ -4,6 +4,8 @@
 
 :root {
   --header-height: 50px;
+  --lh: 1.4rem;
+  line-height: var(--lh);
 }
 
 #app {
@@ -31,7 +33,30 @@
 
 .post-partial {
   height: 20vh;
+  width: 100%;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  --max-lines: 20;
+  position: relative;
+  max-height: calc(var(--lh) * var(--max-lines));
   overflow: hidden;
+  padding-right: 1rem; /* space for ellipsis */
+}
+
+.post-partial::before {
+  position: absolute;
+  content: "...";
+  inset-block-end: 0; /* "bottom" */
+  inset-inline-end: 0; /* "right" */
+}
+
+.post-partial::after {
+  content: "";
+  position: absolute;
+  inset-inline-end: 0; /* "right" */
+  width: 1rem;
+  height: 1rem;
+  background: white;
 }
 
 #text-posts {
@@ -46,7 +71,7 @@
   height: calc(100% - var(--header-height));
   top: var(--header-height);  
   position: absolute;
-  background-color: lightpink;
+  background-color: white;
   overflow-x: none;
   overflow-y: hidden;
 }
