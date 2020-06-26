@@ -35,6 +35,10 @@ class BlogPost < ApplicationRecord
         false
     end
 
+    def unlink_all
+        self.internal_links.destroy_all
+    end
+
     def self.min_links
         BlogPost.order(internal_links_count: :asc).limit(1).first.internal_links_count
     end
