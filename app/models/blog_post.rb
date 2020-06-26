@@ -5,12 +5,8 @@ class BlogPost < ApplicationRecord
 
     validates_uniqueness_of :name
     
-    def create_link(post_name)
-        if !BlogPost.find_by name: post_name
-            other = BlogPost.create(name: post_name)
-        else
-            other = BlogPost.find_by(name: post_name)
-        end
+    def create_link(post_name, body = '')
+        other = BlogPost.find_or_create_by(name: post_name, body: body)
         self.link other
     end
 
@@ -26,6 +22,17 @@ class BlogPost < ApplicationRecord
             puts 'this didn\'t work but that is right.'
             false
         end
+    end
+    
+    def unlink(other)
+        if other.is_a? BlogPost
+            if self.destinations.include? other
+                puts self.internal_links.where(destination_id: other.id).destroy_all
+                true
+            end
+            false
+        end
+        false
     end
 
     def self.min_links
