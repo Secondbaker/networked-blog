@@ -43,22 +43,6 @@
   padding-right: 1rem; /* space for ellipsis */
 }
 
-.post-partial::before {
-  position: absolute;
-  content: "...";
-  inset-block-end: 0; /* "bottom" */
-  inset-inline-end: 0; /* "right" */
-}
-
-.post-partial::after {
-  content: "";
-  position: absolute;
-  inset-inline-end: 0; /* "right" */
-  width: 1rem;
-  height: 1rem;
-  background: white;
-}
-
 #text-posts {
   overflow-y: scroll;
   height: 100%;

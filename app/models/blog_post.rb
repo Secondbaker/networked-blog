@@ -48,11 +48,11 @@ class BlogPost < ApplicationRecord
     end
 
     def self.min_body_length
-        BlogPost.order("LENGTH(body) asc").first.body.length
+        BlogPost.where.not(body: nil).order("LENGTH(body) asc").first.body.length
     end
 
     def self.max_body_length
-        BlogPost.order("LENGTH(body) desc").first.body.length
+        BlogPost.where.not(body: nil).order("LENGTH(body) desc").first.body.length
     end
 
     private
