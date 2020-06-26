@@ -3,6 +3,5 @@ Rails.application.routes.draw do
     
   end
   root to: 'blog_posts#index'
-  get 'graph', to: 'blog_posts#graph', as: :graph
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
