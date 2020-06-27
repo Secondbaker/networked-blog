@@ -1,5 +1,11 @@
 class CustomMarkdownRenderer < Redcarpet::Render::HTML
-    def normal_text text
-        text.gsub(/\[/, 'oops')
+    def paragraph text
+        pre_process("<p>#{text.strip}</p>\n")
+    end
+
+    private
+
+    def pre_process text
+        return text.gsub('r', 'w')
     end
 end
