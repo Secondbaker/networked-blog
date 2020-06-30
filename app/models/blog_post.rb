@@ -3,7 +3,7 @@ class BlogPost < ApplicationRecord
     has_many :sources, through: :internal_links, foreign_key: 'source_id', class_name: 'BlogPost'
     has_many :destinations, through: :internal_links, foreign_key: 'destination_id', class_name: 'BlogPost'
 
-    after_save :update_links
+    before_save :update_links
 
     validates_uniqueness_of :name
     
@@ -69,8 +69,14 @@ class BlogPost < ApplicationRecord
             self.unlink destination
         end
         self.body.scan(internal_link_regex).each do |link|
-            puts link
+            post = BlogPost.find_or_create_by(name: link[2..-3], body: '')
+
+            puts convert_link_for_save post
         end
+    end
+
+    def convert_link_for_save blog_post
+        `#{blog_post.name}(#{blog_post_path(blog_post.id)})`
     end
 
 end
