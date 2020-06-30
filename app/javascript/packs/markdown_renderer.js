@@ -19,7 +19,8 @@ const renderer = {
 marked.use({ renderer });
 
 gon.blog_posts.map((post) => {
-    document.getElementById('post-body-' + post.id).innerHTML = DOMPurify.sanitize(marked(post.body));
+    console.log('post id: ' +   post.id);
+    $('#post-body-' + post.id).html(DOMPurify.sanitize(marked(post.body)));
 });
 
 $('span.link').on('click', function (e){
