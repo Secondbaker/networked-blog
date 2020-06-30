@@ -1,3 +1,5 @@
 <%= link_to blog_post.name, blog_post %>
 
-<%= markdown(blog_post.body) %>
+<div id='post-body'></div>
+
+<%= javascript_pack_tag 'markdown_renderer' %>

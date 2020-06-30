@@ -10,7 +10,9 @@
     "cytoscape-cose-bilkent": "^4.1.0",
     "cytoscape-dagre": "^2.2.2",
     "cytoscape-fcose": "^1.2.3",
+    "dompurify": "^2.0.12",
     "jquery": "^3.5.1",
+    "marked": "^1.1.0",
     "turbolinks": "^5.2.0"
   },
   "version": "0.1.0",
