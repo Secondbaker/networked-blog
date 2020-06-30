@@ -77,6 +77,7 @@ class BlogPostsController < ApplicationController
   # PATCH/PUT /blog_posts/1.json
   def update
     respond_to do |format|
+      convert_internal_links_to_markdown blog_post_params[:body]
       if @blog_post.update(blog_post_params)
         format.html { redirect_to @blog_post, notice: 'Blog post was successfully updated.' }
         format.json { render :show, status: :ok, location: @blog_post }
@@ -107,5 +108,10 @@ class BlogPostsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def blog_post_params
     params.require(:blog_post).permit(:name, :body)
+  end
+
+  # Converts internal links within the body of a post to the format used in markdown 
+  def convert_internal_links_to_markdown link
+    puts link
   end
 end

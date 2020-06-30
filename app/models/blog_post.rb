@@ -63,7 +63,6 @@ class BlogPost < ApplicationRecord
         /\[\[.*\]\]/
     end
 
-    #here w
     def update_links
         self.destinations.each do |destination|
             self.unlink destination
