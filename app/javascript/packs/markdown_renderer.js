@@ -2,5 +2,5 @@ import DOMPurify from 'dompurify';
 let marked = require('marked');
 
 gon.blog_posts.map((post) => {
-    console.log(marked(post.body));
+    console.log(DOMPurify.sanitize(marked(post.body)));
 });
