@@ -9,7 +9,6 @@ const renderer = {
             var targetText = text;
             if(text.match('(<span.*</span>)') != null)
             {
-                console.log('here');
                 targetText = turndownService.turndown(text);
             }
         return `<span class='link' data-link-target='${href}' data-link-text='${targetText}'>${text}</span>`;

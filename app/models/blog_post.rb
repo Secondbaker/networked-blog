@@ -3,6 +3,8 @@ class BlogPost < ApplicationRecord
     has_many :sources, through: :internal_links, foreign_key: 'source_id', class_name: 'BlogPost'
     has_many :destinations, through: :internal_links, foreign_key: 'destination_id', class_name: 'BlogPost'
 
+    after_save :update_links
+
     validates_uniqueness_of :name
     
     def create_link(post_name, body = '')
@@ -59,6 +61,16 @@ class BlogPost < ApplicationRecord
     
     def internal_link_regex
         /\[\[.*\]\]/
+    end
+
+    #here w
+    def update_links
+        self.destinations.each do |destination|
+            self.unlink destination
+        end
+        self.body.scan(internal_link_regex).each do |link|
+            puts link
+        end
     end
 
 end
