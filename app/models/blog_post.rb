@@ -3,6 +3,8 @@ class BlogPost < ApplicationRecord
     has_many :sources, through: :internal_links, foreign_key: 'source_id', class_name: 'BlogPost'
     has_many :destinations, through: :internal_links, foreign_key: 'destination_id', class_name: 'BlogPost'
 
+    before_save :unlink_all, :convert_links
+    after_save :update_links
 
     validates_uniqueness_of :name
     
@@ -63,18 +65,23 @@ class BlogPost < ApplicationRecord
     end
 
     def update_links
-        self.destinations.each do |destination|
-            self.unlink destination
+        unless self.body == nil
+            puts 'updating links'
+            self.body.gsub(internal_link_regex).each do |link|
+                self.link BlogPost.find JSON.parse(link[2..-3])['id']
+                link
+            end
         end
-        self.body.scan(internal_link_regex).each do |link|
-            post = BlogPost.find_or_create_by(name: link[2..-3], body: '')
 
-            puts convert_link_for_save post
-        end
     end
 
-    def convert_link_for_save blog_post
-        `#{blog_post.name}(#{blog_post_path(blog_post.id)})`
+    def convert_links
+        unless self.body == nil
+            self.body.gsub!(internal_link_regex).each do |link|
+                post = BlogPost.find_or_create_by(name: link[2..-3])
+                link = "[[#{{name: post.name, id: post.id}.to_json}]]"
+                link
+            end
+        end
     end
-
 end

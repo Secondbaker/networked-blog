@@ -124,14 +124,16 @@ class BlogPostsController < ApplicationController
 
   # Change InternalLinks in text into a format that works with Markdown
   def convert_internal_links_to_markdown (text)
-    text.gsub(internal_link_regex){|link|
-      #remove the outer bracket
-      link = link[1..-2]
-      #append the matching blog post with parenthesis
-      link = link.concat "(#{blog_post_path(BlogPost.find_or_create_by(name: link[1..-2]))})"
+    unless text.nil?
+      text.gsub(internal_link_regex){|link|
+        #remove the outer bracket
+        link = link[1..-2]
+        #append the matching blog post with parenthesis
+        link = link.concat "(#{blog_post_path(BlogPost.find_or_create_by(name: link[1..-2]))})"
 
-      link
-    }
+        link
+      }
+    end
   end
 
   # This is so we can nest internal links

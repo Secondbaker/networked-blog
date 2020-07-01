@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-verbose = false
+verbose = true
 
 BLOG_POST_TARGET = 25
 BLOG_POST_MIN_SIZE = 0
@@ -23,13 +23,13 @@ end
 BlogPost.destroy_all
 
 BLOG_POST_TARGET.times do
-    name = Faker::Color.unique.hex_color
+    name = Faker::Games::Pokemon.unique.name
     if verbose
         puts name
     end
     body = ''
     rand(BLOG_POST_MIN_SIZE..BLOG_POST_MAX_SIZE).times do
-        body += Faker::Markdown.random
+        body += "[[#{Faker::Games::Pokemon.name}]]"
     end
     if verbose
         puts body
