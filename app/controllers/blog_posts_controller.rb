@@ -56,7 +56,9 @@ class BlogPostsController < ApplicationController
   end
 
   # GET /blog_posts/1/edit
-  def edit; end
+  def edit
+    @blog_post.body = convert_markdown_links_to_internal_links @blog_post.body
+  end
 
   # POST /blog_posts
   # POST /blog_posts.json
@@ -117,6 +119,10 @@ class BlogPostsController < ApplicationController
     /\[\[.*\]\]/
   end
 
+  def markdown_link_regex
+    /^\[([\w\s\d]+)\]\(((?:\/|https?:\/\/)*[\w\d.?=#]+)\)$/
+  end
+
   # Change InternalLinks in text into a format that works with Markdown
   def convert_internal_links_to_markdown text
     text.gsub(internal_link_regex){|link|
@@ -131,6 +137,13 @@ class BlogPostsController < ApplicationController
 
   # This is so we can nest internal links
   def check_for_internal_links text
-    
+    text.gsub(external_link_regex){|link|
+      puts link
+    }
+  end
+
+  def convert_markdown_links_to_internal_links text
+    puts text
+    text
   end
 end
