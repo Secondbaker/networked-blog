@@ -115,11 +115,6 @@ class BlogPostsController < ApplicationController
     params.require(:blog_post).permit(:name, :body)
   end
 
-<<<<<<< HEAD
-  # Converts internal links within the body of a post to the format used in markdown 
-  def convert_internal_links_to_markdown link
-    puts link
-=======
   def internal_link_regex
     /\[\[.*\]\]/
   end
@@ -157,6 +152,5 @@ class BlogPostsController < ApplicationController
       link
     }
     text
->>>>>>> a6787d7508fef616d7aa1d2dbcc646f33f5c7a0b
   end
 end
