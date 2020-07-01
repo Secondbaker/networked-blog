@@ -33,7 +33,7 @@ class BlogPostsController < ApplicationController
   # GET /blog_posts/1
   # GET /blog_posts/1.json
   def show
-    
+    markdown_body = convert_internal_links_to_markdown @blog_post.body
     @internal_links = InternalLink.where(destination_id: @blog_post.id) + InternalLink.where(source_id: @blog_post.id)
     @destinations = []
     @sources = []
@@ -63,8 +63,8 @@ class BlogPostsController < ApplicationController
   # POST /blog_posts
   # POST /blog_posts.json
   def create
-    markdown_body = convert_internal_links_to_markdown blog_post_params[:body]
-    @blog_post = BlogPost.new(name: blog_post_params[:name], body: markdown_body)
+    
+    @blog_post = BlogPost.new(blog_post_params)
 
     respond_to do |format|
       if @blog_post.save
@@ -81,9 +81,8 @@ class BlogPostsController < ApplicationController
   # PATCH/PUT /blog_posts/1.json
   def update
 
-    markdown_body = convert_internal_links_to_markdown blog_post_params[:body]
     respond_to do |format|
-      if @blog_post.update(name: blog_post_params[:name], body: markdown_body)
+      if @blog_post.update(blog_post_params)
         format.html { redirect_to @blog_post, notice: 'Blog post was successfully updated.' }
         format.json { render :show, status: :ok, location: @blog_post }
       else
@@ -124,7 +123,7 @@ class BlogPostsController < ApplicationController
   end
 
   # Change InternalLinks in text into a format that works with Markdown
-  def convert_internal_links_to_markdown text
+  def convert_internal_links_to_markdown (text)
     text.gsub(internal_link_regex){|link|
       #remove the outer bracket
       link = link[1..-2]
@@ -136,7 +135,7 @@ class BlogPostsController < ApplicationController
   end
 
   # This is so we can nest internal links
-  def check_for_internal_links text
+  def check_for_internal_links (text)
     text.gsub(external_link_regex){|link|
       puts link
     }
@@ -148,7 +147,11 @@ class BlogPostsController < ApplicationController
     text.gsub(markdown_link_regex){|link|
       puts Pathname(link.scan(markdown_link_regex).last.last)
       path = Pathname(link.scan(markdown_link_regex).last.last)
-      puts path.inspect
+      if path.absolute?
+        puts path.basename
+        post =  BlogPost.find_by(id: path.basename)
+        link = "[[#{post.name}]]"
+      end
       link
     }
     text
