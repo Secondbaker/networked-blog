@@ -2,6 +2,7 @@
 
 class BlogPostsController < ApplicationController
   before_action :set_blog_post, only: %i[show edit update destroy]
+  
 
   # GET /blog_posts
   # GET /blog_posts.json
@@ -60,7 +61,8 @@ class BlogPostsController < ApplicationController
   # POST /blog_posts
   # POST /blog_posts.json
   def create
-    @blog_post = BlogPost.new(blog_post_params)
+    markdown_body = convert_internal_links_to_markdown blog_post_params[:body]
+    @blog_post = BlogPost.new(name: blog_post_params[:name], body: markdown_body)
 
     respond_to do |format|
       if @blog_post.save
@@ -76,8 +78,10 @@ class BlogPostsController < ApplicationController
   # PATCH/PUT /blog_posts/1
   # PATCH/PUT /blog_posts/1.json
   def update
+
+    markdown_body = convert_internal_links_to_markdown blog_post_params[:body]
     respond_to do |format|
-      if @blog_post.update(blog_post_params)
+      if @blog_post.update(name: blog_post_params[:name], body: markdown_body)
         format.html { redirect_to @blog_post, notice: 'Blog post was successfully updated.' }
         format.json { render :show, status: :ok, location: @blog_post }
       else
@@ -107,5 +111,26 @@ class BlogPostsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def blog_post_params
     params.require(:blog_post).permit(:name, :body)
+  end
+
+  def internal_link_regex
+    /\[\[.*\]\]/
+  end
+
+  # Change InternalLinks in text into a format that works with Markdown
+  def convert_internal_links_to_markdown text
+    text.gsub(internal_link_regex){|link|
+      #remove the outer bracket
+      link = link[1..-2]
+      #append the matching blog post with parenthesis
+      link = link.concat "(#{blog_post_path(BlogPost.find_or_create_by(name: link[1..-2]))})"
+
+      link
+    }
+  end
+
+  # This is so we can nest internal links
+  def check_for_internal_links text
+    
   end
 end
