@@ -120,7 +120,7 @@ class BlogPostsController < ApplicationController
   end
 
   def markdown_link_regex
-    /^\[([\w\s\d]+)\]\(((?:\/|https?:\/\/)*[\w\d.?=#]+)\)$/
+    /\[([\w\s\d]+)\]\(((?:\/|https?:\/\/)*.*)\)/
   end
 
   # Change InternalLinks in text into a format that works with Markdown
@@ -143,7 +143,14 @@ class BlogPostsController < ApplicationController
   end
 
   def convert_markdown_links_to_internal_links text
-    puts text
+    puts 'converting'
+    puts text.scan markdown_link_regex
+    text.gsub(markdown_link_regex){|link|
+      puts Pathname(link.scan(markdown_link_regex).last.last)
+      path = Pathname(link.scan(markdown_link_regex).last.last)
+      puts path.inspect
+      link
+    }
     text
   end
 end
