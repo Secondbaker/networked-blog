@@ -48,7 +48,7 @@ class BlogPostsController < ApplicationController
 
     gon.destinations = @destinations
     gon.sources = @sources
-    gon.blog_post = @blog_post
+    gon.blog_posts = [ @blog_post ]
     gon.internal_links = @internal_links
     
   end
@@ -60,7 +60,8 @@ class BlogPostsController < ApplicationController
 
   # GET /blog_posts/1/edit
   def edit
-    @blog_post.body = convert_markdown_links_to_internal_links @blog_post.body
+    @markdown_body = convert_markdown_links_to_internal_links(@blog_post.body)
+    
   end
 
   # POST /blog_posts
@@ -118,7 +119,11 @@ class BlogPostsController < ApplicationController
   end
 
   def internal_link_regex
-    /\[\[.*\]\]/
+    /\[\[(?<link>(\{\"name\"\:\"(?<name>(.*))\"\,\"id\"\:(?<id>(.*))\}))\]\]/
+  end
+
+  def another_regex_for_now
+    "[[#{BlogPost.find_by(id: $~[:id]).name}]]"
   end
 
   def markdown_link_regex
@@ -149,17 +154,23 @@ class BlogPostsController < ApplicationController
   def convert_markdown_links_to_internal_links text
     puts 'converting'
     unless text.nil?
-      puts text.scan markdown_link_regex
-      text.gsub(markdown_link_regex){|link|
-        puts Pathname(link.scan(markdown_link_regex).last.last)
-        path = Pathname(link.scan(markdown_link_regex).last.last)
-        if path.absolute?
-          puts path.basename
-          post =  BlogPost.find_by(id: path.basename)
-          link = "[[#{post.name}]]"
-        end
+      puts 'text found'
+      puts text
+      text = text.gsub(/\[\[.*\]\]/){|link|
+        puts "link: " + link.to_s
+        link = link.gsub(internal_link_regex){|internal_link_data|
+            unless BlogPost.find_by(id: $~[:id]).name.nil?
+              name = "[[#{BlogPost.find_by(id: $~[:id]).name}]]"
+            else
+              name = "#{$~[:name]}"
+            end
+            puts name
+            name
+          }
+        puts "link after gsub: " + link.to_s
         link
       }
+      puts text
     end
     text
   end
