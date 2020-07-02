@@ -94,6 +94,7 @@ class BlogPost < ApplicationRecord
         stack = []
         depth = 0
         while text != '' do
+            current_word = ''
             if  text[0] == '[' && text[0] == text[1]
                 stack << [text[0], text[1], depth]
                 text = text [2..]
@@ -103,9 +104,9 @@ class BlogPost < ApplicationRecord
                 text = text [2..]
                 depth -= 1
             else
-                word = ''
+                
                 until text[0] == '[' || text[0] == ']' || text == '' do
-                    word.concat text[0]
+                    current_word.concat text[0]
                     text = text[1..]
                 end
                 stack << word
