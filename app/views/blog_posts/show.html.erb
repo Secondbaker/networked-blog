@@ -2,15 +2,7 @@
 
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @blog_post.name %>
-</p>
-
-<p>
-  <strong>Body:</strong>
-  <%= render 'body', body: @markdown_body %>
-</p>
+<%= render @blog_post%>
 
 <% @related_posts.each do |related_post| %>
   <%= link_to related_post.name, blog_post_path(related_post) %>
