@@ -78,10 +78,45 @@ class BlogPost < ApplicationRecord
     def convert_links
         unless self.body == nil
             self.body.gsub!(internal_link_regex).each do |link|
+                link_scan link
                 post = BlogPost.find_or_create_by(name: link[2..-3])
                 link = "[[#{{name: post.name, id: post.id}.to_json}]]"
                 link
             end
         end
     end
+
+    #given an internal link reference formatted as [[destination.name]]
+    #this searches within to find InternalLinks which [[are]][[adjacent]]
+    #and ones which [[are [[nested]] in any configuration]]
+    def link_scan text
+        formatted_link = ''
+        stack = []
+        depth = 0
+        while text != '' do
+            if  text[0] == '[' && text[0] == text[1]
+                stack << [text[0], text[1], depth]
+                text = text [2..]
+                depth += 1
+            elsif text[0] == ']' && text[0] == text[1] 
+                stack << [text[0], text[1], depth]
+                text = text [2..]
+                depth -= 1
+            else
+                word = ''
+                until text[0] == '[' || text[0] == ']' || text == '' do
+                    word.concat text[0]
+                    text = text[1..]
+                end
+                stack << word
+            end
+            
+            
+            puts stack
+            puts text
+        end
+        puts formatted_link
+        formatted_link
+    end
+
 end
