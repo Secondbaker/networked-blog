@@ -1,25 +1,17 @@
 import DOMPurify from 'dompurify';
-let marked = require('marked');
 import TurndownService from 'turndown';
-var turndownService = new TurndownService();
+var showdown  = require('showdown'),
+    converter = new showdown.Converter(),
+    text      = '# hello, markdown!',
+    html      = converter.makeHtml(text);
 
-const renderer = {
-        link(href, title, text) {
-            console.log(text);
-            var targetText = text;
-            if(text.match('(<span.*</span>)') != null)
-            {
-                targetText = turndownService.turndown(text);
-            }
-        return `<span class='link' data-link-target='${href}' data-link-text='${targetText}'>${text}</span>`;
-    }
-}
 
-marked.use({ renderer });
+console.log('converter' + converter);
+
 
 gon.blog_posts.map((post) => {
     console.log('post id: ' +   post.id);
-    $('#post-body-' + post.id).html(DOMPurify.sanitize(marked(post.body)));
+    $('#post-body-' + post.id).html(DOMPurify.sanitize(converter.makeHtml(post.body)));
 });
 
 $('span.link').on('click', function (e){
