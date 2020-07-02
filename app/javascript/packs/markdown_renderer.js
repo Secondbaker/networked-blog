@@ -10,7 +10,7 @@ var showdown  = require('showdown'),
           type: 'lang',
           filter: function (text, converter) {
             console.log(gon.blog_post_path);
-            text = text.replace(/\[\[\{\"name\"\:\"(.*)\"\,\"id\"\:(.*)\}\]\]/g, '[$1]($2)');
+            text = text.replace(/\[\[\{\"name\"\:\"(.*)\"\,\"id\"\:(.*)\}\]\]/g, `[$1](${gon.blog_post_path}/$2)`);
             return text;
           } 
         };

@@ -28,6 +28,8 @@ class BlogPostsController < ApplicationController
     gon.min_links = BlogPost.min_links
     gon.max_body_length = BlogPost.max_body_length
     gon.min_body_length = BlogPost.min_body_length
+    puts blog_posts_url
+    gon.blog_post_path = blog_posts_url
   end
 
   # GET /blog_posts/1
@@ -48,7 +50,7 @@ class BlogPostsController < ApplicationController
     gon.sources = @sources
     gon.blog_post = @blog_post
     gon.internal_links = @internal_links
-    gon.blog_post_path = blog_posts_url
+    
   end
 
   # GET /blog_posts/new
