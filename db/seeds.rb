@@ -29,7 +29,7 @@ BLOG_POST_TARGET.times do
     end
     body = ''
     rand(BLOG_POST_MIN_SIZE..BLOG_POST_MAX_SIZE).times do
-        body += Faker::Markdown.random
+        body += "[[#{Faker::Games::Pokemon.name}]]"
     end
     if verbose
         puts body
