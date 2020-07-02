@@ -5,8 +5,16 @@ var showdown  = require('showdown'),
     text      = '# hello, markdown!',
     html      = converter.makeHtml(text);
 
+    var customExpressions = function () {
+        var internalLink = {
+          type: 'lang',
+          regex: /\[\[.*\]\]/g,
+          replace: 'showdown'
+        };
+        return [internalLink];
+      }
 
-console.log('converter' + converter);
+converter = new showdown.Converter({ extensions: [customExpressions]})
 
 
 gon.blog_posts.map((post) => {
