@@ -33,7 +33,7 @@ class BlogPostsController < ApplicationController
   # GET /blog_posts/1
   # GET /blog_posts/1.json
   def show
-    markdown_body = convert_internal_links_to_markdown @blog_post.body
+    @markdown_body = convert_internal_links_to_markdown @blog_post.body
     @internal_links = InternalLink.where(destination_id: @blog_post.id) + InternalLink.where(source_id: @blog_post.id)
     @destinations = []
     @sources = []
@@ -145,17 +145,19 @@ class BlogPostsController < ApplicationController
 
   def convert_markdown_links_to_internal_links text
     puts 'converting'
-    puts text.scan markdown_link_regex
-    text.gsub(markdown_link_regex){|link|
-      puts Pathname(link.scan(markdown_link_regex).last.last)
-      path = Pathname(link.scan(markdown_link_regex).last.last)
-      if path.absolute?
-        puts path.basename
-        post =  BlogPost.find_by(id: path.basename)
-        link = "[[#{post.name}]]"
-      end
-      link
-    }
+    unless text.nil?
+      puts text.scan markdown_link_regex
+      text.gsub(markdown_link_regex){|link|
+        puts Pathname(link.scan(markdown_link_regex).last.last)
+        path = Pathname(link.scan(markdown_link_regex).last.last)
+        if path.absolute?
+          puts path.basename
+          post =  BlogPost.find_by(id: path.basename)
+          link = "[[#{post.name}]]"
+        end
+        link
+      }
+    end
     text
   end
 end

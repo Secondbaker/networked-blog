@@ -1,1 +1,1 @@
-<%= blog_post.body %>
+<%= body %>
