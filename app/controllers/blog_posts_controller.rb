@@ -48,6 +48,7 @@ class BlogPostsController < ApplicationController
     gon.sources = @sources
     gon.blog_post = @blog_post
     gon.internal_links = @internal_links
+    gon.blog_post_path = blog_posts_url
   end
 
   # GET /blog_posts/new

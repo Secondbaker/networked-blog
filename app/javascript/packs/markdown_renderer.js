@@ -8,8 +8,11 @@ var showdown  = require('showdown'),
     var customExpressions = function () {
         var internalLink = {
           type: 'lang',
-          regex: /\[\[.*\]\]/g,
-          replace: 'showdown'
+          filter: function (text, converter) {
+            console.log(gon.blog_post_path);
+            text = text.replace(/\[\[\{\"name\"\:\"(.*)\"\,\"id\"\:(.*)\}\]\]/g, '[$1]($2)');
+            return text;
+          } 
         };
         return [internalLink];
       }
