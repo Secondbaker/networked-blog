@@ -97,31 +97,32 @@ class BlogPost < ApplicationRecord
     end
 
     def recursive_check text
-        current_name = ''
-        while text != '' do
-            #until we reach the end of the string
-            
-            if text[0] == text[1] && text[0] == '['
-                #we probably start here
-                #every time we hit [[, we need to start a new search within it before this search can finish
-                next_section = recursive_check(text[2..]).to_s
-                text = text[(2 + next_section.length)..]
-                return current_name << '[[' + next_section
-            elsif text[0] == text[1] && text[0] == ']'
-                #we finished a search and need to return everything since the last [[
-                #however, we still need to check further if there is more to the string    
-                text = text[2..]
-                puts 'the end: ' + current_name
-                current_post = BlogPost.find_or_create_by(name: current_name)
-                formatted_post = "#{{name: current_post.name, id: current_post.id}.to_json}"
-                return formatted_post + ']]' + recursive_check(text).to_s
-            end
-            current = text[0]
-            current_name << text[0]
-            puts current_name
-            text = text [1..]
+        puts 'new recursive check'
+        if (text.nil? || text.size < 2)
+            return
         end
-        puts current_name
-        return current_name
+        index = 0
+        if text[index] == text[index + 1] && text[index] == '['
+            index += 2
+        end
+        until index >= text.length do
+            puts text[index..]
+            if text[index] == text[index + 1] && text[index] == '['
+                #we know we'll checking another link for links
+                next_part = recursive_check text[index..]
+                section_end = !text.index(']]', index).nil? ? text.index(']]', index) : text[index..].length
+                puts 'the part to replace:  ' + text[index..(section_end + 1)]
+                text[index..(section_end + 1)] = next_part
+                index += next_part.length - 1
+            elsif text[index] == text[index + 1] && text[index] == ']'
+                post_name = text[2..index - 1]
+                puts 'we found a name: ' + post_name
+                post = BlogPost.find_or_create_by(name: post_name)
+                post_json = {name: post.name, id: post.id}.to_json
+                return "[[#{post_json}]]"
+            end
+            index += 1
+        end
+        text
     end
 end
