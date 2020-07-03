@@ -65,7 +65,7 @@ class BlogPost < ApplicationRecord
     end
 
     def update_links
-        unless self.body == nil
+        unless self.body.nil?
             puts 'updating links'
             self.body.gsub(internal_link_regex).each do |link|
                 self.link BlogPost.find JSON.parse(link[2..-3])['id']
@@ -75,6 +75,10 @@ class BlogPost < ApplicationRecord
 
     end
 
+    #looks through the body for InternalLinks, formatted as:
+    #[[blog_post.name]]
+    #and formats them for saving to the database as
+    #[[{name: blog_post.name, id: blog_post.id}]]
     def convert_links
         unless self.body.nil?
             self.body.gsub!(internal_link_regex).each do |link|
@@ -120,12 +124,16 @@ class BlogPost < ApplicationRecord
                 index += nested_link.length - 1
             ##this is where we go when we've hit the end of a recursive branch
             elsif text[index] == text[index + 1] && text[index] == ']'
+                #text[0] and text[1] should be [[
+                #so the blog_post.name is everything from the [[ to ]] (where we are now)
                 post_name = text[2..index - 1]
-                puts 'we found a name: ' + post_name
+                #we get the corresponding BlogPost
                 post = BlogPost.find_or_create_by(name: post_name)
+                #and we return it in the proper format
                 post_json = {name: post.name, id: post.id}.to_json
                 return "[[#{post_json}]]"
             end
+
             index += 1
         end
         text
