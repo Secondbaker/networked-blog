@@ -92,7 +92,7 @@ class BlogPost < ApplicationRecord
     def link_scan text
         formatted_link = ''
         formatted_link = recursive_check text
-        puts formatted_link
+        puts 'formatted_link: ' + formatted_link
         formatted_link
     end
 
@@ -104,19 +104,24 @@ class BlogPost < ApplicationRecord
             if text[0] == text[1] && text[0] == '['
                 #we probably start here
                 #every time we hit [[, we need to start a new search within it before this search can finish
-                text = text[2..]
-                return '[[' + recursive_check(text).to_s
+                next_section = recursive_check(text[2..]).to_s
+                text = text[(2 + next_section.length)..]
+                return current_name << '[[' + next_section
             elsif text[0] == text[1] && text[0] == ']'
                 #we finished a search and need to return everything since the last [[
                 #however, we still need to check further if there is more to the string    
                 text = text[2..]
                 puts 'the end: ' + current_name
-                return ']]' + recursive_check(text).to_s 
+                current_post = BlogPost.find_or_create_by(name: current_name)
+                formatted_post = "#{{name: current_post.name, id: current_post.id}.to_json}"
+                return formatted_post + ']]' + recursive_check(text).to_s
             end
             current = text[0]
             current_name << text[0]
             puts current_name
             text = text [1..]
         end
+        puts current_name
+        return current_name
     end
 end
