@@ -108,8 +108,14 @@ class BlogPost < ApplicationRecord
 
             ##this is the recursion trigger
             if text[index] == text[index + 1] && text[index] == '['
+                #We'll be replacing from the current index at [[ to the next ]] with whatever link is within the [[]]
+                #in other words, we're going to replace the section we're in with the nested_link
                 nested_link = recursive_check text[index..]
+                #this is really error checking
+                #usually, the section will just go to the next ]],
+                #but in case we somehow have a string with no ]], this should rescue it
                 section_end = !text.index(']]', index).nil? ? text.index(']]', index) : text[index..].length
+                #we insert our new substring, then move the index beyond it
                 text[index..(section_end + 1)] = nested_link
                 index += nested_link.length - 1
             ##this is where we go when we've hit the end of a recursive branch
