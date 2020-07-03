@@ -97,16 +97,26 @@ class BlogPost < ApplicationRecord
     end
 
     def recursive_check text
-        if text[0] == text[1] && text[0] == '['
-            text = text[2..]
-            return '[[' + recursive_check(text).to_s
-        elsif text[0] == text[1] && text[0] == ']'
-            text = text[2..]
-            return ']]' + recursive_check(text).to_s 
-        elsif text != ''
+        current_name = ''
+        while text != '' do
+            #until we reach the end of the string
+            
+            if text[0] == text[1] && text[0] == '['
+                #we probably start here
+                #every time we hit [[, we need to start a new search within it before this search can finish
+                text = text[2..]
+                return '[[' + recursive_check(text).to_s
+            elsif text[0] == text[1] && text[0] == ']'
+                #we finished a search and need to return everything since the last [[
+                #however, we still need to check further if there is more to the string    
+                text = text[2..]
+                puts 'the end: ' + current_name
+                return ']]' + recursive_check(text).to_s 
+            end
             current = text[0]
+            current_name << text[0]
+            puts current_name
             text = text [1..]
-            return current + recursive_check(text).to_s
         end
     end
 end
