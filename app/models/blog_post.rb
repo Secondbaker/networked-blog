@@ -91,33 +91,22 @@ class BlogPost < ApplicationRecord
     #and ones which [[are [[nested]] in any configuration]]
     def link_scan text
         formatted_link = ''
-        stack = []
-        depth = 0
-        while text != '' do
-            current_word = ''
-            if  text[0] == '[' && text[0] == text[1]
-                stack << [text[0], text[1], depth]
-                text = text [2..]
-                depth += 1
-            elsif text[0] == ']' && text[0] == text[1] 
-                stack << [text[0], text[1], depth]
-                text = text [2..]
-                depth -= 1
-            else
-                
-                until text[0] == '[' || text[0] == ']' || text == '' do
-                    current_word.concat text[0]
-                    text = text[1..]
-                end
-                stack << word
-            end
-            
-            
-            puts stack
-            puts text
-        end
+        formatted_link = recursive_check text
         puts formatted_link
         formatted_link
     end
 
+    def recursive_check text
+        if text[0] == text[1] && text[0] == '['
+            text = text[2..]
+            return '[[' + recursive_check(text).to_s
+        elsif text[0] == text[1] && text[0] == ']'
+            text = text[2..]
+            return ']]' + recursive_check(text).to_s 
+        elsif text != ''
+            current = text[0]
+            text = text [1..]
+            return current + recursive_check(text).to_s
+        end
+    end
 end
