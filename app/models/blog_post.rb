@@ -76,12 +76,9 @@ class BlogPost < ApplicationRecord
     end
 
     def convert_links
-        unless self.body == nil
+        unless self.body.nil?
             self.body.gsub!(internal_link_regex).each do |link|
-                link_scan link
-                post = BlogPost.find_or_create_by(name: link[2..-3])
-                link = "[[#{{name: post.name, id: post.id}.to_json}]]"
-                link
+                recursive_check link
             end
         end
     end
@@ -89,31 +86,33 @@ class BlogPost < ApplicationRecord
     #given an internal link reference formatted as [[destination.name]]
     #this searches within to find InternalLinks which [[are]][[adjacent]]
     #and ones which [[are [[nested]] in any configuration]]
-    def link_scan text
-        formatted_link = ''
-        formatted_link = recursive_check text
-        puts 'formatted_link: ' + formatted_link
-        formatted_link
-    end
-
     def recursive_check text
-        puts 'new recursive check'
+        #just to be safe - this should not really get called if the conditions aren't met
         if (text.nil? || text.size < 2)
             return
         end
+        
+        #the idea here is that we parse through the string linearly,
+        #unless we run into another string starting with [[
+        #in which case we recurse and parse through that string first
+
+        #index: the index of the character in the string we are on
         index = 0
+
+        #we don't want to start on [[ because that triggers recursion and we'll recurse forever
         if text[index] == text[index + 1] && text[index] == '['
             index += 2
         end
+
         until index >= text.length do
-            puts text[index..]
+
+            ##this is the recursion trigger
             if text[index] == text[index + 1] && text[index] == '['
-                #we know we'll checking another link for links
-                next_part = recursive_check text[index..]
+                nested_link = recursive_check text[index..]
                 section_end = !text.index(']]', index).nil? ? text.index(']]', index) : text[index..].length
-                puts 'the part to replace:  ' + text[index..(section_end + 1)]
-                text[index..(section_end + 1)] = next_part
-                index += next_part.length - 1
+                text[index..(section_end + 1)] = nested_link
+                index += nested_link.length - 1
+            ##this is where we go when we've hit the end of a recursive branch
             elsif text[index] == text[index + 1] && text[index] == ']'
                 post_name = text[2..index - 1]
                 puts 'we found a name: ' + post_name
