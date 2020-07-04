@@ -1,10 +1,27 @@
 require 'rails_helper'
 
 RSpec.describe BlogPost, type: :model do
+  PostBodyTest = Struct.new(:name, :result, keyword_init: true)
+  post_body_tests = [
+    PostBodyTest.new(name: '[[]]', result: /\[\[\]\]/),
+    PostBodyTest.new(name: '[[test]]', result: /\[\[\{\\\"name\\\"\:\\\"test\\\",\\\"id\\\"\:d*\]\]/)
+  ]
   subject{ BlogPost.create(name: 'test', body: 'test') }
-  context "is created normally" do 
-    it "is created normally" do 
+  context "created using create" do 
+    it "exists" do 
       expect(subject).to_not eq(nil)
+    end
+    it "has the expected attributes" do
+      expect(subject).to have_attributes(name: eq('test'), body: eq('test'))
+    end
+  end
+  context "is updated" do
+    post_body_tests.each do |post_body_test|
+      it "to #{post_body_test.name}" do
+        subject.update body: post_body_test.name
+        expect(subject).to have_attributes(body: match(post_body_test.result))
+      end
+
     end
   end
 end

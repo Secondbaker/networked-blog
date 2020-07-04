@@ -61,7 +61,7 @@ class BlogPost < ApplicationRecord
     private
     
     def internal_link_regex
-        /\[\[.*\]\]/
+        /\[\[.+\]\]/
     end
 
     def update_links
@@ -92,8 +92,8 @@ class BlogPost < ApplicationRecord
     #and ones which [[are [[nested]] in any configuration]]
     def recursive_check text
         #just to be safe - this should not really get called if the conditions aren't met
-        if (text.nil? || text.size < 2)
-            return
+        if (text.nil? || text.size < 5)
+            return text
         end
         
         #the idea here is that we parse through the string linearly,
