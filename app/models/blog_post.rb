@@ -80,7 +80,7 @@ class BlogPost < ApplicationRecord
         depth = 0
         while text.size > 0 do
 
-            text = text 
+            text = text[1..] 
         end
     end
 

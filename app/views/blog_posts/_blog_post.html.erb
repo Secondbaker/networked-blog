@@ -1,4 +1,4 @@
-<%= link_to blog_post.name, blog_post %>
+<%= render 'blog_posts/name', blog_post: blog_post%>
 
 <div id='post-body-<%= blog_post.id %>'></div>
 
