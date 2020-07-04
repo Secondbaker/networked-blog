@@ -8,12 +8,36 @@ class BlogPost < ApplicationRecord
 
     validates_uniqueness_of :name
     
+    def self.min_links
+        BlogPost.order(internal_links_count: :asc).limit(1).first.internal_links_count
+    end
+
+    def self.max_links
+        BlogPost.order(internal_links_count: :desc).limit(1).first.internal_links_count
+    end
+
+    def self.min_body_length
+        BlogPost.where.not(body: nil).order("LENGTH(body) asc").first.body.length
+    end
+
+    def self.max_body_length
+        BlogPost.where.not(body: nil).order("LENGTH(body) desc").first.body.length
+    end
+
     def render_name
         output = ''
         index = 0
         while index < name.length do
-            output << name[index]
-            index += 1
+            if name[index..index + 1] == '[['
+                link_start = index
+                link_end = name.index(']]', index) + 1
+                link = name[link_start..link_end]
+                output << '[[' + BlogPost.find(link[2..-3].to_i).render_name + ']]'
+                index += link.length
+            else
+                output << name[index]
+                index += 1
+            end
         end
         output
     end
@@ -52,21 +76,7 @@ class BlogPost < ApplicationRecord
         self.internal_links.destroy_all
     end
 
-    def self.min_links
-        BlogPost.order(internal_links_count: :asc).limit(1).first.internal_links_count
-    end
-
-    def self.max_links
-        BlogPost.order(internal_links_count: :desc).limit(1).first.internal_links_count
-    end
-
-    def self.min_body_length
-        BlogPost.where.not(body: nil).order("LENGTH(body) asc").first.body.length
-    end
-
-    def self.max_body_length
-        BlogPost.where.not(body: nil).order("LENGTH(body) desc").first.body.length
-    end
+    
 
     private
     
