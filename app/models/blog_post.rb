@@ -67,12 +67,21 @@ class BlogPost < ApplicationRecord
     def update_links
         unless self.body.nil?
             puts 'updating links'
-            self.body.gsub(internal_link_regex).each do |link|
-                self.link BlogPost.find JSON.parse(link[2..-3])['id']
-                link
+            self.body.scan(internal_link_regex).each do |link|
+                find_and_add_links link
             end
         end
 
+    end
+
+    def find_and_add_links text
+        puts 'find_and_add_links'
+        strings_to_search = Queue.new
+        depth = 0
+        while text.size > 0 do
+
+            text = text 
+        end
     end
 
     #looks through the body for InternalLinks, formatted as:
@@ -82,6 +91,11 @@ class BlogPost < ApplicationRecord
     def convert_links
         unless self.body.nil?
             self.body.gsub!(internal_link_regex).each do |link|
+                recursive_check link
+            end
+        end
+        unless self.name.nil?
+            self.name.gsub!(internal_link_regex).each do |link|
                 recursive_check link
             end
         end
@@ -130,8 +144,7 @@ class BlogPost < ApplicationRecord
                 #we get the corresponding BlogPost
                 post = BlogPost.find_or_create_by(name: post_name)
                 #and we return it in the proper format
-                post_json = {name: post.name, id: post.id}.to_json
-                return "[[#{post_json}]]"
+                return "[[#{post.id}]]"
             end
 
             index += 1
