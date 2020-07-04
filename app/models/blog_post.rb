@@ -16,7 +16,7 @@ class BlogPost < ApplicationRecord
     def link(other)
         if other.is_a? BlogPost
             if !self.destinations.include? other
-                self.destinations << other
+                InternalLink.create(source: self, destination: other)
                 true
             else
                 false
