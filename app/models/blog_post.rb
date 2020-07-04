@@ -8,6 +8,16 @@ class BlogPost < ApplicationRecord
 
     validates_uniqueness_of :name
     
+    def render_name
+        output = ''
+        index = 0
+        while index < name.length do
+            output << name[index]
+            index += 1
+        end
+        output
+    end
+
     def create_link(post_name, body = '')
         other = BlogPost.find_or_create_by(name: post_name, body: body)
         self.link other

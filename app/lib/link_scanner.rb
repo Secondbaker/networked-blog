@@ -9,11 +9,11 @@ class LinkScanner
         index = 0
         while index < text.length do
             if text[index..index + 1] == '[['
-                output += 'whoa this syntax is easier'
+                
                 link_start = index
                 link_end = text.index(']]', index)  + 1
                 link = text[link_start..link_end]
-
+                output += '[[' + BlogPost.find(link[2..-3].to_i).name + ']]'
                 index += link.length
 
             else

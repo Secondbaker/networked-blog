@@ -1,7 +1,2 @@
-<% if !blog_post.name.scan(/\[\[\d+\]\]/).nil? %>
-    <% scanner = LinkScanner.new blog_post.name%>
-    <%= scanner.render %>
-<% else %>
-
-<% end %>
+<%= blog_post.render_name %>
 Name goes here
