@@ -4,8 +4,12 @@
 
 <%= render @blog_post%>
 
-<% @related_posts.each do |related_post| %>
-  <%= link_to related_post.name, blog_post_path(related_post) %>
+<% unless @related_posts.nil?%>
+  <% @related_posts.each do |related_post| %>
+    <% unless related_post.nil? %>
+      <%= link_to related_post.name, blog_post_path(related_post) %>
+    <% end %>
+  <% end %>
 <% end %>
 
 
