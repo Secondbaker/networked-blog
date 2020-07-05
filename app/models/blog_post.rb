@@ -25,21 +25,11 @@ class BlogPost < ApplicationRecord
     end
 
     def render_name
-        output = ''
-        index = 0
-        while index < name.length do
-            if name[index..index + 1] == '[['
-                link_start = index
-                link_end = name.index(']]', index) + 1
-                link = name[link_start..link_end]
-                output << '[[' + BlogPost.find(link[2..-3].to_i).render_name + ']]'
-                index += link.length
-            else
-                output << name[index]
-                index += 1
-            end
-        end
-        output
+        render_internal_links self.name
+    end
+
+    def render_body
+        render_internal_links self.body
     end
 
     def create_link(post_name, body = '')
@@ -79,6 +69,23 @@ class BlogPost < ApplicationRecord
     
 
     private
+    def render_internal_links text
+        output = ''
+        index = 0
+        while index < text.length do
+            if text[index..index + 1] == '[['
+                link_start = index
+                link_end = text.index(']]', index) + 1
+                link = text[link_start..link_end]
+                output << '[[' + BlogPost.find(link[2..-3].to_i).render_name + ']]'
+                index += link.length
+            else
+                output << text[index]
+                index += 1
+            end
+        end
+        output
+    end
     
     def internal_link_regex
         /\[\[.+\]\]/
