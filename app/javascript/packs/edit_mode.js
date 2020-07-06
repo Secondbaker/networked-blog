@@ -23,7 +23,6 @@ function editMode (target) {
 
 function readMode (target) {
     console.log('readMode');
-
     console.log(target);
     return;
 }
@@ -33,7 +32,7 @@ function toggleModes (event) {
     let { target } = event;
     console.log('toggleModes');
     console.log($('.editing'));
-    console.log('readMode target');
+    console.log('toggleModes target');
     console.log($(target));
 
     if($(target).hasClass('text-block'))
@@ -43,10 +42,7 @@ function toggleModes (event) {
     
     console.log($('.text-block', this).not(target));
 
-    $('.text-block', this).not(target).map(readMode(this))
+    $('.text-block', this).not(target).each(function() {readMode($(this));});
 }
 
-$('.text-block-container').click( function(e) {
-    e.stopPropagation();
-    toggleModes(e);
-});
+$('.text-block-container').click( toggleModes );
