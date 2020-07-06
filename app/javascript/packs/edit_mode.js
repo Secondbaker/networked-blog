@@ -24,7 +24,11 @@ function editMode (target) {
 function readMode (target) {
     console.log('readMode');
     console.log(target);
-    return;
+    if ($(target).hasClass('editing'))
+    {   
+        $(target).contents().replaceWith('nest');
+        $(target).removeClass('editing')
+    }
 }
 
 //sets everything but event.target to read mode
