@@ -3,22 +3,26 @@ console.log('edit_mode');
 // sets target to edit mode
 function editMode (target) {
     console.log('editMode')
-    thisBlock = target
     
     //just so we don't need to make additional requests for edit mode
-    if ($(thisBlock).hasClass('editing'))
+    if ($(target).hasClass('editing') || $(target).parentsUntil('.text-block-container').hasClass('editing'))
     {
+        console.log('early exit');
         return;
     }
 
-    console.log(thisBlock.id);
-    $(thisBlock).addClass('editing');
-    myID = thisBlock.id.split('-')[2];
+    textBlock = $(target).parentsUntil('.text-block-container').find('.text-block');
+    textBlockID = textBlock.attr('id').split('-')[2];
+    console.log(textBlockID);
+    $(textBlock).addClass('editing');
     let request = $.ajax({
-        url: `/text_blocks/${myID}.json`
+        url: `/text_blocks/${textBlockID}.json`
     });
     console.log(request);
-    $(thisBlock).contents().replaceWith('test');
+    request.done(function() {
+        $(target).contents().replaceWith(`<input class="text-block-text-area" type="text" value="${request.responseJSON.body}"></input>`);
+    });
+    
 }
 
 function readMode (target) {
@@ -39,14 +43,15 @@ function toggleModes (event) {
     console.log('toggleModes target');
     console.log($(target));
 
-    if($(target).hasClass('text-block'))
-    {
-        editMode (target);
+    if ($(target).parentsUntil('.text-block-container').hasClass('text-block')) {
+        editMode(target);
     }
-    
+
     console.log($('.text-block', this).not(target));
 
     $('.text-block', this).not(target).each(function() {readMode($(this));});
+
+    
 }
 
 $('.text-block-container').click( toggleModes );
