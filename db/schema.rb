@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_04_202259) do
+ActiveRecord::Schema.define(version: 2020_07_06_125808) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,12 @@ ActiveRecord::Schema.define(version: 2020_07_04_202259) do
     t.string "destination_name"
     t.index ["destination_id"], name: "index_internal_links_on_destination_id"
     t.index ["source_id"], name: "index_internal_links_on_source_id"
+  end
+
+  create_table "text_blocks", force: :cascade do |t|
+    t.text "body"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
 end
