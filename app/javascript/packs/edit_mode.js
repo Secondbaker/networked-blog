@@ -42,10 +42,33 @@ function toggleModes (event) {
     console.log($('.editing'));
     console.log('toggleModes target');
     console.log($(target));
-
-    if ($(target).parentsUntil('.text-block-container').hasClass('text-block')) {
-        editMode(target);
+    if ($(target).hasClass('text-block'))
+    {
+        console.log('if');
+    //then our target is the text block
+    //check the container's data-selected
+        //if it is our target's id
+        //do nothing
+        //else
+        //run editMode on target
     }
+    else if($(target).parentsUntil('.text-block-container').hasClass('text-block'))
+    {
+        console.log('else if');
+    //then the text block we want is an ancestor of target
+    //so we need to get that text block
+        //then we do the same as above
+    }
+    else
+    {
+    //something outside of all the text blocks was clicked
+    //put everything into read mode
+    //set data-selected to none
+        console.log('else');
+        console.log($(this).data('selected'));
+        $(this).data('selected', "none");
+    }
+    
 
     console.log($('.text-block', this).not(target));
 

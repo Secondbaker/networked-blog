@@ -10,7 +10,7 @@
     </tr>
   </thead>
 
-  <tbody class='text-block-container'>
+  <tbody class='text-block-container' data-selected='none'>
     <% @text_blocks.each do |text_block| %>
       <tr>
         <td><%= render partial: 'text_blocks/text_block', locals: { text_block: text_block } %></td>
