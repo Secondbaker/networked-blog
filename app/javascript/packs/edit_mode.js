@@ -25,6 +25,7 @@ function readMode (target) {
     console.log('readMode');
 
     console.log(target);
+    return;
 }
 
 //sets everything but event.target to read mode
@@ -45,4 +46,7 @@ function toggleModes (event) {
     $('.text-block', this).not(target).map(readMode(this))
 }
 
-$('.text-block-container').click( toggleModes )
+$('.text-block-container').click( function(e) {
+    e.stopPropagation();
+    toggleModes(e);
+});
