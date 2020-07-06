@@ -1,6 +1,6 @@
 console.log('edit_mode');
 
-// sets event.target to edit mode
+// sets target to edit mode
 function editMode (target) {
     console.log('editMode')
     thisBlock = target
@@ -21,15 +21,28 @@ function editMode (target) {
     $(thisBlock).contents().replaceWith('test');
 }
 
+function readMode (target) {
+    console.log('readMode');
+
+    console.log(target);
+}
+
 //sets everything but event.target to read mode
 function toggleModes (event) {
     let { target } = event;
-    console.log('readMode');
+    console.log('toggleModes');
     console.log($('.editing'));
-    console.log('readMode target ' + target.toString());
+    console.log('readMode target');
+    console.log($(target));
 
-    editMode (target);
+    if($(target).hasClass('text-block'))
+    {
+        editMode (target);
+    }
     
+    console.log($('.text-block', this).not(target));
+
+    $('.text-block', this).not(target).map(readMode(this))
 }
 
 $('.text-block-container').click( toggleModes )
