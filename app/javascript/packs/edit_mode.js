@@ -1,9 +1,9 @@
 console.log('edit_mode');
 
 // sets event.target to edit mode
-function editMode (event) {
+function editMode (target) {
     console.log('editMode')
-    thisBlock = event.target
+    thisBlock = target
     
     //just so we don't need to make additional requests for edit mode
     if ($(thisBlock).hasClass('editing'))
@@ -11,9 +11,6 @@ function editMode (event) {
         return;
     }
 
-    console.log($('.editing'))
-
-    console.log('here');
     console.log(thisBlock.id);
     $(thisBlock).addClass('editing');
     myID = thisBlock.id.split('-')[2];
@@ -25,14 +22,14 @@ function editMode (event) {
 }
 
 //sets everything but event.target to read mode
-function readMode (event) {
+function toggleModes (event) {
     let { target } = event;
     console.log('readMode');
     console.log($('.editing'));
-    console.log('readMode target ' + target);
+    console.log('readMode target ' + target.toString());
+
+    editMode (target);
     
 }
 
-$('.text-block').click( editMode );
-
-$('.text-block-container').click( readMode )
+$('.text-block-container').click( toggleModes )
