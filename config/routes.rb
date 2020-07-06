@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :text_blocks
   resources :blog_posts do
   end
   root to: 'blog_posts#index'
