@@ -51,6 +51,19 @@ function toggleModes (event) {
         //do nothing
         //else
         //run editMode on target
+        //run readMode on everything else
+        
+        if ($(target).attr('id') === $(this).data('selected'))
+        {
+            console.log('already selected')
+        }
+        else
+        {
+            console.log('new selection')
+            $(this).data('selected', $(target).attr('id'));
+            editMode(target);
+            $('.text-block', this).not($(target)).each(function () { readMode($(this)); });
+        }
     }
     else if($(target).parentsUntil('.text-block-container').hasClass('text-block'))
     {
@@ -65,16 +78,12 @@ function toggleModes (event) {
     //put everything into read mode
     //set data-selected to none
         console.log('else');
-        console.log($(this).data('selected'));
         $(this).data('selected', "none");
+        $('.text-block', this).each(function () { readMode($(this)); });
     }
     
 
-    console.log($('.text-block', this).not(target));
-
-    $('.text-block', this).not(target).each(function() {readMode($(this));});
-
-    
+    console.log($('.text-block', this).not(target));    
 }
 
 $('.text-block-container').click( toggleModes );
