@@ -19,6 +19,7 @@ class TextBlocksController < ApplicationController
 
   # GET /text_blocks/1/edit
   def edit
+    
   end
 
   # POST /text_blocks

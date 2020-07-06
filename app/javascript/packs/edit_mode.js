@@ -10,12 +10,13 @@ function editMode (event) {
         return;
     }
     console.log('here');
-    console.log(event.target.id);
-    $(event.target).addClass('editing');
-    myID = event.target.id.split('-')[2]
-    $.ajax({
-        url: `/text_blocks/${myID}/edit`
-    })
+    console.log(thisBlock).id);
+    $(thisBlock).addClass('editing');
+    myID = thisBlock.id.split('-')[2]
+    let request = $.ajax({
+        url: `/text_blocks/${myID}.json`
+    });
+    console.log(request);
 }
 
 //sets everything but event.target to read mode
