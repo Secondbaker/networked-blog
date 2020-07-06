@@ -13,7 +13,7 @@
   <tbody>
     <% @text_blocks.each do |text_block| %>
       <tr>
-        <td><%= text_block.body %></td>
+        <td><%= render partial: 'text_blocks/text_block', locals: { text_block: text_block } %></td>
         <td><%= link_to 'Show', text_block %></td>
         <td><%= link_to 'Edit', edit_text_block_path(text_block) %></td>
         <td><%= link_to 'Destroy', text_block, method: :delete, data: { confirm: 'Are you sure?' } %></td>
