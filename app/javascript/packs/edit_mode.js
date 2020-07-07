@@ -39,7 +39,8 @@ function editMode (target) {
     });
     console.log(request);
     request.done(function() {
-        $(target).contents().replaceWith(`<input class="text-block-text-area" type="text" value="${request.responseJSON.body}"></input>`);
+        $(target).contents().replaceWith(`<textarea class="text-block-text-area">${request.responseJSON.body}</textarea>`);
+        $('.text-block-text-area').focus();
     });
     
 }
@@ -50,7 +51,7 @@ function readMode (target) {
     if ($(target).hasClass('editing'))
     {   
         text = $(target).find('.text-block-text-area').val();
-        sendText(text, target)
+        sendText(text, target);
         $(target).contents().replaceWith(text);
         $(target).removeClass('editing')
     }
