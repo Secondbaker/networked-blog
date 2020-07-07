@@ -1,5 +1,5 @@
 console.log('edit_mode');
-
+let timeout = 0;
 $.ajaxSetup({
     headers: {
       'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
@@ -40,7 +40,16 @@ function editMode (target) {
     console.log(request);
     request.done(function() {
         $(target).contents().replaceWith(`<textarea class="text-block-text-area">${request.responseJSON.body}</textarea>`);
-        $('.text-block-text-area').focus();
+        $('textarea.text-block-text-area').focus();
+        $('textarea.text-block-text-area').keypress(function () {
+            if (timeout) {
+                clearTimeout(timeout);
+                timeout = null;
+            }
+            console.log('keypress');
+            console.log($(this));
+            timeout = setTimeout(function(){ console.log('timeout'); }, 3000)
+        });
     });
     
 }
