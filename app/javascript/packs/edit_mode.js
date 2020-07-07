@@ -6,6 +6,16 @@ $.ajaxSetup({
     }
   });
 
+function autoSend() {
+    if (timeout) {
+        clearTimeout(timeout);
+        timeout = null;
+    }
+    console.log('keypress');
+    console.log($(this));
+    timeout = setTimeout(function () { console.log('timeout'); }, 3000)
+}
+
 function sendText (text, textBlock) {
     console.log('sendText');
     console.log(text);
@@ -41,15 +51,7 @@ function editMode (target) {
     request.done(function() {
         $(target).contents().replaceWith(`<textarea class="text-block-text-area">${request.responseJSON.body}</textarea>`);
         $('textarea.text-block-text-area').focus();
-        $('textarea.text-block-text-area').keypress(function () {
-            if (timeout) {
-                clearTimeout(timeout);
-                timeout = null;
-            }
-            console.log('keypress');
-            console.log($(this));
-            timeout = setTimeout(function(){ console.log('timeout'); }, 3000)
-        });
+        $('textarea.text-block-text-area').keypress( autoSend );
     });
     
 }
