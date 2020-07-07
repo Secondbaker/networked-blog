@@ -62,6 +62,7 @@ function toggleModes (event) {
     let { target } = event;
     console.log('toggleModes');
     console.log($('.editing'));
+    console.log(event)
     console.log('toggleModes target');
     console.log($(target));
     if ($(target).hasClass('text-block'))
