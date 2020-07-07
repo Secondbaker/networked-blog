@@ -1,7 +1,26 @@
 console.log('edit_mode');
 
-function sendText () {
-    
+$.ajaxSetup({
+    headers: {
+      'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+
+function sendText (text, textBlock) {
+    console.log('sendText');
+    console.log(text);
+    console.log(textBlock);
+    textBlockID = $(textBlock).attr('id').split('-')[2];
+    console.log(textBlockID)
+    let request = $.ajax({
+        method: 'PATCH',
+        url: `text_blocks/${textBlockID}.json`,
+        data: JSON.stringify({
+            id: textBlockID,
+            body: text
+        }),
+        dataType: 'JSON'
+    });
 }
 // sets target to edit mode
 function editMode (target) {
@@ -33,7 +52,9 @@ function readMode (target) {
     console.log(target);
     if ($(target).hasClass('editing'))
     {   
-        $(target).contents().replaceWith('nest');
+        text = $(target).find('.text-block-text-area').val();
+        sendText(text, target)
+        $(target).contents().replaceWith(text);
         $(target).removeClass('editing')
     }
 }
