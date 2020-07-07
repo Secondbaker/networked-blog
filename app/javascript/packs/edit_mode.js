@@ -12,8 +12,10 @@ function autoSend() {
         timeout = null;
     }
     console.log('keypress');
-    console.log($(this));
-    timeout = setTimeout(function () { console.log('timeout'); }, 3000)
+    console.log($(this).val());
+    text = $(this).val();
+    target = $(this).parentsUntil('.text-block-container').find('.text-block')
+    timeout = setTimeout( sendText(text, target), 3000)
 }
 
 function sendText (text, textBlock) {
@@ -51,7 +53,7 @@ function editMode (target) {
     request.done(function() {
         $(target).contents().replaceWith(`<textarea class="text-block-text-area">${request.responseJSON.body}</textarea>`);
         $('textarea.text-block-text-area').focus();
-        $('textarea.text-block-text-area').keypress( autoSend );
+        $('textarea.text-block-text-area').keyup( autoSend );
     });
     
 }
