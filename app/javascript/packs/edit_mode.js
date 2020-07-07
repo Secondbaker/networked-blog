@@ -78,6 +78,15 @@ function editMode (target) {
     
 }
 
+function readyDisplay (target) {
+    var text = $(target).find('.text-block-text-area').text();
+    console.log(text.replace('t', 'm'));
+    
+    let contents = $(target).contents();
+    console.log($(contents));
+    $(contents).replaceWith(`<div class='text-block-text-area'>${DOMPurify.sanitize(converter.makeHtml(text))}</div>`);
+}
+
 function readMode (target) {
     console.log('readMode');
     console.log(target);
@@ -159,4 +168,7 @@ function toggleModes (event) {
 
 $('.text-block-container').click( toggleModes );
 
-$('.text-block').each(function () { readMode($(this)); });
+$(document).ready( function() {
+    converter = new showdown.Converter({ extensions: [customExpressions] });
+    $('.text-block').each(function () { readyDisplay($(this)); });
+});
