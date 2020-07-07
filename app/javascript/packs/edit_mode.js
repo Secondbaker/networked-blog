@@ -97,9 +97,10 @@ function readyDisplay (target) {
     $(contents).replaceWith(`<div class='text-block-text-area'>${DOMPurify.sanitize(converter.makeHtml(text))}</div>`);
 }
 
+//Switches target from editing mode to read mode
+//If target is not in editing mode (does not have class editing)
+    //does nothing
 function readMode (target) {
-    console.log('readMode');
-    console.log(target);
     if ($(target).hasClass('editing'))
     {   
         let text = $(target).find('.text-block-text-area').val();
