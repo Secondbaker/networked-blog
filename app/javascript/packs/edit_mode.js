@@ -52,7 +52,7 @@ function readMode (target) {
     {   
         text = $(target).find('.text-block-text-area').val();
         sendText(text, target);
-        $(target).contents().replaceWith(text);
+        $(target).contents().replaceWith(`<div class='text-block-text-area'>${text}</div>`);
         $(target).removeClass('editing')
     }
 }
