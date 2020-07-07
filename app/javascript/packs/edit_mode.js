@@ -1,7 +1,25 @@
-import Converter from './markdown_renderer';
+import DOMPurify from 'dompurify';
+var showdown = require('showdown'),
+    converter = new showdown.Converter(),
+    text = '# hello, markdown!',
+    html = converter.makeHtml(text);
 
 console.log('edit_mode');
 let timeout = 0;
+
+var customExpressions = function () {
+    var internalLink = {
+        type: 'lang',
+        filter: function (text, converter) {
+            text = text.replace(/\[\[\{\"name\"\:\"(.*)\"\,\"id\"\:(.*)\}\]\]/g, `[$1](/text_blocks/$2)`);
+            return text;
+        }
+    };
+    return [internalLink];
+}
+
+var converter = new showdown.Converter({ extensions: [customExpressions] });
+
 $.ajaxSetup({
     headers: {
       'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
@@ -15,8 +33,8 @@ function autoSend() {
     }
     console.log('keypress');
     console.log($(this).val());
-    text = $(this).val();
-    target = $(this).parentsUntil('.text-block-container').find('.text-block')
+    let text = $(this).val();
+    let target = $(this).parentsUntil('.text-block-container').find('.text-block')
     timeout = setTimeout( sendText(text, target), 3000)
 }
 
@@ -24,7 +42,7 @@ function sendText (text, textBlock) {
     console.log('sendText');
     console.log(text);
     console.log(textBlock);
-    textBlockID = $(textBlock).attr('id').split('-')[2];
+    let textBlockID = $(textBlock).attr('id').split('-')[2];
     console.log(textBlockID)
     let request = $.ajax({
         method: 'PATCH',
@@ -65,9 +83,9 @@ function readMode (target) {
     console.log(target);
     if ($(target).hasClass('editing'))
     {   
-        text = $(target).find('.text-block-text-area').val();
+        let text = $(target).find('.text-block-text-area').val();
         sendText(text, target);
-        $(target).contents().replaceWith(`<div class='text-block-text-area'>${DOMPurify.sanitize(Converter.makeHtml(text))}</div>`);
+        $(target).contents().replaceWith(`<div class='text-block-text-area'>${DOMPurify.sanitize(converter.makeHtml(text))}</div>`);
         $(target).removeClass('editing')
     }
 }
