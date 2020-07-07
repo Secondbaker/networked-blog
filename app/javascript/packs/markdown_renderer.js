@@ -20,11 +20,17 @@ var showdown  = require('showdown'),
 converter = new showdown.Converter({ extensions: [customExpressions]})
 
 
-gon.blog_posts.map((post) => {
+/*gon.blog_posts.map((post) => {
     console.log('post id: ' +   post.id);
     $('#post-body-' + post.id).html(DOMPurify.sanitize(converter.makeHtml(post.body)));
-});
+});*/
 
 $('span.link').on('click', function (e){
     window.location =$(e.target).data('link-target');
-})
+});
+
+function Converter() {
+  return converter;
+}
+
+export default Converter;

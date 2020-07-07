@@ -1,3 +1,5 @@
+import Converter from './markdown_renderer';
+
 console.log('edit_mode');
 let timeout = 0;
 $.ajaxSetup({
@@ -42,10 +44,10 @@ function editMode (target) {
         return;
     }
 
-    textBlock = $(target).parentsUntil('.text-block-container').find('.text-block');
-    textBlockID = textBlock.attr('id').split('-')[2];
+    console.log($(target).attr('id').split('-')[2]);
+    let textBlockID = $(target).attr('id').split('-')[2];
     console.log(textBlockID);
-    $(textBlock).addClass('editing');
+    $(target).addClass('editing');
     let request = $.ajax({
         url: `/text_blocks/${textBlockID}.json`
     });
@@ -65,7 +67,7 @@ function readMode (target) {
     {   
         text = $(target).find('.text-block-text-area').val();
         sendText(text, target);
-        $(target).contents().replaceWith(`<div class='text-block-text-area'>${text}</div>`);
+        $(target).contents().replaceWith(`<div class='text-block-text-area'>${DOMPurify.sanitize(Converter.makeHtml(text))}</div>`);
         $(target).removeClass('editing')
     }
 }
@@ -107,7 +109,8 @@ function toggleModes (event) {
     //then the text block we want is an ancestor of target
     //so we need to get that text block
         //then we do the same as above
-        targetBlock = $(target).parentsUntil('.text-block-container').find('.text-block');
+        console.log($(target).parentsUntil('.text-block-container').find('.text-block'));
+        let targetBlock = $(target).parentsUntil('.text-block-container').find('.text-block')[0];
         console.log(targetBlock);
 
         if ($(targetBlock).attr('id') === $(this).data('selected'))
@@ -137,3 +140,5 @@ function toggleModes (event) {
 }
 
 $('.text-block-container').click( toggleModes );
+
+$('.text-block').each(function () { readMode($(this)); });
