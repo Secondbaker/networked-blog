@@ -1,5 +1,8 @@
 console.log('edit_mode');
 
+function sendText () {
+    
+}
 // sets target to edit mode
 function editMode (target) {
     console.log('editMode')
@@ -71,6 +74,20 @@ function toggleModes (event) {
     //then the text block we want is an ancestor of target
     //so we need to get that text block
         //then we do the same as above
+        targetBlock = $(target).parentsUntil('.text-block-container').find('.text-block');
+        console.log(targetBlock);
+
+        if ($(targetBlock).attr('id') === $(this).data('selected'))
+        {
+            console.log('already selected')
+        }
+        else
+        {
+            console.log('new selection')
+            $(this).data('selected', $(targetBlock).attr('id'));
+            editMode(targetBlock);
+            $('.text-block', this).not($(targetBlock)).each(function () { readMode($(this)); });
+        }
     }
     else
     {
@@ -83,7 +100,7 @@ function toggleModes (event) {
     }
     
 
-    console.log($('.text-block', this).not(target));    
+       
 }
 
 $('.text-block-container').click( toggleModes );
