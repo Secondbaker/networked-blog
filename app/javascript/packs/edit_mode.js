@@ -110,6 +110,7 @@ function readMode (target) {
 }
 
 //sets everything but event.target to read mode
+//sets the data-selected attribute to the id of the text-block which was clicked, if any
 function toggleModes (event) {
     let { target } = event;
     //The target might be a text-block, or the child of a text-block, or the text-block-container
@@ -117,7 +118,6 @@ function toggleModes (event) {
     {
         if ($(target).attr('id') !== $(this).data('selected'))
         {
-            console.log('new selection')
             $(this).data('selected', $(target).attr('id'));
             editMode(target);
             $('.text-block', this).not($(target)).each(function () { readMode($(this)); });
@@ -125,21 +125,13 @@ function toggleModes (event) {
     }
     else if($(target).parentsUntil('.text-block-container').hasClass('text-block'))
     {
-        console.log('else if');
-    //then the text block we want is an ancestor of target
+    //the text block we want is an ancestor of target
     //so we need to get that text block
-        //then we do the same as above
-        console.log($(target).parentsUntil('.text-block-container').find('.text-block'));
+    //then we do the same as above
         let targetBlock = $(target).parentsUntil('.text-block-container').find('.text-block')[0];
-        console.log(targetBlock);
-
-        if ($(targetBlock).attr('id') === $(this).data('selected'))
+        
+        if ($(targetBlock).attr('id') !== $(this).data('selected'))
         {
-            console.log('already selected')
-        }
-        else
-        {
-            console.log('new selection')
             $(this).data('selected', $(targetBlock).attr('id'));
             editMode(targetBlock);
             $('.text-block', this).not($(targetBlock)).each(function () { readMode($(this)); });
