@@ -14,11 +14,8 @@ function sendText (text, textBlock) {
     console.log(textBlockID)
     let request = $.ajax({
         method: 'PATCH',
-        url: `text_blocks/${textBlockID}.json`,
-        data: JSON.stringify({
-            id: textBlockID,
-            body: text
-        }),
+        url: `text_blocks/${textBlockID}`,
+        data: {text_block: {body: text}},
         dataType: 'JSON'
     });
 }
