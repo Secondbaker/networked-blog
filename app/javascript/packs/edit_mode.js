@@ -4,9 +4,13 @@ var showdown = require('showdown'),
     text = '# hello, markdown!',
     html = converter.makeHtml(text);
 
-console.log('edit_mode');
+//#region  Setup
+
+//Yay global timeout variable
 let timeout = 0;
 
+//Set custom expressions for the markdown converter
+//This technically isn't needed right now, but I think it will be
 var customExpressions = function () {
     var internalLink = {
         type: 'lang',
@@ -18,13 +22,19 @@ var customExpressions = function () {
     return [internalLink];
 }
 
-var converter = new showdown.Converter({ extensions: [customExpressions] });
+//Yay global converter
+var converter;
 
+//So we don't need to get the csrf token for every single ajax request
 $.ajaxSetup({
     headers: {
       'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
     }
   });
+
+//#endregion Setup
+
+//#region Functions
 
 function autoSend() {
     if (timeout) {
@@ -102,27 +112,10 @@ function readMode (target) {
 //sets everything but event.target to read mode
 function toggleModes (event) {
     let { target } = event;
-    console.log('toggleModes');
-    console.log($('.editing'));
-    console.log(event)
-    console.log('toggleModes target');
-    console.log($(target));
+    //The target might be a text-block, or the child of a text-block, or the text-block-container
     if ($(target).hasClass('text-block'))
     {
-        console.log('if');
-    //then our target is the text block
-    //check the container's data-selected
-        //if it is our target's id
-        //do nothing
-        //else
-        //run editMode on target
-        //run readMode on everything else
-        
-        if ($(target).attr('id') === $(this).data('selected'))
-        {
-            console.log('already selected')
-        }
-        else
+        if ($(target).attr('id') !== $(this).data('selected'))
         {
             console.log('new selection')
             $(this).data('selected', $(target).attr('id'));
@@ -152,7 +145,7 @@ function toggleModes (event) {
             $('.text-block', this).not($(targetBlock)).each(function () { readMode($(this)); });
         }
     }
-    else
+    else //text-block-container
     {
     //something outside of all the text blocks was clicked
     //put everything into read mode
@@ -160,15 +153,19 @@ function toggleModes (event) {
         console.log('else');
         $(this).data('selected', "none");
         $('.text-block', this).each(function () { readMode($(this)); });
-    }
-    
-
-       
+    }      
 }
 
+//#endregion
+
+//#region attaching functions
+//We put this on the container
+//The container isn't replaced, but its contents are
+//Because the container isn't replaced, we only need to attach this once
 $('.text-block-container').click( toggleModes );
 
-$(document).ready( function() {
-    converter = new showdown.Converter({ extensions: [customExpressions] });
-    $('.text-block').each(function () { readyDisplay($(this)); });
-});
+//since our text is raw markdown, we need to convert it
+converter = new showdown.Converter({ extensions: [customExpressions] });
+$('.text-block').each(function () { readyDisplay($(this)); });
+
+//#endregion
