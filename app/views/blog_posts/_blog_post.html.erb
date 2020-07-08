@@ -1,5 +1,5 @@
 <%= blog_post.render_name %>
 
 <% blog_post.text_blocks.each do |text_block| %>
-    <%= render text_block %>
+    <%= render partial: '/text_blocks/text_block', locals: { text_block: text_block } %>
 <% end %>

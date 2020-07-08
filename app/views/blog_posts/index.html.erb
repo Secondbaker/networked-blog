@@ -17,7 +17,7 @@
   </div>
 
   <div class='panelWrapper app-body'>
-    <div id='text-posts text-block-container'>
+    <div id='text-posts' class='text-block-container' data-selected='none'>
       <% @blog_posts.each do |blog_post|%>
         <div class='post-partial'>
           <%= render blog_post %>

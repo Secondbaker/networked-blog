@@ -2,8 +2,8 @@
 
 <p id="notice"><%= notice %></p>
 
-<div class='text-block-container'>
-<%= render @blog_post%>
+<div class='text-block-container' data-selected='none'>
+  <%= render @blog_post%>
 </div>
 
 <% unless @related_posts.nil?%>
@@ -17,7 +17,6 @@
 
 
 <div id='cy'></div>
-<%= javascript_pack_tag 'mini_graph' %>
 <%= javascript_pack_tag 'edit_mode' %>
 
 <%= link_to 'Edit', edit_blog_post_path(@blog_post) %> |
