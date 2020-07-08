@@ -4,6 +4,7 @@ var showdown = require('showdown'),
     text = '# hello, markdown!',
     html = converter.makeHtml(text);
 
+
 //#region  Setup
 
 //Yay global timeout variable
@@ -54,7 +55,7 @@ function sendText (text, textBlock) {
     let textBlockID = $(textBlock).attr('id').split('-')[2];
     let request = $.ajax({
         method: 'PATCH',
-        url: `text_blocks/${textBlockID}`,
+        url: `/text_blocks/${textBlockID}`,
         data: {text_block: {body: text}},
         dataType: 'JSON'
     });
@@ -114,7 +115,6 @@ function toggleModes (event) {
     //The target might be a text-block, or the child of a text-block, or the text-block-container
     if ($(target).hasClass('text-block'))
     {
-        console.log('if');
         if ($(target).attr('id') !== $(this).data('selected'))
         {
             $(this).data('selected', $(target).attr('id'));
@@ -127,11 +127,7 @@ function toggleModes (event) {
     //the text block we want is an ancestor of target
     //so we need to get that text block
     //then we do the same as above
-        console.log('else if');
-        var parents = $(target).parentsUntil('.text-block-container');
         var targetBlock = $(target).closest('.text-block');
-        console.log(target);
-        console.log($(target).closest('.text-block'));
         if ($(targetBlock).attr('id') !== $(this).data('selected'))
         {
             $(this).data('selected', $(targetBlock).attr('id'));
@@ -144,7 +140,6 @@ function toggleModes (event) {
     //something outside of all the text blocks was clicked
     //put everything into read mode
     //set data-selected to none
-        console.log('else');
         $(this).data('selected', "none");
         $('.text-block', this).each(function () { readMode($(this)); });
     }      
