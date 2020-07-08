@@ -2,12 +2,10 @@ import DOMPurify from 'dompurify';
 import Converter from './markdown_renderer';
 var converter = Converter();
 
-//#region  Setup
+//#region Setup
 
 //Yay global timeout variable
 let timeout = 0;
-
-
 
 //So we don't need to get the csrf token for every single ajax request
 $.ajaxSetup({
@@ -130,7 +128,7 @@ function toggleModes (event) {
 
 //#endregion
 
-//#region attaching functions
+//#region Attaching functions
 //We put this on the container
 //The container isn't replaced, but its contents are
 //Because the container isn't replaced, we only need to attach this once
