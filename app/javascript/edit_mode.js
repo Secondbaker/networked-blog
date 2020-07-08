@@ -34,6 +34,7 @@ function sendText (text, textBlock) {
     //the id of textBlock should look like
         //text-block-{id}
     let textBlockID = $(textBlock).attr('id').split('-')[2];
+    console.log(textBlockID);
     let request = $.ajax({
         method: 'PATCH',
         url: `/text_blocks/${textBlockID}`,
@@ -59,7 +60,7 @@ function editMode (target) {
         url: `/text_blocks/${textBlockID}.json`
     });
     request.done(function() {
-        $(target).contents().replaceWith(`<textarea class="text-block-text-area">${request.responseJSON.body}</textarea>`);
+        $(target).html(`<textarea class="text-block-text-area">${request.responseJSON.body}</textarea>`);
         $('textarea.text-block-text-area').focus();
         //setting the focus puts the cursor into the textarea
         //TODO? make it so the cursor goes exactly where the user clicks
@@ -71,9 +72,14 @@ function editMode (target) {
 //To be triggered once for each TextBlock when it is first rendered
 //Parses the markdown into HTML
 function readyDisplay (target) {
-    var text = $(target).find('.text-block-text-area').text();
-    let contents = $(target).contents();
-    $(contents).replaceWith(`<div class='text-block-text-area'>${DOMPurify.sanitize(converter.makeHtml(text))}</div>`);
+    //to make sure this is only fired once per object
+    if(!$(target).hasClass('ready'))
+    {
+        var text = $(target).find('.text-block-text-area').text();
+        var contents = $(target).contents();
+        $(contents).html(`<div class='text-block-text-area'>${DOMPurify.sanitize(converter.makeHtml(text))}</div>`);
+        $(target).addClass('ready');
+    }
 }
 
 //Switches target from editing mode to read mode
@@ -83,8 +89,9 @@ function readMode (target) {
     if ($(target).hasClass('editing'))
     {   
         let text = $(target).find('.text-block-text-area').val();
+        console.log($(target).find('.text-block-text-area'));
         sendText(text, target);
-        $(target).contents().replaceWith(`<div class='text-block-text-area'>${DOMPurify.sanitize(converter.makeHtml(text))}</div>`);
+        $(target).html(`<div class='text-block-text-area'>${DOMPurify.sanitize(converter.makeHtml(text))}</div>`);
         $(target).removeClass('editing')
     }
 }
