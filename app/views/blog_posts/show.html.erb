@@ -2,7 +2,9 @@
 
 <p id="notice"><%= notice %></p>
 
+<div class='text-block-container'>
 <%= render @blog_post%>
+</div>
 
 <% unless @related_posts.nil?%>
   <% @related_posts.each do |related_post| %>
@@ -16,6 +18,7 @@
 
 <div id='cy'></div>
 <%= javascript_pack_tag 'mini_graph' %>
+<%= javascript_pack_tag 'edit_mode' %>
 
 <%= link_to 'Edit', edit_blog_post_path(@blog_post) %> |
 <%= link_to 'Back', blog_posts_path %>

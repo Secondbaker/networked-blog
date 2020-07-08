@@ -1,7 +1,5 @@
 <%= blog_post.render_name %>
 
-<div id='post-body-<%= blog_post.id %>'></div>
-
-<%= javascript_pack_tag 'markdown_renderer' %>
-
-<%= javascript_pack_tag 'edit_mode' %>
+<% blog_post.text_blocks.each do |text_block| %>
+    <%= render text_block %>
+<% end %>
