@@ -71,6 +71,7 @@ function editMode (target) {
 
     //the id of textBlock should look like
         //text-block-{id}
+    console.log($(target))
     let textBlockID = $(target).attr('id').split('-')[2];
     $(target).addClass('editing');
     let request = $.ajax({
@@ -114,6 +115,7 @@ function toggleModes (event) {
     //The target might be a text-block, or the child of a text-block, or the text-block-container
     if ($(target).hasClass('text-block'))
     {
+        console.log('if');
         if ($(target).attr('id') !== $(this).data('selected'))
         {
             $(this).data('selected', $(target).attr('id'));
@@ -126,8 +128,9 @@ function toggleModes (event) {
     //the text block we want is an ancestor of target
     //so we need to get that text block
     //then we do the same as above
+        console.log('else if');
         let targetBlock = $(target).parentsUntil('.text-block-container').find('.text-block')[0];
-        
+        console.log(targetBlock);
         if ($(targetBlock).attr('id') !== $(this).data('selected'))
         {
             $(this).data('selected', $(targetBlock).attr('id'));
