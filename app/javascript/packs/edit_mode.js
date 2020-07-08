@@ -13,21 +13,7 @@ var showdown = require('showdown'),
 //Yay global timeout variable
 let timeout = 0;
 
-//Set custom expressions for the markdown converter
-//This technically isn't needed right now, but I think it will be
-var customExpressions = function () {
-    var internalLink = {
-        type: 'lang',
-        filter: function (text, converter) {
-            text = text.replace(/\[\[\{\"name\"\:\"(.*)\"\,\"id\"\:(.*)\}\]\]/g, `[$1](/text_blocks/$2)`);
-            return text;
-        }
-    };
-    return [internalLink];
-}
 
-//Yay global converter
-var converter;
 
 //So we don't need to get the csrf token for every single ajax request
 $.ajaxSetup({
@@ -47,8 +33,8 @@ function autoSend() {
         timeout = null;
     }
     let text = $(this).val();
-    let target = $(this).parentsUntil('.text-block-container').find('.text-block')
-    timeout = setTimeout( sendText(text, target), 3000)
+    let target = $(this).closest('.text-block');
+    timeout = setTimeout( sendText(text, target), 3000);
 }
 
 //Triggers the edit method of text_blocks_controller through ajax
@@ -157,7 +143,7 @@ function toggleModes (event) {
 $('.text-block-container').click( toggleModes );
 
 //since our text is raw markdown, we need to convert it
-converter = new showdown.Converter({ extensions: [customExpressions] });
+//converter = new showdown.Converter({ extensions: [customExpressions] });
 $('.text-block').each(function () { readyDisplay($(this)); });
 
 //#endregion
