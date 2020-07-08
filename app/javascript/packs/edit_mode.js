@@ -62,37 +62,35 @@ function sendText (text, textBlock) {
 }
 // sets target to edit mode
 function editMode (target) {
-    console.log('editMode')
     
     //just so we don't need to make additional requests for edit mode
     if ($(target).hasClass('editing') || $(target).parentsUntil('.text-block-container').hasClass('editing'))
     {
-        console.log('early exit');
         return;
     }
 
-    console.log($(target).attr('id').split('-')[2]);
+    //the id of textBlock should look like
+        //text-block-{id}
     let textBlockID = $(target).attr('id').split('-')[2];
-    console.log(textBlockID);
     $(target).addClass('editing');
     let request = $.ajax({
         url: `/text_blocks/${textBlockID}.json`
     });
-    console.log(request);
     request.done(function() {
         $(target).contents().replaceWith(`<textarea class="text-block-text-area">${request.responseJSON.body}</textarea>`);
         $('textarea.text-block-text-area').focus();
+        //setting the focus puts the cursor into the textarea
+        //TODO? make it so the cursor goes exactly where the user clicks
         $('textarea.text-block-text-area').keyup( autoSend );
     });
-    
+    //TODO? add error handling for request    
 }
 
+//To be triggered once for each TextBlock when it is first rendered
+//Parses the markdown into HTML
 function readyDisplay (target) {
     var text = $(target).find('.text-block-text-area').text();
-    console.log(text.replace('t', 'm'));
-    
     let contents = $(target).contents();
-    console.log($(contents));
     $(contents).replaceWith(`<div class='text-block-text-area'>${DOMPurify.sanitize(converter.makeHtml(text))}</div>`);
 }
 
