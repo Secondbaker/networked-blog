@@ -1,4 +1,7 @@
 import DOMPurify from 'dompurify';
+import Converter from './markdown_renderer';
+var converter = Converter();
+console.log(converter);
 var showdown = require('showdown'),
     converter = new showdown.Converter(),
     text = '# hello, markdown!',

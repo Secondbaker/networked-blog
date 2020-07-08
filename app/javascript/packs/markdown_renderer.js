@@ -5,7 +5,7 @@ var showdown = require('showdown'),
   converter = new showdown.Converter(),
   text = '# hello, markdown!',
   html = converter.makeHtml(text);
-converter = new showdown.Converter({ extensions: [customExpressions] });
+
 
 console.log('converter');
 console.log(converter);
@@ -19,7 +19,7 @@ $('span.link').on('click', function (e){
     window.location =$(e.target).data('link-target');
 });
 
-function Converter() {
+const Converter = function () {
   
 
   var customExpressions = function () {
