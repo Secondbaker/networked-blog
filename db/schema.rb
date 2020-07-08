@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_06_125808) do
+ActiveRecord::Schema.define(version: 2020_07_08_122810) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,9 @@ ActiveRecord::Schema.define(version: 2020_07_06_125808) do
     t.text "body"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "blog_post_id", null: false
+    t.index ["blog_post_id"], name: "index_text_blocks_on_blog_post_id"
   end
 
+  add_foreign_key "text_blocks", "blog_posts"
 end
