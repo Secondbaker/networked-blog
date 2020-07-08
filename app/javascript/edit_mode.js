@@ -75,10 +75,11 @@ function readyDisplay (target) {
     //to make sure this is only fired once per object
     if(!$(target).hasClass('ready'))
     {
-        var text = $(target).find('.text-block-text-area').text();
-        var contents = $(target).contents();
-        $(contents).html(`<div class='text-block-text-area'>${DOMPurify.sanitize(converter.makeHtml(text))}</div>`);
-        $(target).addClass('ready');
+        
+        let text = $(target).find('.text-block-text-area').text();
+        console.log(text);
+        $(target).html(`<div class='text-block-text-area'>${DOMPurify.sanitize(converter.makeHtml(text))}</div>`);
+        $(target).removeClass('ready')
     }
 }
 
@@ -89,7 +90,6 @@ function readMode (target) {
     if ($(target).hasClass('editing'))
     {   
         let text = $(target).find('.text-block-text-area').val();
-        console.log($(target).find('.text-block-text-area'));
         sendText(text, target);
         $(target).html(`<div class='text-block-text-area'>${DOMPurify.sanitize(converter.makeHtml(text))}</div>`);
         $(target).removeClass('editing')
