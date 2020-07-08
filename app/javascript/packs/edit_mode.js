@@ -36,30 +36,29 @@ $.ajaxSetup({
 
 //#region Functions
 
+//After keypresses, waits 3 seconds then triggers sendText if there are no more keypresses
 function autoSend() {
     if (timeout) {
         clearTimeout(timeout);
         timeout = null;
     }
-    console.log('keypress');
-    console.log($(this).val());
     let text = $(this).val();
     let target = $(this).parentsUntil('.text-block-container').find('.text-block')
     timeout = setTimeout( sendText(text, target), 3000)
 }
 
+//Triggers the edit method of text_blocks_controller through ajax
 function sendText (text, textBlock) {
-    console.log('sendText');
-    console.log(text);
-    console.log(textBlock);
+    //the id of textBlock should look like
+        //text-block-{id}
     let textBlockID = $(textBlock).attr('id').split('-')[2];
-    console.log(textBlockID)
     let request = $.ajax({
         method: 'PATCH',
         url: `text_blocks/${textBlockID}`,
         data: {text_block: {body: text}},
         dataType: 'JSON'
     });
+    //TODO?  Add error handling if the server can't accept the edit right now
 }
 // sets target to edit mode
 function editMode (target) {
