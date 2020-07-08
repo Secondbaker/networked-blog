@@ -1,12 +1,6 @@
 import DOMPurify from 'dompurify';
 import Converter from './markdown_renderer';
 var converter = Converter();
-console.log(converter);
-var showdown = require('showdown'),
-    converter = new showdown.Converter(),
-    text = '# hello, markdown!',
-    html = converter.makeHtml(text);
-
 
 //#region  Setup
 
@@ -143,7 +137,6 @@ function toggleModes (event) {
 $('.text-block-container').click( toggleModes );
 
 //since our text is raw markdown, we need to convert it
-//converter = new showdown.Converter({ extensions: [customExpressions] });
 $('.text-block').each(function () { readyDisplay($(this)); });
 
 //#endregion
