@@ -76,7 +76,7 @@ function readyDisplay (target) {
     if(!$(target).hasClass('ready'))
     {
         
-        let text = $(target).find('.text-block-text-area').text();
+        let text = $(target).find('.text-block-text-area').text().trim();
         console.log(text);
         $(target).html(`<div class='text-block-text-area'>${DOMPurify.sanitize(converter.makeHtml(text))}</div>`);
         $(target).removeClass('ready')
