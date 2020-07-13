@@ -70,16 +70,19 @@ async function editMode (target) {
     console.log(replacementString);
     //the id of textBlock should look like
         //text-block-{id}
-    let request = $.ajax({
+    
+    $(target).html(`<textarea class="text-block-text-area">${replacementString}</textarea>`);
+    $('textarea.text-block-text-area').focus();
+    //setting the focus puts the cursor into the textarea
+    //TODO? make it so the cursor goes exactly where the user clicks
+    $('textarea.text-block-text-area').keyup(autoSend);
+    
+        let request = $.ajax({
         url: `/text_blocks/${ID}.json`
     });
     
     request.done(function() {
-        $(target).html(`<textarea class="text-block-text-area">${request.responseJSON.body}</textarea>`);
-        $('textarea.text-block-text-area').focus();
-        //setting the focus puts the cursor into the textarea
-        //TODO? make it so the cursor goes exactly where the user clicks
-        $('textarea.text-block-text-area').keyup( autoSend );
+        
     });
     //TODO? add error handling for request    
 }
@@ -102,11 +105,11 @@ async function getInfo(ID, type, dataLocation)
     let request = await $.ajax({
         url: `/${type}/${ID}.json`
     }).done(function(request) {
-        console.log(request.body);
+        console.log(request[dataLocation]);
         return request[dataLocation];
     });
 
-    resultString = request.body;
+    resultString = request[dataLocation];
 
     return resultString;
 }
