@@ -51,7 +51,7 @@ async function editMode (target) {
     {
         return;
     }
-    let replacementString;
+
     let splitID = $(target).attr('id').split('-');
     let type = [splitID[0], splitID[1]].join('_') + 's';
     let ID = splitID[2];
@@ -65,9 +65,8 @@ async function editMode (target) {
     {
         dataLocation = 'name';
     }
-    replacementString = await getInfo(ID, type, dataLocation);
+    let replacementString = await getInfo(ID, type, dataLocation);
 
-    console.log(replacementString);
     //the id of textBlock should look like
         //text-block-{id}
     
@@ -76,42 +75,26 @@ async function editMode (target) {
     //setting the focus puts the cursor into the textarea
     //TODO? make it so the cursor goes exactly where the user clicks
     $('textarea.text-block-text-area').keyup(autoSend);
-    
-        let request = $.ajax({
-        url: `/text_blocks/${ID}.json`
-    });
-    
-    request.done(function() {
-        
-    });
-    //TODO? add error handling for request    
+
+       
 }
 
-//takes a string textBlockID
-//returns the ajax request for a text_block
-function getTextBlock(ID) {
-    
-}
-
-//returns the ajax request for a blog_post.name
-async function getBlogPostName() {
-
-}
-
+//Given:  ID of an object, its type, and a location to get data from (eg. body, head)
+//Returns:  a string containing the information in that location
+//Behavior on failed transaction is undefined.
 async function getInfo(ID, type, dataLocation)
 {
-    console.log(dataLocation);
     var resultString = "test";
     let request = await $.ajax({
         url: `/${type}/${ID}.json`
     }).done(function(request) {
-        console.log(request[dataLocation]);
         return request[dataLocation];
     });
 
     resultString = request[dataLocation];
 
     return resultString;
+    //TODO? add error handling for request 
 }
 
 //To be triggered once for each TextBlock when it is first rendered
