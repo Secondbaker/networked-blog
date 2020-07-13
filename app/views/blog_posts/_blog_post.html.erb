@@ -1,6 +1,6 @@
 <div id='blog-post-<%= blog_post.id %>'>
     <div class='blog-post-name'>
-        <%= blog_post.render_name %>
+        <%= render partial: '/blog_posts/name', locals: { blog_post: blog_post } %>
     </div>
 
     <% blog_post.text_blocks.each do |text_block| %>

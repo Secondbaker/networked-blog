@@ -44,21 +44,36 @@ function sendText (text, textBlock) {
     //TODO?  Add error handling if the server can't accept the edit right now
 }
 // sets target to edit mode
-function editMode (target) {
+async function editMode (target) {
     
     //just so we don't need to make additional requests for edit mode
     if ($(target).hasClass('editing') || $(target).parentsUntil('.text-block-container').hasClass('editing'))
     {
         return;
     }
+    let replacementString;
+    let splitID = $(target).attr('id').split('-');
+    let type = [splitID[0], splitID[1]].join('_') + 's';
+    let ID = splitID[2];
+    $(target).addClass('editing');
+    let dataLocation;
+    if(type === "text_blocks")
+    {
+        dataLocation = 'body';
+    }
+    else if (type == "blog_posts")
+    {
+        dataLocation = 'name';
+    }
+    replacementString = await getInfo(ID, type, dataLocation);
 
+    console.log(replacementString);
     //the id of textBlock should look like
         //text-block-{id}
-    let textBlockID = $(target).attr('id').split('-')[2];
-    $(target).addClass('editing');
     let request = $.ajax({
-        url: `/text_blocks/${textBlockID}.json`
+        url: `/text_blocks/${ID}.json`
     });
+    
     request.done(function() {
         $(target).html(`<textarea class="text-block-text-area">${request.responseJSON.body}</textarea>`);
         $('textarea.text-block-text-area').focus();
@@ -67,6 +82,33 @@ function editMode (target) {
         $('textarea.text-block-text-area').keyup( autoSend );
     });
     //TODO? add error handling for request    
+}
+
+//takes a string textBlockID
+//returns the ajax request for a text_block
+function getTextBlock(ID) {
+    
+}
+
+//returns the ajax request for a blog_post.name
+async function getBlogPostName() {
+
+}
+
+async function getInfo(ID, type, dataLocation)
+{
+    console.log(dataLocation);
+    var resultString = "test";
+    let request = await $.ajax({
+        url: `/${type}/${ID}.json`
+    }).done(function(request) {
+        console.log(request.body);
+        return request[dataLocation];
+    });
+
+    resultString = request.body;
+
+    return resultString;
 }
 
 //To be triggered once for each TextBlock when it is first rendered
