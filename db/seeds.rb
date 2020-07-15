@@ -42,7 +42,7 @@ BLOG_POST_TARGET.times do
         if verbose
             puts body
         end
-        text_blocks << TextBlock.create(body: body)
+       # text_blocks << TextBlock.create(body: body)
     end
 
     post = BlogPost.create(name: name)
