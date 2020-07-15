@@ -119,9 +119,10 @@ class BlogPost < ApplicationRecord
     #[[{name: blog_post.name, id: blog_post.id}]]
     def convert_links
         unless self.body.nil?
-            self.body.gsub!(internal_link_regex).each do |link|
+            self.body.gsub!(internal_link_regex){|link|
+                puts 'found a link'
                 recursive_check link
-            end
+            }
         end
         unless self.name.nil?
             self.name.gsub!(internal_link_regex).each do |link|
@@ -146,18 +147,13 @@ class BlogPost < ApplicationRecord
         #index: the index of the character in the string we are on
         index = 0
 
-        #we don't want to start on [[ because that triggers recursion and we'll recurse forever
-        if text[index] == text[index + 1] && text[index] == '['
-            index += 2
-        end
-
         until index >= text.length do
-
+            puts text[index..]
             ##this is the recursion trigger
             if text[index] == text[index + 1] && text[index] == '['
-                #We'll be replacing from the current index at [[ to the next ]] with whatever link is within the [[]]
+                #We'll be replacing from (current index + 2 for the [[) to the next ]] with whatever link is within the [[]]
                 #in other words, we're going to replace the section we're in with the nested_link
-                nested_link = recursive_check text[index..]
+                nested_link = recursive_check text[(index + 2)..]
                 #this is really error checking
                 #usually, the section will just go to the next ]],
                 #but in case we somehow have a string with no ]], this should rescue it
@@ -169,7 +165,7 @@ class BlogPost < ApplicationRecord
             elsif text[index] == text[index + 1] && text[index] == ']'
                 #text[0] and text[1] should be [[
                 #so the blog_post.name is everything from the [[ to ]] (where we are now)
-                post_name = text[2..index - 1]
+                post_name = text[0..index - 1]
                 #we get the corresponding BlogPost
                 post = BlogPost.find_or_create_by(name: post_name)
                 #and we return it in the proper format

@@ -134,11 +134,7 @@ class BlogPostsController < ApplicationController
   def convert_internal_links_to_markdown (text)
     unless text.nil?
       text.gsub(internal_link_regex){|link|
-        #remove the outer bracket
-        link = link[1..-2]
-        #append the matching blog post with parenthesis
-        link = link.concat "(#{blog_post_path(BlogPost.find_or_create_by(name: link[1..-2]))})"
-
+       
         link
       }
     end
