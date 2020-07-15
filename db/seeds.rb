@@ -16,6 +16,10 @@ BLOG_POST_MAX_SIZE = 30
 MAX_LINKS_PER_POST = 1
 
 if verbose
+    puts 'Destroying TextBlock'
+end
+TextBlock.destroy_all
+if verbose
     puts 'Destroying InternalLink'
 end
 InternalLink.destroy_all

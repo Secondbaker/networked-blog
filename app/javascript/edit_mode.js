@@ -59,12 +59,24 @@ function sendText (text, textBlock) {
 //Sends a TextBlock to the server
 function sendTextBlock(text, ID)
 {
-    return $.ajax({
-        method: 'PATCH',
-        url: `/text_blocks/${ID}`,
-        data: { text_block: { body: text } },
-        dataType: 'JSON'
-    });
+    if(ID === "creator")
+    {
+        return $.ajax({
+            method: 'POST',
+            url: `/text_blocks/`,
+            data: { text_block: { body: text } },
+            dataType: 'JSON'
+        });
+    }
+    else
+    {
+        return $.ajax({
+            method: 'PATCH',
+            url: `/text_blocks/${ID}`,
+            data: { text_block: { body: text } },
+            dataType: 'JSON'
+        });
+    }
 }
 
 //Sends a BlogPost#name to the server
@@ -89,6 +101,7 @@ async function editMode (target) {
     let splitID = $(target).attr('id').split('-');
     let type = [splitID[0], splitID[1]].join('_') + 's';
     let ID = splitID[2];
+    
     $(target).addClass('editing');
     let dataLocation;
     if(type === "text_blocks")
@@ -99,7 +112,11 @@ async function editMode (target) {
     {
         dataLocation = 'name';
     }
-    let replacementString = await getInfo(ID, type, dataLocation);
+
+    let replacementString = "...";
+    if (ID !== "creator") {
+        replacementString = await getInfo(ID, type, dataLocation);
+    }
 
     //the id of textBlock should look like
         //text-block-{id}
