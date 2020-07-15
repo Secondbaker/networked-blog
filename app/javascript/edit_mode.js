@@ -40,6 +40,9 @@ function sendText (text, textBlock) {
 
     let type = [splitString[0], splitString[1]].join('_');
 
+    //TODO it doesn't feel right that this function looks at the string
+    //and figures out the same thing that editMode does in basically the same way
+    //but right now if I change anything I have to remember to update both
     if(type === "text_block")
     {
         sendTextBlock(text, ID);
@@ -53,6 +56,7 @@ function sendText (text, textBlock) {
     //TODO?  Add error handling if the server can't accept the edit right now
 }
 
+//Sends a TextBlock to the server
 function sendTextBlock(text, ID)
 {
     return $.ajax({
@@ -63,6 +67,7 @@ function sendTextBlock(text, ID)
     });
 }
 
+//Sends a BlogPost#name to the server
 function sendName(text, ID)
 {
     return $.ajax({
