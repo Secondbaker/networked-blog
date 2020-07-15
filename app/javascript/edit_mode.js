@@ -33,15 +33,44 @@ function autoSend() {
 function sendText (text, textBlock) {
     //the id of textBlock should look like
         //text-block-{id}
-    let textBlockID = $(textBlock).attr('id').split('-')[2];
-    console.log(textBlockID);
-    let request = $.ajax({
+
+    let splitString = $(textBlock).attr('id').split('-');
+    let ID = splitString[2];
+    console.log(ID);
+
+    let type = [splitString[0], splitString[1]].join('_');
+
+    if(type === "text_block")
+    {
+        sendTextBlock(text, ID);
+    }
+
+    else if(type === "blog_post")
+    {
+        sendName(text, ID);
+    }
+    
+    //TODO?  Add error handling if the server can't accept the edit right now
+}
+
+function sendTextBlock(text, ID)
+{
+    return $.ajax({
         method: 'PATCH',
-        url: `/text_blocks/${textBlockID}`,
-        data: {text_block: {body: text}},
+        url: `/text_blocks/${ID}`,
+        data: { text_block: { body: text } },
         dataType: 'JSON'
     });
-    //TODO?  Add error handling if the server can't accept the edit right now
+}
+
+function sendName(text, ID)
+{
+    return $.ajax({
+        method: 'PATCH',
+        url: `/blog_posts/${ID}`,
+        data: { blog_post: { name: text } },
+        dataType: 'JSON'
+    });
 }
 // sets target to edit mode
 async function editMode (target) {
