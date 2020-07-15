@@ -101,6 +101,9 @@ async function editMode (target) {
     let splitID = $(target).attr('id').split('-');
     let type = [splitID[0], splitID[1]].join('_') + 's';
     let ID = splitID[2];
+
+    let height = $(target).height();
+    let width = $(target).width();
     
     $(target).addClass('editing');
     let dataLocation;
@@ -122,12 +125,20 @@ async function editMode (target) {
         //text-block-{id}
     
     $(target).html(`<textarea class="text-block-text-area">${replacementString}</textarea>`);
+    $(target).resize();
     $('textarea.text-block-text-area').focus();
     //setting the focus puts the cursor into the textarea
     //TODO? make it so the cursor goes exactly where the user clicks
     $('textarea.text-block-text-area').keyup(autoSend);
-
+    $('textarea.text-block-text-area').keyup(resize);
        
+}
+
+
+function resize()
+{
+    $(this).height(0);
+    $(this).height(this.scrollHeight);
 }
 
 //Given:  ID of an object, its type, and a location to get data from (eg. body, head)

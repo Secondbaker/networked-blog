@@ -2,10 +2,15 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 .text-block {
-    width: 500px;
+    width: 100%;
 }
 .text-block-text-area {
-    width: 50%;
+    width: 100%;
+    padding: 0px;
     resize: none;
     background-color: transparent;
+}
+
+.text-block-container {
+    width: 50%;
 }
