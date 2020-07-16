@@ -134,18 +134,23 @@ async function editMode (target) {
     //TODO? make it so the cursor goes exactly where the user clicks
     textArea.keyup(autoSend);
     textArea.keyup(function () { autosize(textArea) });
-       
+    textArea.keydown(textTravel);
 }
 
-function setSize(target) {
-	console.log(target);
-	console.log('height: ' + target.height());
-	console.log('scrollHeight: ' + target[0].scrollHeight);
-	target.height($(target).prop('scrollHeight'));
-}
-function resize() {
-	console.log('scrollheight: ' + this.scrollHeight);
-	$(this).height(this.scrollHeight);
+function textTravel()
+{
+    console.log('textTravel');
+    console.log(event.keyCode);
+    //down arrow
+    if(event.keyCode === 40)
+    {
+        console.log('down arrow');
+    }
+    //up arrow
+    else if(event.keyCode === 38)
+    {
+        console.log('up arrow');
+    }
 }
 
 
