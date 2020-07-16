@@ -1,5 +1,6 @@
 import DOMPurify from 'dompurify';
 import Converter from './markdown_renderer';
+var autosize = require ('autosize');
 var converter = Converter();
 
 //#region Setup
@@ -125,21 +126,28 @@ async function editMode (target) {
         //text-block-{id}
     
     $(target).html(`<textarea class="text-block-text-area">${replacementString}</textarea>`);
-    $(target).resize();
-    $('textarea.text-block-text-area').focus();
+    
+    var textArea = $('textarea.text-block-text-area');
+    textArea.focus();
+    autosize(textArea);
     //setting the focus puts the cursor into the textarea
     //TODO? make it so the cursor goes exactly where the user clicks
-    $('textarea.text-block-text-area').keyup(autoSend);
-    $('textarea.text-block-text-area').keyup(resize);
+    textArea.keyup(autoSend);
+    textArea.keyup(function () { autosize(textArea) });
        
 }
 
-
-function resize()
-{
-    $(this).height(0);
-    $(this).height(this.scrollHeight);
+function setSize(target) {
+	console.log(target);
+	console.log('height: ' + target.height());
+	console.log('scrollHeight: ' + target[0].scrollHeight);
+	target.height($(target).prop('scrollHeight'));
 }
+function resize() {
+	console.log('scrollheight: ' + this.scrollHeight);
+	$(this).height(this.scrollHeight);
+}
+
 
 //Given:  ID of an object, its type, and a location to get data from (eg. body, head)
 //Returns:  a string containing the information in that location
