@@ -140,17 +140,20 @@ async function editMode (target) {
 function textTravel()
 {
     console.log('textTravel');
-    console.log(event.keyCode);
+    console.log(event);
+    console.log(this.selectionStart);
+    console.log()
     //down arrow
-    if(event.keyCode === 40)
-    {
-        console.log('down arrow');
-    }
-    //up arrow
-    else if(event.keyCode === 38)
-    {
-        console.log('up arrow');
-    }
+    if (event.keyCode === 40 && $(this).val().length == this.selectionStart) {
+		console.log('move down');
+	}
+	//up arrow
+	else if (event.keyCode === 38 && this.selectionStart == 0) {
+		console.log('move up');
+	}
+}
+function getLineNumber(textarea) {
+	return textarea.value.substr(0, textarea.selectionStart).split('\n').length;
 }
 
 
