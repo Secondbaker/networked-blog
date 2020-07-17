@@ -1,6 +1,7 @@
 import DOMPurify from 'dompurify';
 import Converter from './markdown_renderer';
 var autosize = require ('autosize');
+var BlogPost = require ('./blog_post');
 var converter = Converter();
 
 //#region Setup
@@ -14,6 +15,10 @@ $.ajaxSetup({
       'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
     }
   });
+
+var container = $('.text-block-container');
+console.log(container);
+var blogPost = new BlogPost(container);
 
 //#endregion Setup
 
@@ -37,7 +42,6 @@ function sendText (text, textBlock) {
 
     let splitString = $(textBlock).attr('id').split('-');
     let ID = splitString[2];
-    console.log(ID);
 
     let type = [splitString[0], splitString[1]].join('_');
 
@@ -139,10 +143,6 @@ async function editMode (target) {
 
 function textTravel()
 {
-    console.log('textTravel');
-    console.log(event);
-    console.log(this.selectionStart);
-    console.log()
     //down arrow
     if (event.keyCode === 40 && $(this).val().length == this.selectionStart) {
 		console.log('move down');
@@ -183,7 +183,6 @@ function readyDisplay (target) {
     {
         
         let text = $(target).find('.text-block-text-area').text().trim();
-        console.log(text);
         $(target).html(`<div class='text-block-text-area'>${DOMPurify.sanitize(converter.makeHtml(text))}</div>`);
         $(target).removeClass('ready')
     }
