@@ -245,7 +245,7 @@ function toggleModes (event) {
 //We put this on the container
 //The container isn't replaced, but its contents are
 //Because the container isn't replaced, we only need to attach this once
-$('.text-block-container').click( toggleModes );
+//$('.text-block-container').click( toggleModes );
 
 //since our text is raw markdown, we need to convert it
 $('.text-block').each(function () { readyDisplay($(this)); });

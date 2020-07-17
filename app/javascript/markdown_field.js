@@ -1,14 +1,28 @@
 class MarkdownField
 {
     field;
+    editing = false;
     constructor(field)
     {
         this.field = field;
     }
-    transform()
+    readMode()
     {
 
     }
+    editMode()
+    {
+        
+    }
+    isReadMode()
+    {
+        return !this.editing;
+    }
+    isEditingMode()
+    {
+        return this.editing;
+    }
+    
 }
 
 module.exports = MarkdownField;
