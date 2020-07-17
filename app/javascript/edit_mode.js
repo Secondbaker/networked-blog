@@ -19,6 +19,7 @@ $.ajaxSetup({
 var container = $('.text-block-container');
 console.log(container);
 var blogPost = new BlogPost(container);
+console.log(blogPost);
 
 //#endregion Setup
 
