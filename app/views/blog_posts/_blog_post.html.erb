@@ -1,11 +1,1 @@
-<div id='blog-post-<%= blog_post.id %>'>
-    <div class='blog-post-name'>
-        <%= render partial: '/blog_posts/name', locals: { blog_post: blog_post } %>
-    </div>
-
-    <% blog_post.text_blocks.each do |text_block| %>
-        <%= render partial: '/text_blocks/text_block', locals: { text_block: text_block } %>
-    <% end %>
-
-    <%= render partial: '/text_blocks/creator' %>
-</div>
+<%= render_component>
