@@ -8,11 +8,11 @@ class MarkdownField
     }
     readMode()
     {
-
+        console.log("Going to readMode()");
     }
     editMode()
     {
-        
+        console.log("Going to editMode()");
     }
     isReadMode()
     {
@@ -22,7 +22,10 @@ class MarkdownField
     {
         return this.editing;
     }
-    
+    transform()
+    {
+        console.log("transforming");
+    }
 }
 
 module.exports = MarkdownField;

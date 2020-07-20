@@ -3,13 +3,15 @@ var MarkdownField = require('./markdown_field');
 class BlogPost
 {
     blogPostObject;
-    markdown_fields = [];
+    markdownFields = [];
+    selectedField = null;
 
     constructor(blogPostObject)
     {
         console.log('got blog post?  ' + blogPostObject);
         this.blogPostObject = blogPostObject;
-        $(blogPostObject).click( this.toggleModes );
+        var self = this;
+        $(blogPostObject).click( { myObject: this }, this.toggleFields );
         console.log($(blogPostObject).find('.text-block'));
         var textBlocks = $(blogPostObject).find('.text-block');
         for(i = 0; i < textBlocks.length; i++)
@@ -17,52 +19,52 @@ class BlogPost
             var field = new MarkdownField(textBlocks[i]);
             this.addField(field);
         }
-        this.markdown_fields.forEach(element => console.log(element));
+        this.markdownFields.forEach(element => console.log(element));
+        console.log($(this));
     }
     addField(field)
     {
-        this.markdown_fields.push(field);
+        this.markdownFields.push(field);
     }
 
     selectField(field)
     {
-        
+        console.log("selecting " + field);
+        if(field === this.selectedField)
+        {
+            return;
+        }
+        if(field === null)
+        {
+            this.markdownFields[selectedField].readMode();
+            this.selectedField = null;
+        }
+        else
+        {
+            field.editMode();
+            this.selectedField = this.markdownFields.indexOf(this.markdownFields.filter(function(markdownField) {return markdownField.field === field.field}));
+        }
     }
     //sets everything but event.target to read mode
     //sets the data-selected attribute to the id of the text-block which was clicked, if any
-    toggleModes (event) {
-        let { target } = event;
-        //The target might be a text-block, or the child of a text-block, or the text-block-container
-        if ($(target).hasClass('text-block'))
+    toggleFields (event) {
+        let { target, data } = event;
+        console.log(data.myObject);
+        if($(target).hasClass('.text-block'))
         {
-            if ($(target).attr('id') !== $(this).data('selected'))
-            {
-                $(this).data('selected', $(target).attr('id'));
-                editMode(target);
-                $('.text-block', this).not($(target)).each(function () { readMode($(this)); });
-            }
+            console.log("found a text-block");
+            this.selectField(new MarkdownField(target));
         }
-        else if($(target).parentsUntil('.text-block-container').hasClass('text-block'))
+        else
         {
-        //the text block we want is an ancestor of target
-        //so we need to get that text block
-        //then we do the same as above
-            var targetBlock = $(target).closest('.text-block');
-            if ($(targetBlock).attr('id') !== $(this).data('selected'))
-            {
-                $(this).data('selected', $(targetBlock).attr('id'));
-                editMode(targetBlock);
-                $('.text-block', this).not($(targetBlock)).each(function () { readMode($(this)); });
-            }
+            console.log("found something else");
+            console.log(target);
+            textBlock = $(target).parentsUntil('.text-block-container').closest('.text-block')[0];
+            textField = new MarkdownField(textBlock);
+            console.log(textField);
+            field = data.myObject.markdownFields.filter(function(markdownField){ return markdownField.field === textField.field })[0];
+            data.myObject.selectField(field);
         }
-        else //text-block-container
-        {
-        //something outside of all the text blocks was clicked
-        //put everything into read mode
-        //set data-selected to none
-            $(this).data('selected', "none");
-            $('.text-block', this).each(function () { readMode($(this)); });
-        }      
     }
 }
 
