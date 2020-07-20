@@ -41,8 +41,16 @@ class BlogPost
         }
         else
         {
+            console.log(this.selectedField);
+            if(this.selectedField !== null){
+                console.log("They told me it's not null");
+                this.markdownFields[this.selectedField].readMode();
+            }
+            
+            
+            this.selectedField = this.markdownFields.indexOf(field);
             field.editMode();
-            this.selectedField = this.markdownFields.indexOf(this.markdownFields.filter(function(markdownField) {return markdownField.field === field.field}));
+            console.log(this.selectedField);
         }
     }
     //sets everything but event.target to read mode
