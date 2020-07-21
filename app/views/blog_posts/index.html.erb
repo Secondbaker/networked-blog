@@ -16,7 +16,9 @@
     <label>View graph</label>
   </div>
 
+ 
   <div class='panelWrapper app-body'>
+    <%= react_component 'BlogPostContainer' %>
     <div id='text-posts' class='text-block-container' data-selected='none'>
       <% @blog_posts.each do |blog_post|%>
         <div class='post-partial'>
@@ -31,6 +33,3 @@
 
 <%= link_to 'New Blog Post', new_blog_post_path %>
 
-<%= javascript_pack_tag 'panels' %>
-<%= javascript_pack_tag 'graph' %>
-<%= javascript_pack_tag 'blog_posts'%>
