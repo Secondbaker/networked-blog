@@ -20,3 +20,12 @@ export class BlogPostTitle extends TextArea {
   }
 }
 
+export class TextBlock extends TextArea {
+  render() {
+    return (
+      <React.Fragment>
+        BlogPostTitle
+      </React.Fragment>
+    );
+  }
+}
