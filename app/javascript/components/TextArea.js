@@ -1,16 +1,16 @@
 import React from "react"
 import PropTypes from "prop-types"
-class TextArea extends React.Component {
+export class TextArea extends React.Component {
   render () {
     return (
       <React.Fragment>
-        TextArea
+        <p>TextArea</p>
       </React.Fragment>
     );
   }
 }
 
-class BlogPostTitle extends TextArea {
+export class BlogPostTitle extends TextArea {
   render() {
     return (
       <React.Fragment>
@@ -20,6 +20,3 @@ class BlogPostTitle extends TextArea {
   }
 }
 
-export { TextArea,
-   BlogPostTitle
-}
