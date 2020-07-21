@@ -18,7 +18,7 @@
 
  
   <div class='panelWrapper app-body'>
-    <%= react_component 'BlogPostContainer', { blogPosts: @blog_posts } %>
+    <%= react_component 'BlogPostContainer', { blogPosts: @blog_posts, textBlocks: @text_blocks } %>
     <div id='text-posts' class='text-block-container' data-selected='none'>
       <% @blog_posts.each do |blog_post|%>
         <div class='post-partial'>

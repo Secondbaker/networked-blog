@@ -6,6 +6,7 @@ class BlogPost extends React.Component {
     return (
       <React.Fragment>
         This is a BlogPost {JSON.parse(this.props.value).name}
+        {this.props.textBlocks}
         <TextArea />
         <BlogPostTitle />
       </React.Fragment>

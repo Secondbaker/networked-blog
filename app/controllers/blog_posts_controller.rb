@@ -14,6 +14,10 @@ class BlogPostsController < ApplicationController
       data_hash = { data: { id: blog_post.id } }
       @graph_data.push data_hash
     end
+    @text_blocks = []
+    @blog_posts.each do |blog_post|
+      @text_blocks.concat blog_post.text_blocks
+    end
     @internal_links.each do |internal_link|
       data_id = internal_link.source_id.to_s + '' + internal_link.destination_id.to_s
       source_id = internal_link.source_id
