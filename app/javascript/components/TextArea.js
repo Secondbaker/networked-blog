@@ -24,7 +24,7 @@ export class TextBlock extends TextArea {
   render() {
     return (
       <React.Fragment>
-        BlogPostTitle
+        TextBlock
       </React.Fragment>
     );
   }

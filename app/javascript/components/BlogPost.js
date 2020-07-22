@@ -8,7 +8,7 @@ class BlogPost extends React.Component {
         This is a BlogPost {JSON.parse(this.props.value).name}
         {this.props.textBlocks}
         <TextArea />
-        <BlogPostTitle />
+        <BlogPostTitle value={JSON.parse(this.props.value).name}/>
       </React.Fragment>
     );
   }

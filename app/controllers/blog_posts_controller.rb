@@ -18,6 +18,19 @@ class BlogPostsController < ApplicationController
     @blog_posts.each do |blog_post|
       @text_blocks.concat blog_post.text_blocks
     end
+
+    @json = []
+    @blog_posts.each do |blog_post|
+      @json << Jbuilder.encode do |json|
+        json.id blog_post.id
+        json.name blog_post.name
+        json.body blog_post.body
+        json.created_at blog_post.created_at
+        json.text_blocks blog_post.text_blocks, :id, :body, :created_at, :updated_at
+      end
+    end
+
+
     @internal_links.each do |internal_link|
       data_id = internal_link.source_id.to_s + '' + internal_link.destination_id.to_s
       source_id = internal_link.source_id
