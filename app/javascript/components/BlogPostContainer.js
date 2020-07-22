@@ -8,9 +8,9 @@ class BlogPostContainer extends React.Component {
   }
   render () {
     console.log(this.state.blogPosts);
+    console.log(this.state.blogPosts[0].text_blocks);
     return (
-      
-      this.state.blogPosts.map((post) => <BlogPost key={post.id} value={post} textBlocks={post.text_blocks}  />)
+      this.state.blogPosts.map((post) => {console.log(post.text_blocks); <BlogPost key={post.id} value={post} textBlocks={post.text_blocks}  />})
     );
   }
 }
