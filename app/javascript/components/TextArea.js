@@ -24,7 +24,7 @@ export class TextBlock extends TextArea {
   render() {
     return (
       <React.Fragment>
-        TextBlock
+        {this.props.body}
       </React.Fragment>
     );
   }
