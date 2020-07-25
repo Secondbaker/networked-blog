@@ -5,13 +5,13 @@ class BlogPost extends React.Component {
   render () {
     console.log(this.props.textBlocks);
     
-    postBody = JSON.parse(this.props.value).text_blocks.map((block) => "<TextBlock value=${block}/>");
+    let postBody = this.props.textBlocks.map((block) => console.log(block));
     
     return (
       
       <React.Fragment>
-        {JSON.parse(this.props.value).name}
-        <BlogPostTitle value={JSON.parse(this.props.value).name}/>
+        {this.props.name}
+        <BlogPostTitle value={this.props.name}/>
         {postBody}
       </React.Fragment>
     );

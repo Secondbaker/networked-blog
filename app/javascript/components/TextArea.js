@@ -14,7 +14,7 @@ export class BlogPostTitle extends TextArea {
   render() {
     return (
       <React.Fragment>
-        BlogPostTitle
+        {this.props.value}
       </React.Fragment>
     );
   }
