@@ -11,7 +11,7 @@ class BlogPost extends React.Component {
       
       <React.Fragment>
         <BlogPostTitle value={this.props.name}/>
-        {this.props.textBlocks.map((block) => <p><TextBlock {...block} /></p>)}
+        {this.props.textBlocks.map((block) => <TextBlock {...block} key={block.id} editMode={true}/>)}
       </React.Fragment>
     );
   }

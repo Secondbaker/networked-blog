@@ -22,9 +22,20 @@ export class BlogPostTitle extends TextArea {
 
 export class TextBlock extends TextArea {
   render() {
+    let body;
+    if(this.props.editMode)
+    {
+      body = <textarea defaultValue={this.props.body}></textarea>
+    }
+    else
+    {
+      body = this.props.body;
+    }
     return (
       <React.Fragment>
-        {this.props.body}
+        <p>
+          {body}
+        </p>
       </React.Fragment>
     );
   }
