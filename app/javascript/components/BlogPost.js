@@ -4,9 +4,13 @@ import { TextArea, BlogPostTitle, TextBlock } from './TextArea'
 class BlogPost extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { textBlocks: this.props.textBlocks,
+    let textAreaCount = this.props.textBlocks.length + 1;
+    let textBlocks = this.props.textBlocks.slice();
+    this.state = { textBlocks: textBlocks,
                   name: this.props.name,
+                  selected: Array(textAreaCount).fill(false),
                 };
+    this.state.textBlocks.map((e) => console.log(e));
   }
   render () {
     let {textBlocks, name} = this.state;
