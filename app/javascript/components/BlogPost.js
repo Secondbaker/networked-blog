@@ -12,6 +12,12 @@ class BlogPost extends React.Component {
     this.state = { textBlocks: textBlocks,
                   post: this.props.post,
                 };
+    console.log(this.state.textBlocks.map((tb) => {
+      if(tb.name)
+        return tb.name;
+      else
+        return 'no name';
+    }));
   }
   handleClick(index) {
 
@@ -40,8 +46,14 @@ class BlogPost extends React.Component {
     return (
       
       <React.Fragment>
-        <BlogPostTitle onClick={() => this.handleClick(0)} value={post.name} />
-        {textBlocks.map((block) => <TextBlock onClick={() => this.handleClick(textBlocks.indexOf(block))} {...block} key={block.id} editMode={block.selected}/>)}
+        
+        {textBlocks.map((block) => {
+          if(block.name)
+            return <BlogPostTitle onClick={() => this.handleClick(textBlocks.indexOf(block))} {...block} key={block.id} editMode={block.selected} />
+          else
+            return <TextBlock onClick={() => this.handleClick(textBlocks.indexOf(block))} {...block} key={block.id} editMode={block.selected} />
+          }) 
+        }
       </React.Fragment>
     );
   }
