@@ -5,38 +5,42 @@ class BlogPost extends React.Component {
   constructor(props) {
     super(props);
     let textBlocks = this.props.textBlocks.slice();
-    textBlocks.unshift(this.props.name);
+    textBlocks.unshift(this.props.post);
     textBlocks = textBlocks.map((tb) => {
       tb.selected = false;
       return tb;});
     this.state = { textBlocks: textBlocks,
-                  name: this.props.name,
+                  post: this.props.post,
                 };
   }
-  handleClick(key) {
+  handleClick(index) {
 
     let textBlocks = this.state.textBlocks.slice();
-    if(Number.isInteger(key))
+    if(Number.isInteger(index))
     {
+      if(textBlocks[index].selected)
+      {
+        return;
+      }
       textBlocks = textBlocks.map((tb) => {
         tb.selected = false;
         return tb;
       })
-      textBlocks[key].selected = true;
+      textBlocks[index].selected = true;
     }
     this.setState({
       textBlocks: textBlocks
     });
-    console.log(key);
+    console.log(index);
   }
   render () {
-    let {textBlocks, name} = this.state;
+    let {textBlocks, post} = this.state;
     
     
     return (
       
       <React.Fragment>
-        <BlogPostTitle onClick={() => this.handleClick(0)} value={name.name}/>
+        <BlogPostTitle onClick={() => this.handleClick(0)} value={post.name} />
         {textBlocks.map((block) => <TextBlock onClick={() => this.handleClick(textBlocks.indexOf(block))} {...block} key={block.id} editMode={block.selected}/>)}
       </React.Fragment>
     );
