@@ -1,6 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { TextArea, BlogPostTitle, TextBlock } from './TextArea'
+import { BlogPostTitle, TextBlock } from './TextArea'
 class BlogPost extends React.Component {
   constructor(props) {
     super(props);
