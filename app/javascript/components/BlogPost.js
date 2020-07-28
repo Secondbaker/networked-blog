@@ -5,12 +5,13 @@ class BlogPost extends React.Component {
   constructor(props) {
     super(props);
     let textAreaCount = this.props.textBlocks.length + 1;
-    let textBlocks = this.props.textBlocks.slice();
+    let textBlocks = this.props.textBlocks.map((tb) => {
+      tb.selected = false;
+      return tb;});
     this.state = { textBlocks: textBlocks,
                   name: this.props.name,
                   selected: Array(textAreaCount).fill(false),
                 };
-    this.state.textBlocks.map((e) => console.log(e));
   }
   render () {
     let {textBlocks, name} = this.state;
@@ -20,7 +21,7 @@ class BlogPost extends React.Component {
       
       <React.Fragment>
         <BlogPostTitle value={name}/>
-        {textBlocks.map((block) => <TextBlock {...block} key={block.id} editMode={true}/>)}
+        {textBlocks.map((block) => <TextBlock {...block} key={block.id} editMode={block.selected}/>)}
       </React.Fragment>
     );
   }
