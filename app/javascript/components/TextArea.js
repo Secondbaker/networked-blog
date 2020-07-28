@@ -9,6 +9,7 @@ export class TextArea extends React.Component {
     else {
       body = this.props.body;
     }
+    console.log(body);
     return (
       <React.Fragment>
         <p onClick={() => this.props.onClick()}>
@@ -23,7 +24,7 @@ export class BlogPostTitle extends TextArea {
   render() {
     console.log('here');
     return (
-      <TextArea body={this.props.value} editMode={this.props.editMode} onClick={this.props.onClick}/>
+      <TextArea body={this.props.name} editMode={this.props.editMode} onClick={this.props.onClick}/>
     );
   }
 }
