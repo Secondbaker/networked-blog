@@ -2,16 +2,21 @@ import React from "react"
 import PropTypes from "prop-types"
 import { TextArea, BlogPostTitle, TextBlock } from './TextArea'
 class BlogPost extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { textBlocks: this.props.textBlocks,
+                  name: this.props.name,
+                };
+  }
   render () {
-    console.log(this.props.textBlocks);
+    let {textBlocks, name} = this.state;
     
-    let postBody = this.props.textBlocks.map((block) => `<p><TextBlock {...block} /></p>` ).join('\n');
     
     return (
       
       <React.Fragment>
-        <BlogPostTitle value={this.props.name}/>
-        {this.props.textBlocks.map((block) => <TextBlock {...block} key={block.id} editMode={true}/>)}
+        <BlogPostTitle value={name}/>
+        {textBlocks.map((block) => <TextBlock {...block} key={block.id} editMode={true}/>)}
       </React.Fragment>
     );
   }
