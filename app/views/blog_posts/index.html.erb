@@ -23,7 +23,7 @@
     <div id='text-posts' class='text-block-container' data-selected='none'>
       <% @blog_posts.each do |blog_post|%>
         <div class='post-partial'>
-          <%= react_component 'BlogPost', { textBlocks: blog_post.text_blocks, name: blog_post.name} %>
+          <%= react_component 'BlogPost', { textBlocks: blog_post.text_blocks, name: blog_post} %>
         </div>
       <% end %>
     </div>

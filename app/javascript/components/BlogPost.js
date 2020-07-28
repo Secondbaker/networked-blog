@@ -4,8 +4,9 @@ import { TextArea, BlogPostTitle, TextBlock } from './TextArea'
 class BlogPost extends React.Component {
   constructor(props) {
     super(props);
-    let textAreaCount = this.props.textBlocks.length + 1;
-    let textBlocks = this.props.textBlocks.map((tb) => {
+    let textBlocks = this.props.textBlocks.slice();
+    textBlocks.unshift(this.props.name);
+    textBlocks = textBlocks.map((tb) => {
       tb.selected = false;
       return tb;});
     this.state = { textBlocks: textBlocks,
@@ -35,7 +36,7 @@ class BlogPost extends React.Component {
     return (
       
       <React.Fragment>
-        <BlogPostTitle onClick={() => this.handleClick(0)} value={name}/>
+        <BlogPostTitle onClick={() => this.handleClick(0)} value={name.name}/>
         {textBlocks.map((block) => <TextBlock onClick={() => this.handleClick(textBlocks.indexOf(block))} {...block} key={block.id} editMode={block.selected}/>)}
       </React.Fragment>
     );
