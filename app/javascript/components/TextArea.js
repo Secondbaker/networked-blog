@@ -10,7 +10,6 @@ class TextArea extends React.Component {
     else {
       body = this.props.body;
     }
-    console.log(body);
     return (
       <React.Fragment>
         <p onClick={() => this.props.onClick()}>

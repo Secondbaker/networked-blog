@@ -28,7 +28,13 @@ class BlogPost extends React.Component {
       {
         return;
       }
+
       textBlocks = textBlocks.map((tb) => {
+        if(tb.selected)
+        {
+          
+          this.sendData(tb);
+        }
         tb.selected = false;
         return tb;
       })
@@ -38,6 +44,11 @@ class BlogPost extends React.Component {
       textBlocks: textBlocks
     });
     console.log(index);
+  }
+  sendData(block)
+  {
+    if(block.name)
+      console.log
   }
   render () {
     let {textBlocks, post} = this.state;
@@ -57,6 +68,11 @@ class BlogPost extends React.Component {
       </React.Fragment>
     );
   }
+}
+
+isBlogPostTitle(block)
+{
+  return block.name;
 }
 
 export default BlogPost
