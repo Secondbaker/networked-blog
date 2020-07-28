@@ -10,8 +10,23 @@ class BlogPost extends React.Component {
       return tb;});
     this.state = { textBlocks: textBlocks,
                   name: this.props.name,
-                  selected: Array(textAreaCount).fill(false),
                 };
+  }
+  handleClick(key) {
+
+    let textBlocks = this.state.textBlocks.slice();
+    if(Number.isInteger(key))
+    {
+      textBlocks = textBlocks.map((tb) => {
+        tb.selected = false;
+        return tb;
+      })
+      textBlocks[key].selected = true;
+    }
+    this.setState({
+      textBlocks: textBlocks
+    });
+    console.log(key);
   }
   render () {
     let {textBlocks, name} = this.state;
@@ -20,8 +35,8 @@ class BlogPost extends React.Component {
     return (
       
       <React.Fragment>
-        <BlogPostTitle value={name}/>
-        {textBlocks.map((block) => <TextBlock {...block} key={block.id} editMode={block.selected}/>)}
+        <BlogPostTitle onClick={() => this.handleClick(0)} value={name}/>
+        {textBlocks.map((block) => <TextBlock onClick={() => this.handleClick(textBlocks.indexOf(block))} {...block} key={block.id} editMode={block.selected}/>)}
       </React.Fragment>
     );
   }

@@ -33,7 +33,7 @@ export class TextBlock extends TextArea {
     }
     return (
       <React.Fragment>
-        <p>
+        <p onClick={() => this.props.onClick()}>
           {body}
         </p>
       </React.Fragment>
