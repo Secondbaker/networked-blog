@@ -22,7 +22,7 @@
     
     <div id='text-posts' class='text-block-container' data-selected='none'>
       <% @blog_posts.each do |blog_post|%>
-        <%= render partial: 'blog_post', locals: { blog_post: blog_post, text_block_path: text_block_path(blog_post) }%>
+        <%= render partial: 'blog_post', locals: { blog_post: blog_post, text_block_path: edit_blog_post_path(blog_post) }%>
       <% end %>
     </div>
     <div id='cy' class='panel' data-enter='slideleft' data-exit='slideright'></div>

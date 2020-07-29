@@ -20,7 +20,7 @@ class BlogPost extends React.Component {
       else
         return 'no name';
     }));
-    console.log(this.state.textBlockPath);
+    console.log(this.props.text_block_path);
   }
   handleClick(index) {
 
