@@ -1,6 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { BlogPostTitle, TextBlock } from './TextArea'
+const axios = require('axios').default
 class BlogPost extends React.Component {
   constructor(props) {
     super(props);
@@ -32,7 +33,6 @@ class BlogPost extends React.Component {
       textBlocks = textBlocks.map((tb) => {
         if(tb.selected)
         {
-          
           this.sendData(tb);
         }
         tb.selected = false;
@@ -47,8 +47,15 @@ class BlogPost extends React.Component {
   }
   sendData(block)
   {
-    if(block.name)
-      console.log
+    if(isBlogPostTitle(block))
+      console.log('found title');
+    else
+    {
+      console.log('found block');
+      console.log(block);
+      //update db
+
+    }
   }
   render () {
     let {textBlocks, post} = this.state;
@@ -70,7 +77,7 @@ class BlogPost extends React.Component {
   }
 }
 
-isBlogPostTitle(block)
+function isBlogPostTitle(block)
 {
   return block.name;
 }
