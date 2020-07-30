@@ -12,7 +12,8 @@ class BlogPost extends React.Component {
       return tb;});
     this.state = { textBlocks: textBlocks,
                   post: this.props.post,
-                  textBlockPath: this.props.text_block_path
+                  blogPostsPath: this.props.blogPostsPath,
+                  textBlocksPath: this.props.textBlocksPath
                 };
     console.log(this.state.textBlocks.map((tb) => {
       if(tb.name)
@@ -20,7 +21,8 @@ class BlogPost extends React.Component {
       else
         return 'no name';
     }));
-    console.log(this.props.text_block_path);
+    console.log(this.props);
+    console.log(this.state);
   }
   handleClick(index) {
 
