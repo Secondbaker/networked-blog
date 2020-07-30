@@ -20,10 +20,10 @@ class TextArea extends React.Component {
   render() {
     let body;
     if (this.props.editMode) {
-      body = <TextareaAutosize className="text-block-text-area" value={this.state.body} onChange={this.handleChange}/>
+      body = <TextareaAutosize className="text-block-text-area" defaultValue={this.props.body} onChange={this.props.onChange} ref={this.props.textAreaRef}/>
     }
     else {
-      body = this.state.body;
+      body = this.props.body;
     }
     return (
       <React.Fragment>
@@ -39,7 +39,7 @@ export class BlogPostTitle extends TextArea {
   render() {
     console.log('here');
     return (
-      <TextArea body={this.props.name} editMode={this.props.editMode} onClick={this.props.onClick}/>
+      <TextArea body={this.props.name} editMode={this.props.editMode} onClick={this.props.onClick} onChange={this.props.onChange} textAreaRef={this.props.textAreaRef}/>
     );
   }
 }
@@ -47,7 +47,7 @@ export class BlogPostTitle extends TextArea {
 export class TextBlock extends TextArea {
   render() {
     return (
-      <TextArea body={this.props.body} editMode={this.props.editMode} onClick={this.props.onClick} />
+      <TextArea body={this.props.body} editMode={this.props.editMode} onClick={this.props.onClick} onChange={this.props.onChange} textAreaRef={this.props.textAreaRef}/>
     );
   }
 }

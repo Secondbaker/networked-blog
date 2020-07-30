@@ -23,6 +23,7 @@ class BlogPost extends React.Component {
     }));
     console.log(this.props);
     console.log(this.state);
+    this.textAreaRef = '';
   }
   handleClick(index) {
 
@@ -35,7 +36,6 @@ class BlogPost extends React.Component {
       }
 
       textBlocks = textBlocks.map((tb) => {
-        console.log (document.getElementsByClassName('text-block-text-area'));
         if(tb.selected)
         {
           this.sendData(tb);
@@ -45,10 +45,19 @@ class BlogPost extends React.Component {
       })
       textBlocks[index].selected = true;
     }
+    
     this.setState({
       textBlocks: textBlocks
     });
     console.log(index);
+  }
+  textBoxChange(index){
+    console.log('textboxchange');
+    console.log(index);
+    let textBlocks = this.state.textBlocks.slice();
+    textBlocks[index].body = this.textAreaRef.value;
+    this.setState({textBlocks: textBlocks});
+    console.log(this.textAreaRef.value);
   }
   sendData(block)
   {
@@ -59,6 +68,7 @@ class BlogPost extends React.Component {
       console.log('found block');
       console.log(block);
       //update db
+      
 
     }
   }
@@ -72,9 +82,9 @@ class BlogPost extends React.Component {
         
         {textBlocks.map((block) => {
           if(block.name)
-            return <BlogPostTitle onClick={() => this.handleClick(textBlocks.indexOf(block))} {...block} key={block.id} editMode={block.selected} />
+            return <BlogPostTitle onClick={() => this.handleClick(textBlocks.indexOf(block))} onChange={() => this.textBoxChange(textBlocks.indexOf(block))} textAreaRef={(textArea) => { this.textAreaRef = textArea }} {...block} key={block.id} editMode={block.selected} />
           else
-            return <TextBlock onClick={() => this.handleClick(textBlocks.indexOf(block))} {...block} key={block.id} editMode={block.selected} />
+            return <TextBlock onClick={() => this.handleClick(textBlocks.indexOf(block))} onChange={() => this.textBoxChange(textBlocks.indexOf(block))} textAreaRef={(textArea) => { this.textAreaRef = textArea }} {...block} key={block.id} editMode={block.selected} />
           }) 
         }
       </React.Fragment>
