@@ -49,29 +49,34 @@ class BlogPost extends React.Component {
     this.setState({
       textBlocks: textBlocks
     });
-    console.log(index);
   }
   textBoxChange(index){
-    console.log('textboxchange');
-    console.log(index);
     let textBlocks = this.state.textBlocks.slice();
     textBlocks[index].body = this.textAreaRef.value;
     this.setState({textBlocks: textBlocks});
-    console.log(this.textAreaRef.value);
   }
+
   sendData(block)
   {
+    const token = 
+      document.querySelector('[name=csrf-token]').content
+    
+    axios.defaults.headers.common['X-CSRF-TOKEN'] = token
+
     if(isBlogPostTitle(block))
       console.log('found title');
     else
     {
       console.log('found block');
-      console.log(block);
+      console.log(block.body);
+      let url = this.state.textBlocksPath + '/' + block.id;
+      console.log(url);
       //update db
       
-
+      axios.patch(url, {text_block: {body: block.body}}).then((response) => console.log(response));
     }
   }
+
   render () {
     let {textBlocks, post} = this.state;
     
