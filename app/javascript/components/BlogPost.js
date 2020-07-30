@@ -35,6 +35,7 @@ class BlogPost extends React.Component {
       }
 
       textBlocks = textBlocks.map((tb) => {
+        console.log (document.getElementsByClassName('text-block-text-area'));
         if(tb.selected)
         {
           this.sendData(tb);

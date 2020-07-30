@@ -2,13 +2,28 @@ import React from "react"
 import PropTypes from "prop-types"
 import TextareaAutosize from "react-autosize-textarea"
 class TextArea extends React.Component {
+  constructor(props) {
+    super(props);
+    let {editMode, body} = this.props;
+    this.state = {
+      editMode: editMode,
+      body: body
+    }
+  }
+
+  handleChange = () => {
+    this.setState({
+      body: event.target.value
+    });
+  }
+
   render() {
     let body;
     if (this.props.editMode) {
-      body = <TextareaAutosize className="text-block-text-area" defaultValue={this.props.body} />
+      body = <TextareaAutosize className="text-block-text-area" value={this.state.body} onChange={this.handleChange}/>
     }
     else {
-      body = this.props.body;
+      body = this.state.body;
     }
     return (
       <React.Fragment>
