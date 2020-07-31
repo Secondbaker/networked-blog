@@ -69,7 +69,7 @@ class BlogPost extends React.Component {
     {
       console.log('found block');
       console.log(block.body);
-      let url = this.state.textBlocksPath + '/' + block.id;
+      let url = `${this.state.textBlocksPath}/${block.id}.json`;
       console.log(url);
       //update db
       
