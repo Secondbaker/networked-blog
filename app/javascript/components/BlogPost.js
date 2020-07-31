@@ -15,16 +15,9 @@ class BlogPost extends React.Component {
                   blogPostsPath: this.props.blogPostsPath,
                   textBlocksPath: this.props.textBlocksPath
                 };
-    console.log(this.state.textBlocks.map((tb) => {
-      if(tb.name)
-        return tb.name;
-      else
-        return 'no name';
-    }));
-    console.log(this.props);
-    console.log(this.state);
     this.textAreaRef = '';
   }
+
   handleClick(index) {
 
     let textBlocks = this.state.textBlocks.slice();
@@ -50,10 +43,11 @@ class BlogPost extends React.Component {
       textBlocks: textBlocks
     });
   }
+
   textBoxChange(index){
     let textBlocks = this.state.textBlocks.slice();
     textBlocks[index].body = this.textAreaRef.value;
-    this.setState({textBlocks: textBlocks});
+    this.setState(({textBlocks: textBlocks}));
   }
 
   sendData(block)
