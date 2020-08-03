@@ -58,7 +58,11 @@ class BlogPost extends React.Component {
       axios
         .patch(url, { blog_post: { name: block.name } })
         .then((response) => console.log(response));
-    } else if (block.id !== 'new') {
+    }
+    else if (block.body == '') {
+      console.log('found one to delete');
+    }
+    else if (block.id !== 'new') {
       let url = `${this.state.textBlocksPath}/${block.id}.json`;
       axios
         .patch(url, { text_block: { body: block.body } })
