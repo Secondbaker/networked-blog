@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class BlogPostsController < ApplicationController
-  before_action :set_blog_post, only: %i[show edit update destroy]
+  before_action :set_blog_post, only: %i[show edit update destroy new_text_block]
   
 
   # GET /blog_posts
@@ -121,6 +121,15 @@ class BlogPostsController < ApplicationController
       format.html { redirect_to blog_posts_url, notice: 'Blog post was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def new_text_block
+    puts 'here'
+    puts 'text_blocks_controller'
+    puts params.inspect
+    puts @blog_post
+    text_block = @blog_post.text_blocks.create(body: params[:text_block][:body])
+    render json: text_block
   end
 
   private
