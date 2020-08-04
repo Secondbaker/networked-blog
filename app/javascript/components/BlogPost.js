@@ -7,7 +7,7 @@ class BlogPost extends React.Component {
     super(props);
     let textBlocks = this.props.textBlocks.slice();
     textBlocks.unshift(this.props.post);
-    textBlocks.push({ body: '-', id: 'new' });
+    textBlocks.push({ body: '', id: 'new' });
     textBlocks = textBlocks.map((tb) => {
       tb.selected = false;
       return tb;
@@ -97,7 +97,7 @@ class BlogPost extends React.Component {
 
   appendBlock() {
     let textBlocks = this.state.textBlocks.slice();
-    textBlocks.push({ body: '-', selected: false, id: "new" });
+    textBlocks.push({ body: '', selected: false, id: "new" });
     this.setState({ textBlocks: textBlocks });
   }
 

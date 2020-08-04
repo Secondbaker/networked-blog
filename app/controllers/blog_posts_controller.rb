@@ -124,10 +124,6 @@ class BlogPostsController < ApplicationController
   end
 
   def new_text_block
-    puts 'here'
-    puts 'text_blocks_controller'
-    puts params.inspect
-    puts @blog_post
     text_block = @blog_post.text_blocks.create(body: params[:text_block][:body])
     render json: text_block
   end
