@@ -31,6 +31,9 @@ class BlogPost extends React.Component {
       textBlocks = textBlocks.map((tb) => {
         if (tb.selected) {
           this.sendData(tb);
+          if (tb.body == '' && tb.id != 'new') {
+            this.removeBlock(tb);
+          }
         }
         tb.selected = false;
         return tb;
@@ -60,7 +63,10 @@ class BlogPost extends React.Component {
         .then((response) => console.log(response));
     }
     else if (block.body == '') {
-      console.log('found one to delete');
+      if (block.id != 'new') {
+        let url = `${this.state.textBlocksPath}/${block.id}.json`;
+        axios.delete(url);
+      }
     }
     else if (block.id !== 'new') {
       let url = `${this.state.textBlocksPath}/${block.id}.json`;
@@ -99,6 +105,16 @@ class BlogPost extends React.Component {
     let textBlocks = this.state.textBlocks.slice();
     textBlocks.push({ body: '', selected: false, id: "new" });
     this.setState({ textBlocks: textBlocks });
+  }
+
+  removeBlock(block) {
+    var index = this.state.textBlocks.lastIndexOf(block);
+    this.removeItem(index);
+  }
+  removeItem(index) {
+    this.setState((prevState) => ({
+      textBlocks: prevState.textBlocks.filter((_, i) => i !== index)
+    }));
   }
 
   render() {
