@@ -5,8 +5,11 @@ const axios = require("axios").default;
 class BlogPost extends React.Component {
   constructor(props) {
     super(props);
-    let textBlocks = this.props.textBlocks.slice();
-    textBlocks.unshift(this.props.post);
+    let textBlocks = this.props.textBlocks.map((block) => { block.isTitle = false; return block; });
+    let titleBlock = this.props.post;
+    titleBlock.body = titleBlock.name;
+    titleBlock.isTitle = true;
+    textBlocks.unshift(titleBlock);
     textBlocks.push({ body: '', id: 'new' });
     textBlocks = textBlocks.map((tb) => {
       tb.selected = false;
@@ -20,6 +23,7 @@ class BlogPost extends React.Component {
       textBlocksPath: this.props.textBlocksPath,
     };
     this.textAreaRef = "";
+    console.log(this.state.textBlocks);
   }
 
   handleClick(index) {
@@ -143,7 +147,7 @@ class BlogPost extends React.Component {
 }
 
 function isBlogPostTitle(block) {
-  return block.name;
+  return block.isTitle;
 }
 
 export default BlogPost;
