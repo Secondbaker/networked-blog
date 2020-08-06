@@ -37,7 +37,7 @@ class BlogPost extends React.Component {
       });
       textBlocks[index].selected = true;
     }
-    textBlocks = textBlocks.filter((block) => block.body != '' || block.id == 'new')
+    textBlocks = textBlocks.filter((block) => { return (block.body != '' || block.id == 'new' || isBlogPostTitle(block)) })
     this.setState({ textBlocks: textBlocks });
   }
 
@@ -61,7 +61,7 @@ class BlogPost extends React.Component {
         .then((response) => console.log(response));
     }
     else if (block.body == '') {
-      if (block.id != 'new') {
+      if (block.id != 'new' && !isBlogPostTitle(block)) {
         let url = `${this.state.textBlocksPath}/${block.id}.json`;
         axios.delete(url);
       }
@@ -102,18 +102,6 @@ class BlogPost extends React.Component {
     let textBlocks = this.state.textBlocks.slice();
     textBlocks.push({ body: '', selected: false, id: "new" });
     this.setState({ textBlocks: textBlocks });
-  }
-
-  removeBlock() {
-    let textBlocks = this.state.textBlocks.filter((block) => block.body != '' && block.id != 'new')
-    console.log(textBlocks);
-    this.setState({ textBlocks: textBlocks });
-    this.forceUpdate();
-  }
-  removeItem(index) {
-    this.setState((prevState) => ({
-      textBlocks: prevState.textBlocks.filter((_, i) => i !== index)
-    }));
   }
 
   render() {
