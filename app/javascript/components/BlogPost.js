@@ -31,15 +31,13 @@ class BlogPost extends React.Component {
       textBlocks = textBlocks.map((tb) => {
         if (tb.selected) {
           this.sendData(tb);
-          if (tb.body == '' && tb.id != 'new') {
-            this.removeBlock(tb);
-          }
         }
         tb.selected = false;
         return tb;
       });
       textBlocks[index].selected = true;
     }
+    textBlocks = textBlocks.filter((block) => block.body != '' || block.id == 'new')
     this.setState({ textBlocks: textBlocks });
   }
 
@@ -84,7 +82,6 @@ class BlogPost extends React.Component {
           this.setBlockID(block, response.data.id);
           this.appendBlock();
         });
-
     }
   }
 
@@ -107,9 +104,11 @@ class BlogPost extends React.Component {
     this.setState({ textBlocks: textBlocks });
   }
 
-  removeBlock(block) {
-    var index = this.state.textBlocks.lastIndexOf(block);
-    this.removeItem(index);
+  removeBlock() {
+    let textBlocks = this.state.textBlocks.filter((block) => block.body != '' && block.id != 'new')
+    console.log(textBlocks);
+    this.setState({ textBlocks: textBlocks });
+    this.forceUpdate();
   }
   removeItem(index) {
     this.setState((prevState) => ({
