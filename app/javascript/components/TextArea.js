@@ -19,15 +19,13 @@ class TextArea extends React.Component {
 
   render() {
     let body;
-    if (this.props.editMode || this.props.body == '') {
+    if (this.props.editMode) {
       body = (
         <TextareaAutosize
           className="text-block-text-area"
           defaultValue={this.props.body}
           onChange={this.props.onChange}
           ref={this.props.textAreaRef}
-          placeholder='type here to add a block'
-          style={{ border: 'none' }}
         />
       );
     } else {

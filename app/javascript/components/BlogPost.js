@@ -5,12 +5,15 @@ const axios = require("axios").default;
 class BlogPost extends React.Component {
   constructor(props) {
     super(props);
-    let textBlocks = this.props.textBlocks.map((block) => { block.isTitle = false; return block; });
+    let textBlocks = this.props.textBlocks.map((block) => {
+      block.isTitle = false;
+      return block;
+    });
     let titleBlock = this.props.post;
     titleBlock.body = titleBlock.name;
     titleBlock.isTitle = true;
     textBlocks.unshift(titleBlock);
-    textBlocks.push({ body: '', id: 'new' });
+    textBlocks.push({ body: "", id: "new" });
     textBlocks = textBlocks.map((tb) => {
       tb.selected = false;
       return tb;
@@ -41,14 +44,17 @@ class BlogPost extends React.Component {
       });
       textBlocks[index].selected = true;
     }
-    textBlocks = textBlocks.filter((block) => { return (block.body != '' || block.id == 'new' || isBlogPostTitle(block)) })
+    textBlocks = textBlocks.filter((block) => {
+      return block.body != "" || block.id == "new" || isBlogPostTitle(block);
+    });
     this.setState({ textBlocks: textBlocks });
   }
 
   textBoxChange(index) {
     let textBlocks = this.state.textBlocks.slice();
 
-    if (textBlocks[index].name) textBlocks[index].name = this.textAreaRef.value;
+    if (isBlogPostTitle(textBlocks[index]))
+      textBlocks[index].name = this.textAreaRef.value;
     else textBlocks[index].body = this.textAreaRef.value;
 
     this.setState({ textBlocks: textBlocks });
@@ -63,35 +69,30 @@ class BlogPost extends React.Component {
       axios
         .patch(url, { blog_post: { name: block.name } })
         .then((response) => console.log(response));
-    }
-    else if (block.body == '') {
-      if (block.id != 'new' && !isBlogPostTitle(block)) {
+    } else if (block.body == "") {
+      if (block.id != "new" && !isBlogPostTitle(block)) {
         let url = `${this.state.textBlocksPath}/${block.id}.json`;
         axios.delete(url);
       }
-    }
-    else if (block.id !== 'new') {
+    } else if (block.id !== "new") {
       let url = `${this.state.textBlocksPath}/${block.id}.json`;
       axios
         .patch(url, { text_block: { body: block.body } })
         .then((response) => console.log(response));
-    }
-    else {
+    } else {
       let url = `${this.state.blogPostsPath}/${this.state.id}/text_blocks/new`;
-      axios
-        .post(url, { text_block: { body: block.body } })
-        .then((response) => {
-          console.log(response);
-          console.log(response.data.id);
-          this.setBlockID(block, response.data.id);
-          this.appendBlock();
-        });
+      axios.post(url, { text_block: { body: block.body } }).then((response) => {
+        console.log(response);
+        console.log(response.data.id);
+        this.setBlockID(block, response.data.id);
+        this.appendBlock();
+      });
     }
   }
 
   setBlockID(block, id) {
-    console.log('setBlockID');
-    console.log(`block ${block.id} id ${id}`)
+    console.log("setBlockID");
+    console.log(`block ${block.id} id ${id}`);
     var index = this.state.textBlocks.indexOf(block);
     console.log(index);
     block.id = id;
@@ -104,7 +105,7 @@ class BlogPost extends React.Component {
 
   appendBlock() {
     let textBlocks = this.state.textBlocks.slice();
-    textBlocks.push({ body: '', selected: false, id: "new" });
+    textBlocks.push({ body: "", selected: false, id: "new" });
     this.setState({ textBlocks: textBlocks });
   }
 
