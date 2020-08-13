@@ -51,12 +51,13 @@ class BlogPost extends React.Component {
   }
 
   textBoxChange(index) {
+    //console.log("TextBoxChange");
     let textBlocks = this.state.textBlocks.slice();
 
     if (isBlogPostTitle(textBlocks[index]))
       textBlocks[index].name = this.textAreaRef.value;
     else textBlocks[index].body = this.textAreaRef.value;
-
+    //console.log(textBlocks[index].body);
     this.setState({ textBlocks: textBlocks });
   }
 
