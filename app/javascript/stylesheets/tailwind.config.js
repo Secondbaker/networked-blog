@@ -17,12 +17,6 @@ module.exports = {
 
       black: '#000',
       white: '#fff',
-      pink: {
-        3: '#C713EB',
-        2: '#6F6873',
-        1: '#83089C',
-        0: '#3B0854',
-      },
       gray: {
         100: '#f7fafc',
         200: '#edf2f7',
@@ -137,6 +131,10 @@ module.exports = {
         700: '#b83280',
         800: '#97266d',
         900: '#702459',
+        3: '#C713EB',
+        2: '#6F6873',
+        1: '#83089C',
+        0: '#3B0854',
       },
     },
     spacing: {
@@ -258,6 +256,7 @@ module.exports = {
       ],
       serif: ['Georgia', 'Cambria', '"Times New Roman"', 'Times', 'serif'],
       mono: ['Menlo', 'Monaco', 'Consolas', '"Liberation Mono"', '"Courier New"', 'monospace'],
+      header: ['VT323',],
     },
     fontSize: {
       xs: '0.75rem',

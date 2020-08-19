@@ -21,14 +21,12 @@
     height: var(--header-height);
     display: grid;  
     grid-template-columns: 75%  10% 5% 10%;
-    background-color: lightgrey;
 }
 
 #cy {
   width: 100%;
   height: 100%;
   margin: 0;
-  background-color: lightgreen;
 }
 
 .post-partial {
@@ -119,10 +117,6 @@ input:checked + .slider:before {
 
 /* For a full explanation of this code, please refer to the blogpost at http://www.bram.us/2014/01/05/css-animated-content-switching/ */
 
-body {
-  background: #fff url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgAQMAAABJtOi3AAAABlBMVEX4+Pj09PQf/c7fAAAAGklEQVR4Xq3MIQEAAADDIPqX/kvMIMEWEm8O7b0/wewc/NcAAAAASUVORK5CYII=) repeat;
-  font-family: Georgia;
-}
 /*
 PanelWrapper and Basic Panel styling.
 Make sure to set `overflow:hidden` onto the wrapper. */
