@@ -14,15 +14,6 @@
   grid-template-rows: 10% 90%;
 }
 
-#header {
-    position: fixed; /* Set the navbar to fixed position */
-    top: 0; /* Position the navbar at the top of the page */
-    width: 100%; /* Full width */
-    height: var(--header-height);
-    display: grid;  
-    grid-template-columns: 75%  10% 5% 10%;
-}
-
 #cy {
   width: 100%;
   height: 100%;

@@ -4,15 +4,16 @@
     <title>NetworkedBlog</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_pack_tag 'application', 'data-turbolinks0track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    
   </head>
 
   <body class="bg-green-2">
-  <div class="header font-family-header font-size-6xl">
-    Test Header
+  <div class="header font-header text-6xl text-pink-3 text-center">
+    <h1>Test Header</h1>
   </div>
     <%= yield %>
   </body>
