@@ -2,10 +2,11 @@ var cytoscape = require("cytoscape");
 var coseBilkent = require("cytoscape-cose-bilkent");
 let dagre = require('cytoscape-dagre');
 var fcose = require('cytoscape-fcose');
+const $ = require('jquery');
 
-cytoscape.use( fcose );
-cytoscape.use( coseBilkent );
-cytoscape.use( dagre ); // register extension
+cytoscape.use(fcose);
+cytoscape.use(coseBilkent);
+cytoscape.use(dagre); // register extension
 
 
 var link_range = gon.max_links - gon.min_links;
@@ -30,10 +31,10 @@ const config = { attributes: true, childList: true, subtree: true };
 const callback = function (mutationsList, observer) {
   // Use traditional 'for loops' for IE 11
   for (let mutation of mutationsList) {
-    if(!shown && mutation.type === 'attributes' && mutation.attributeName === 'class' && $(mutation.target).hasClass('current')) {
-        layoutRunner = cy.layout(defaultDagreOptions);
-        hasRun = layoutRunner.run();
-        shown = true;
+    if (!shown && mutation.type === 'attributes' && mutation.attributeName === 'class' && $(mutation.target).hasClass('current')) {
+      layoutRunner = cy.layout(defaultDagreOptions);
+      hasRun = layoutRunner.run();
+      shown = true;
     }
   }
 };
@@ -56,15 +57,15 @@ const defaultfCoseOptions = {
   quality: "default",
   // Use random node positions at beginning of layout
   // if this is set to false, then quality option must be "proof"
-  randomize: true, 
+  randomize: true,
   // Whether or not to animate the layout
-  animate: true, 
+  animate: true,
   // Duration of animation in ms, if enabled
-  animationDuration: 1000, 
+  animationDuration: 1000,
   // Easing of animation, if enabled
-  animationEasing: undefined, 
+  animationEasing: undefined,
   // Fit the viewport to the repositioned nodes
-  fit: true, 
+  fit: true,
   // Padding around layout
   padding: 30,
   // Whether to include labels in node dimensions. Valid in "proof" quality
@@ -73,9 +74,9 @@ const defaultfCoseOptions = {
   uniformNodeDimensions: false,
   // Whether to pack disconnected components - valid only if randomize: true
   packComponents: true,
-  
+
   /* spectral layout options */
-  
+
   // False for random, true for greedy sampling
   samplingType: true,
   // Sample size to construct distance matrix
@@ -84,9 +85,9 @@ const defaultfCoseOptions = {
   nodeSeparation: 75,
   // Power iteration tolerance
   piTol: 0.0000001,
-  
+
   /* incremental layout options */
-  
+
   // Node repulsion (non overlapping) multiplier
   nodeRepulsion: 4500,
   // Ideal edge (non nested) length
@@ -98,7 +99,7 @@ const defaultfCoseOptions = {
   // Maximum number of iterations to perform
   numIter: 2500,
   // For enabling tiling
-  tile: true,  
+  tile: true,
   // Represents the amount of the vertical space to put between the zero degree members during the tiling operation(can also be a function)
   tilingPaddingVertical: 10,
   // Represents the amount of the horizontal space to put between the zero degree members during the tiling operation(can also be a function)
@@ -110,13 +111,13 @@ const defaultfCoseOptions = {
   // Gravity force (constant) for compounds
   gravityCompound: 1.0,
   // Gravity range (constant)
-  gravityRange: 3.8, 
+  gravityRange: 3.8,
   // Initial cooling factor for incremental layout  
-  initialEnergyOnIncremental: 0.3,  
+  initialEnergyOnIncremental: 0.3,
 
   /* layout event callbacks */
-  ready: () => {}, // on layoutready
-  stop: () => {} // on layoutstop
+  ready: () => { }, // on layoutready
+  stop: () => { } // on layoutstop
 };
 
 const defaultDagreOptions = {
@@ -145,87 +146,85 @@ const defaultDagreOptions = {
   stop: function () { } // on layoutstop
 };
 
-if(layout == 'cose')
-{
+if (layout == 'cose') {
   var cy = cytoscape({
 
-      container: $('#cy'), // container to render in
-    
-      elements: gon.graph_data,
-    
-      style: [ // the stylesheet for the graph
-        {
-          selector: 'node',
-          style: {
-            'background-color': '#666',
-            'label': 'data(id)'
-          }
-        },
-    
-        {
-          selector: 'edge',
-          style: {
-            'width': 1,
-            'line-color': '#ccc',
-            'line-fill': 'linear-gradient',
-            'target-arrow-color': '#ccc',
-            'target-arrow-shape': 'triangle',
-          }
+    container: $('#cy'), // container to render in
+
+    elements: gon.graph_data,
+
+    style: [ // the stylesheet for the graph
+      {
+        selector: 'node',
+        style: {
+          'background-color': '#666',
+          'label': 'data(id)'
         }
-      ],
-    
-      layout: {
-        name: 'cose-bilkent',
-        // 'draft', 'default' or 'proof" 
-        // - 'draft' fast cooling rate 
-        // - 'default' moderate cooling rate 
-        // - "proof" slow cooling rate
-        quality: 'proof',
-        // Whether to include labels in node dimensions. Useful for avoiding label overlap
-        nodeDimensionsIncludeLabels: true,
-        // number of ticks per frame; higher is faster but more jerky
-        refresh: 30,
-        // Whether to fit the network view after when done
-        fit: true,
-        // Padding on fit
-        padding: 10,
-        // Whether to enable incremental mode
-        randomize: true,
-        // Node repulsion (non overlapping) multiplier
-        nodeRepulsion: 2000,
-        // Ideal (intra-graph) edge length
-        idealEdgeLength: gon.blog_posts.length / 2,
-        // Divisor to compute edge forces
-        edgeElasticity: .05,
-        // Nesting factor (multiplier) to compute ideal edge length for inter-graph edges
-        nestingFactor: 0.8,
-        // Gravity force (constant)
-        gravity: 0.2,
-        // Maximum number of iterations to perform
-        numIter: 500,
-        // Whether to tile disconnected nodes
-        tile: true,
-        // Type of layout animation. The option set is {'during', 'end', false}
-        animate: false,
-        // Duration for animate:end
-        animationDuration: 500,
-        // Amount of vertical space to put between degree zero nodes during tiling (can also be a function)
-        tilingPaddingVertical: 100,
-        // Amount of horizontal space to put between degree zero nodes during tiling (can also be a function)
-        tilingPaddingHorizontal: 100,
-        // Gravity range (constant) for compounds
-        gravityRangeCompound: 1.0,
-        // Gravity force (constant) for compounds
-        gravityCompound: 0.5,
-        // Gravity range (constant)
-        gravityRange: 3.8,
-        // Initial cooling factor for incremental layout
-        initialEnergyOnIncremental: 0.5
+      },
+
+      {
+        selector: 'edge',
+        style: {
+          'width': 1,
+          'line-color': '#ccc',
+          'line-fill': 'linear-gradient',
+          'target-arrow-color': '#ccc',
+          'target-arrow-shape': 'triangle',
+        }
       }
+    ],
+
+    layout: {
+      name: 'cose-bilkent',
+      // 'draft', 'default' or 'proof" 
+      // - 'draft' fast cooling rate 
+      // - 'default' moderate cooling rate 
+      // - "proof" slow cooling rate
+      quality: 'proof',
+      // Whether to include labels in node dimensions. Useful for avoiding label overlap
+      nodeDimensionsIncludeLabels: true,
+      // number of ticks per frame; higher is faster but more jerky
+      refresh: 30,
+      // Whether to fit the network view after when done
+      fit: true,
+      // Padding on fit
+      padding: 10,
+      // Whether to enable incremental mode
+      randomize: true,
+      // Node repulsion (non overlapping) multiplier
+      nodeRepulsion: 2000,
+      // Ideal (intra-graph) edge length
+      idealEdgeLength: gon.blog_posts.length / 2,
+      // Divisor to compute edge forces
+      edgeElasticity: .05,
+      // Nesting factor (multiplier) to compute ideal edge length for inter-graph edges
+      nestingFactor: 0.8,
+      // Gravity force (constant)
+      gravity: 0.2,
+      // Maximum number of iterations to perform
+      numIter: 500,
+      // Whether to tile disconnected nodes
+      tile: true,
+      // Type of layout animation. The option set is {'during', 'end', false}
+      animate: false,
+      // Duration for animate:end
+      animationDuration: 500,
+      // Amount of vertical space to put between degree zero nodes during tiling (can also be a function)
+      tilingPaddingVertical: 100,
+      // Amount of horizontal space to put between degree zero nodes during tiling (can also be a function)
+      tilingPaddingHorizontal: 100,
+      // Gravity range (constant) for compounds
+      gravityRangeCompound: 1.0,
+      // Gravity force (constant) for compounds
+      gravityCompound: 0.5,
+      // Gravity range (constant)
+      gravityRange: 3.8,
+      // Initial cooling factor for incremental layout
+      initialEnergyOnIncremental: 0.5
+    }
   });
 }
-else if (layout == 'dagre')
-{
+else if (layout == 'dagre') {
   var cy = cytoscape({
 
     container: $('#cy'), // container to render in
@@ -260,8 +259,8 @@ else if (layout == 'dagre')
       rankSep: undefined, // the separation between each rank in the layout
       rankDir: undefined, // 'TB' for top to bottom flow, 'LR' for left to right,
       ranker: 'network-simplex', // Type of algorithm to assign a rank to each node in the input graph. Possible values: 'network-simplex', 'tight-tree' or 'longest-path'
-      minLen: function( edge ){ return 1; }, // number of ranks to keep between the source and target of the edge
-      edgeWeight: function( edge ){ return 1; }, // higher weight edges are generally made shorter and straighter than lower weight edges
+      minLen: function (edge) { return 1; }, // number of ranks to keep between the source and target of the edge
+      edgeWeight: function (edge) { return 1; }, // higher weight edges are generally made shorter and straighter than lower weight edges
 
       // general layout options
       fit: true, // whether to fit to viewport
@@ -269,21 +268,20 @@ else if (layout == 'dagre')
       spacingFactor: .25, // Applies a multiplicative factor (>0) to expand or compress the overall area that the nodes take up
       nodeDimensionsIncludeLabels: true, // whether labels should be included in determining the space used by a node
       animate: false, // whether to transition the node positions
-      animateFilter: function( node, i ){ return true; }, // whether to animate specific nodes when animation is on; non-animated nodes immediately go to their final positions
+      animateFilter: function (node, i) { return true; }, // whether to animate specific nodes when animation is on; non-animated nodes immediately go to their final positions
       animationDuration: 500, // duration of animation in ms if enabled
       animationEasing: undefined, // easing of animation if enabled
       boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
     }
   });
 }
-else
-{
+else {
   var cy = cytoscape({
 
     container: $('#cy'), // container to render in
-  
-    
-  
+
+
+
     style: [ // the stylesheet for the graph
       {
         selector: 'node',
@@ -292,7 +290,7 @@ else
           'label': 'data(id)'
         }
       },
-  
+
       {
         selector: 'edge',
         style: {
@@ -304,25 +302,23 @@ else
         }
       }
     ]
-  
-    
-});
+
+
+  });
 }
 
 gon.internal_links.forEach(element => {
   var newLink = [];
 
-  if(cy.elements('node#' + element.source_id)[0] == null)
-  {
-    newLink.push({ group: 'nodes', data: { id: element.source_id} });
+  if (cy.elements('node#' + element.source_id)[0] == null) {
+    newLink.push({ group: 'nodes', data: { id: element.source_id } });
   }
 
-  if(cy.elements('node#' + element.destination_id)[0] == null)
-  {
+  if (cy.elements('node#' + element.destination_id)[0] == null) {
     newLink.push({ group: 'nodes', data: { id: element.destination_id } });
   }
-  
-  newLink.push({ group: 'edges', data: { id: element.source_id +  '' + element.destination_id, source: element.source_id, target: element.destination_id } });
+
+  newLink.push({ group: 'edges', data: { id: element.source_id + '' + element.destination_id, source: element.source_id, target: element.destination_id } });
 
   var eles = cy.add(newLink);
 });
@@ -342,8 +338,7 @@ function colorEdges() {
   gon.internal_links.forEach(element => {
     var gradientColors = '';
     var firstNode = gon.blog_posts.find(e => {
-      if(e.id == element.source_id)
-      {
+      if (e.id == element.source_id) {
         return true
       }
     });
@@ -354,8 +349,7 @@ function colorEdges() {
     var firstColor = standardize_color(firstColor)
     //cy.elements('node#' + firstNode.id)[0].style('background-color', firstColor);
     var secondNode = gon.blog_posts.find(e => {
-      if(e.id == element.destination_id)
-      {
+      if (e.id == element.destination_id) {
         return true
       }
     });
@@ -369,8 +363,8 @@ function colorEdges() {
     //cy.elements('edge#' + element.source_id + '' + element.destination_id)[0].style('line-gradient-stop-colors', gradientColors);
   });
 }
-cy.on('tap', 'node', function(evt){
+cy.on('tap', 'node', function (evt) {
   var node = evt.target;
-  console.log( 'tapped ' + node.id() );
+  console.log('tapped ' + node.id());
   location.href = '/blog_posts/' + node.id();
 });
