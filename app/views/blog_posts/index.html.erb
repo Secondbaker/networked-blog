@@ -1,16 +1,16 @@
 <%= include_gon %>
 
 <p id="notice"><%= notice %></p>
-<div id='app'>
+<div id='app' class='bg-green-0 '>
 
     <div id='cy'></div>
     <div class='panelWrapper app-body'>
 
 
-        <div id='text-posts' class='text-block-container' data-selected='none'>
+        <div id='text-posts' class='text-block-container bg-green-1 w-4/6 mx-auto text-pink-4 rounded' data-selected='none'>
             <% @blog_posts.each do |blog_post|%>
-            <%= blog_posts_url %>
-            <%= render partial: 'blog_post', locals: { blog_post: blog_post }%>
+                <%= blog_posts_url %>
+                <%= render partial: 'blog_post', locals: { blog_post: blog_post }%>
             <% end %>
         </div>
         <div id='cy' class='panel' data-enter='slideleft' data-exit='slideright'></div>
