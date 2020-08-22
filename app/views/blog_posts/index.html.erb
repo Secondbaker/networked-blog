@@ -1,13 +1,13 @@
 
 <p id="notice"><%= notice %></p>
-<div id='app' class='bg-green-0 '>
+<div id='app' class='bg-black '>
 
     <div id='cy'></div>
     <%= react_component 'Graph' %>
     <div class='panelWrapper app-body'>
 
 
-        <div id='text-posts' class='text-block-container w-4/6 mx-auto text-pink-4 grid grid-cols-1 gap-10' data-selected='none'>
+        <div id='text-posts' class='text-block-container w-4/6 mx-auto grid grid-cols-1 gap-10' data-selected='none'>
             <% @blog_posts.each do |blog_post|%>
                 <%= render partial: 'blog_post', locals: { blog_post: blog_post }%>
             <% end %>

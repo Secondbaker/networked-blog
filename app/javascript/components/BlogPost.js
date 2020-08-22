@@ -44,9 +44,9 @@ class BlogPost extends React.Component {
       });
       textBlocks[index].selected = true;
     }
-    textBlocks = textBlocks.filter((block) => {
+    /*textBlocks = textBlocks.filter((block) => {
       return block.body != "" || block.id == "new" || isBlogPostTitle(block);
-    });
+    });*/
     this.setState({ textBlocks: textBlocks });
   }
 
