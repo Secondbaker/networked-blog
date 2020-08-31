@@ -23,11 +23,12 @@ class Graph extends React.Component {
         var nodes = this.props.nodes.slice();
         var mappedNodes = nodes.map((node) => {
             console.log({ data: { id: node.id, label: node.name } });
-            return { data: { id: node.id, label: node.name } };
+            return { data: { id: node.id.toString(), label: node.name } };
         });
-        console.log(mappedNodes);
-        elements.concat();
-        console.log(elements);
+        elements = elements.concat(mappedNodes);
+
+        var edges = this.props.edges.slice();
+        console.log(edges);
         const layout = {
             name: 'cose-bilkent',
             animate: 'end',
