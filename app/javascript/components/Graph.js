@@ -7,6 +7,7 @@ class Graph extends React.Component {
         super(props);
         console.log(props.message);
         this.handleLoad = this.handleLoad.bind(this);
+        this.state = { height: "600px", width: "600px" };
     }
 
     render() {
@@ -16,7 +17,11 @@ class Graph extends React.Component {
             { data: { source: 'one', target: 'two', label: 'Edge from Node1 to Node2' } }
         ];
 
-        return <CytoscapeComponent elements={elements} className="width-100% height-100%" style={{ height: "600px", width: "600px" }} />;
+        return (
+
+            <CytoscapeComponent elements={elements} className="width-100% height-100% blur" style={{ height: this.state.height, width: this.state.width, filter: blur("20px") }} />
+
+        );
     }
 
     componentDidMount() {
@@ -29,7 +34,7 @@ class Graph extends React.Component {
 
     handleLoad() {
         console.log('Handle Load');
-
+        this.setState({ height: "100%", width: "100%" });
     }
 }
 
