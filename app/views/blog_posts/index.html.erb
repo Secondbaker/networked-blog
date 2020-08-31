@@ -2,7 +2,9 @@
 <p id="notice"><%= notice %></p>
 <div id='app' class='bg-black '>
 
-    <%= react_component 'Graph', {message: 'test', nodes: @blog_posts.all} %>
+    
+    <%= react_component 'Graph', {message: 'test', nodes: @blog_posts.all, edges: @internal_links.all} %>
+    
     <div class='panelWrapper app-body'>
 
 

@@ -22,13 +22,18 @@ class Graph extends React.Component {
         var elements = [];
         var nodes = this.props.nodes.slice();
         var mappedNodes = nodes.map((node) => {
-            console.log({ data: { id: node.id, label: node.name } });
+            //console.log({ data: { id: node.id, label: node.name } });
             return { data: { id: node.id.toString(), label: node.name } };
         });
         elements = elements.concat(mappedNodes);
 
         var edges = this.props.edges.slice();
         console.log(edges);
+        var mappedEdges = edges.map((edge) => {
+            console.log({ data: { source: edge.source_id.toString(), target: edge.destination_id.toString() } });
+            return { data: { source: edge.source_id.toString(), target: edge.destination_id.toString() } };
+        });
+        elements = elements.concat(mappedEdges);
         const layout = {
             name: 'cose-bilkent',
             animate: 'end',
@@ -39,7 +44,7 @@ class Graph extends React.Component {
 
         return (
 
-            <CytoscapeComponent layout={layout} elements={elements} className="width-100% height-100% blur" style={{ height: this.state.height, width: this.state.width, filter: blur("20px") }} />
+            <CytoscapeComponent cy={(cy) => { cy.center(); console.log(cy); return cy; }} layout={layout} elements={elements} className="width-100% height-100%" style={{ height: this.state.height, width: this.state.width, filter: blur("20px") }} />
 
         );
     }
@@ -56,6 +61,7 @@ class Graph extends React.Component {
         console.log('Handle Load');
         console.log(this.props.nodes);
         this.setState({ height: "100%", width: "100%" });
+
     }
 }
 
