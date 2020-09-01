@@ -63,13 +63,18 @@ class Graph extends React.Component {
 
         var animation = this.cy.animation({
             duration: 1000,
-            complete: this.centerGraph()
-
+            queue: true
         });
 
-        console.log(animation);
+        this.cy.animation({
+            duration: 1000,
+            queue: true,
+            fit: {
+                padding: 20
+            }
+        })
 
-        this.cy.center();
+        console.log(animation);
 
         this.setState({ height: height, width: width, layout: layout, elements: elements.slice() });
 
