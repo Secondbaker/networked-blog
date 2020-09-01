@@ -41,7 +41,7 @@ class TextArea extends React.Component {
 
 export class BlogPostTitle extends TextArea {
   render() {
-    console.log("here");
+    //console.log("here");
     return (
       <TextArea
         body={this.props.name}

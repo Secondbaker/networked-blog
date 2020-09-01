@@ -26,7 +26,7 @@ class BlogPost extends React.Component {
       textBlocksPath: this.props.textBlocksPath,
     };
     this.textAreaRef = "";
-    console.log(this.state.textBlocks);
+    //console.log(this.state.textBlocks);
   }
 
   handleClick(index) {
