@@ -60,7 +60,7 @@ class Graph extends React.Component {
         elements = elements.concat(mappedEdges);
 
         const layout = {
-            name: 'cose-bilkent',
+            name: 'spread',
             randomize: true,
             animate: true, // Whether to show the layout as it's running
             ready: undefined, // Callback on layoutready
