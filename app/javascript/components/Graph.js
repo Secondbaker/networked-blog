@@ -24,7 +24,7 @@ class Graph extends React.Component {
 
         return (
 
-            <CytoscapeComponent cy={(cy) => { this.cy = cy; this.cy.on('click', this.toggleActive); }} layout={layout} elements={elements} className={active ? "" : "blur"} style={{ height: height, width: width, filter: blur("20px") }} />
+            <CytoscapeComponent cy={(cy) => { this.cy = cy; }} layout={layout} elements={elements} className={active ? "" : "blur"} style={{ height: height, width: width, filter: blur("20px") }} />
 
         );
     }
@@ -82,7 +82,8 @@ class Graph extends React.Component {
 
         this.setState({ height: height, width: width, layout: layout, elements: elements.slice() }, async () => {
             try {
-                await this.centerGraph();
+                await this.prepareGraph();
+
             }
             catch (e) {
                 console.log(e);
@@ -93,12 +94,17 @@ class Graph extends React.Component {
         console.log('Load handled');
     }
 
+    prepareGraph = async () => {
+        this.centerGraph();
+        this.cy.on('click', this.toggleActive);
+    }
     centerGraph = async () => {
         console.log('Centering graph');
         this.cy.center();
     }
 
-    toggleActive() {
+    toggleActive(e) {
+        e.preventDefault();
         console.log('Taggle octave');
         this.setState({ active: true });
     }
