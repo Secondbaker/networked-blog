@@ -13,6 +13,7 @@ class Graph extends React.Component {
     constructor(props) {
         super(props);
         this.handleLoad = this.handleLoad.bind(this);
+        this.toggleActive = this.toggleActive.bind(this);
         this.state = { height: "600px", width: "600px", elements: [], layout: { name: 'random' }, active: false };
     }
 
@@ -23,7 +24,7 @@ class Graph extends React.Component {
 
         return (
 
-            <CytoscapeComponent cy={(cy) => { this.cy = cy }} layout={layout} elements={elements} className={active ? "" : "blur"} style={{ height: height, width: width, filter: blur("20px") }} />
+            <CytoscapeComponent cy={(cy) => { this.cy = cy; this.cy.on('click', this.toggleActive); }} layout={layout} elements={elements} className={active ? "" : "blur"} style={{ height: height, width: width, filter: blur("20px") }} />
 
         );
     }
@@ -95,6 +96,11 @@ class Graph extends React.Component {
     centerGraph = async () => {
         console.log('Centering graph');
         this.cy.center();
+    }
+
+    toggleActive() {
+        console.log('Taggle octave');
+        this.setState({ active: true });
     }
 }
 
