@@ -79,14 +79,20 @@ class Graph extends React.Component {
             randomize: true // Uses random initial node positions on true
         };
 
-        this.setState({ height: height, width: width, layout: layout, elements: elements.slice() });
+        this.setState({ height: height, width: width, layout: layout, elements: elements.slice() }, async () => {
+            try {
+                await this.centerGraph();
+            }
+            catch (e) {
+                console.log(e);
+            }
+        });
 
 
         console.log('Load handled');
-        this.centerGraph();
     }
 
-    centerGraph() {
+    centerGraph = async () => {
         console.log('Centering graph');
         this.cy.center();
     }
