@@ -24,7 +24,16 @@ class Graph extends React.Component {
 
         return (
 
-            <CytoscapeComponent cy={(cy) => { this.cy = cy; }} layout={layout} elements={elements} className={active ? "" : "blur"} style={{ height: height, width: width, filter: blur("20px") }} />
+            <CytoscapeComponent
+                cy={(cy) => { this.cy = cy; }}
+                layout={layout}
+                elements={elements}
+                className={active ? "" : "blur"}
+                style={{ height: height, width: width, filter: blur("20px") }}
+                autoungrabify={!active}
+                userZoomingEnabled={active}
+                userPanningEnabled={active}
+            />
 
         );
     }
@@ -96,7 +105,7 @@ class Graph extends React.Component {
 
     prepareGraph = async () => {
         this.centerGraph();
-        this.cy.on('click', this.toggleActive);
+        this.cy.on('tap', this.toggleActive);
     }
     centerGraph = async () => {
         console.log('Centering graph');
