@@ -13,17 +13,17 @@ class Graph extends React.Component {
     constructor(props) {
         super(props);
         this.handleLoad = this.handleLoad.bind(this);
-        this.state = { height: "600px", width: "600px", elements: [], layout: { name: 'random' } };
+        this.state = { height: "600px", width: "600px", elements: [], layout: { name: 'random' }, active: false };
     }
 
     render() {
 
-        let { layout, elements, height, width } = this.state;
+        let { layout, elements, height, width, active } = this.state;
 
 
         return (
 
-            <CytoscapeComponent cy={(cy) => { this.cy = cy }} layout={layout} elements={elements} className="" style={{ height: height, width: width, filter: blur("20px") }} />
+            <CytoscapeComponent cy={(cy) => { this.cy = cy }} layout={layout} elements={elements} className={active ? "" : "blur"} style={{ height: height, width: width, filter: blur("20px") }} />
 
         );
     }
