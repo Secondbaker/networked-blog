@@ -767,5 +767,9 @@ module.exports = {
     animation: ['responsive'],
   },
   corePlugins: {},
-  plugins: [],
+  plugins: [
+    require('tailwind-css-variables')(
+      {}, { postcssEachVariables: true }
+    )
+  ],
 }
