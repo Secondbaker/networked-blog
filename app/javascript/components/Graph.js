@@ -28,8 +28,8 @@ class Graph extends React.Component {
                 cy={(cy) => { this.cy = cy; }}
                 layout={layout}
                 elements={elements}
-                className={active ? "" : "blur"}
-                style={{ height: height, width: width, filter: blur("20px") }}
+                className={"bg-green-0 my-5 rounded-lg " + (active ? "" : "blur")}
+                style={{ height: height, width: width }}
                 autoungrabify={!active}
                 userZoomingEnabled={active}
                 userPanningEnabled={active}
@@ -56,7 +56,7 @@ class Graph extends React.Component {
         var nodes = this.props.nodes.slice();
         var mappedNodes = nodes.map((node) => {
             //console.log({ data: { id: node.id, label: node.name } });
-            return { data: { id: node.id.toString(), label: node.name } };
+            return { data: { id: node.id.toString(), label: node.name }, classes: 'bg-pink-5' };
         });
         elements = elements.concat(mappedNodes);
 

@@ -27,6 +27,7 @@
     "react_ujs": "^2.6.1",
     "showdown": "^1.9.1",
     "tailwind": "^4.0.0",
+    "tailwind-css-variables": "^2.0.3",
     "tailwindcss": "^1.6.2",
     "turbolinks": "^5.2.0",
     "turndown": "^6.0.0"
