@@ -6,7 +6,7 @@ import coseBilkent from 'cytoscape-cose-bilkent';
 import { nodeName } from 'jquery';
 import Spread from 'cytoscape-spread';
 var TailwindConfig = require('../stylesheets/tailwind.config');
-console.log(TailwindConfig.theme.colors.green[0]);
+
 Cytoscape.use(coseBilkent);
 Spread(Cytoscape);
 
@@ -31,8 +31,28 @@ class Graph extends React.Component {
                 layout={layout}
                 elements={elements}
                 className={"bg-green-0 my-5 rounded-lg " + (active ? "" : "blur")}
-                style={{ height: height, width: width }}
-                autoungrabify={!active}
+                style={{
+                    height: height,
+                    width: width
+                }}
+
+                stylesheet={[{
+                    selector: 'node',
+                    style: {
+                        'background-color': TailwindConfig.theme.colors.pink[2].toString(),
+                        'text-background-color': TailwindConfig.theme.colors.pink[4].toString()
+                    }
+                },
+                {
+                    selector: 'edge',
+                    style: {
+                        'line-color': TailwindConfig.theme.colors.pink[2].toString()
+                    }
+                }]
+                }
+
+                autoungrabify={!active
+                }
                 userZoomingEnabled={active}
                 userPanningEnabled={active}
             />
@@ -57,8 +77,8 @@ class Graph extends React.Component {
         var elements = [];
         var nodes = this.props.nodes.slice();
         var mappedNodes = nodes.map((node) => {
-            //console.log({ data: { id: node.id, label: node.name } });
-            return { data: { id: node.id.toString(), label: node.name }, classes: 'bg-pink-5' };
+            console.log({ data: { id: node.id, name: node.name } });
+            return { data: { id: node.id.toString(), name: node.name } };
         });
         elements = elements.concat(mappedNodes);
 
