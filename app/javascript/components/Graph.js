@@ -39,15 +39,18 @@ class Graph extends React.Component {
                     {
                         selector: 'node',
                         style: {
-                            'background-color': TailwindConfig.theme.colors.pink[2].toString(),
-                            'text-background-color': TailwindConfig.theme.colors.pink[4].toString(),
+                            'background-color': TailwindConfig.theme.colors.pink[3].toString(),
+                            'color': TailwindConfig.theme.colors.pink[4].toString(),
+                            'text-background-color': TailwindConfig.theme.colors.green[0].toString(),
+                            'text-background-opacity': '.5',
+                            'text-background-padding': '5px',
                             'label': 'data(label)'
                         }
                     },
                     {
                         selector: 'edge',
                         style: {
-                            'line-color': TailwindConfig.theme.colors.pink[2].toString()
+                            'line-color': TailwindConfig.theme.colors.pink[3].toString()
                         }
                     }]
                 }
@@ -76,7 +79,7 @@ class Graph extends React.Component {
         var elements = [];
         var nodes = this.props.nodes.slice();
         var mappedNodes = nodes.map((node) => {
-            console.log({ data: { id: node.id, label: node.name } });
+            //console.log({ data: { id: node.id, label: node.name } });
             return { data: { id: node.id.toString(), label: node.name } };
         });
         elements = elements.concat(mappedNodes);
