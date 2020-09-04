@@ -35,9 +35,22 @@ class Graph extends React.Component {
                     height: height,
                     width: width
                 }}
-
-
-
+                stylesheet={[
+                    {
+                        selector: 'node',
+                        style: {
+                            'background-color': TailwindConfig.theme.colors.pink[2].toString(),
+                            'text-background-color': TailwindConfig.theme.colors.pink[4].toString(),
+                            'label': 'data(label)'
+                        }
+                    },
+                    {
+                        selector: 'edge',
+                        style: {
+                            'line-color': TailwindConfig.theme.colors.pink[2].toString()
+                        }
+                    }]
+                }
                 autoungrabify={!active}
                 userZoomingEnabled={active}
                 userPanningEnabled={active}
