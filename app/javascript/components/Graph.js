@@ -5,6 +5,8 @@ import CytoscapeComponent from 'react-cytoscapejs';
 import coseBilkent from 'cytoscape-cose-bilkent';
 import { nodeName } from 'jquery';
 import Spread from 'cytoscape-spread';
+var TailwindConfig = require('../stylesheets/tailwind.config');
+console.log(TailwindConfig.theme.colors.green[0]);
 Cytoscape.use(coseBilkent);
 Spread(Cytoscape);
 
