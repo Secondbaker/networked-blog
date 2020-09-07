@@ -25,39 +25,43 @@ class Graph extends React.Component {
 
 
         return (
-
-            <CytoscapeComponent
-                cy={(cy) => { this.cy = cy; }}
-                layout={layout}
-                elements={elements}
-                className={"bg-green-0 my-5 rounded-lg " + (active ? "" : "blur")}
-                style={{
-                    height: height,
-                    width: width
-                }}
-                stylesheet={[
-                    {
-                        selector: 'node',
-                        style: {
-                            'background-color': TailwindConfig.theme.colors.pink[3].toString(),
-                            'color': TailwindConfig.theme.colors.pink[4].toString(),
-                            'text-background-color': TailwindConfig.theme.colors.green[0].toString(),
-                            'text-background-opacity': '.5',
-                            'text-background-padding': '5px',
-                            'label': 'data(label)'
-                        }
-                    },
-                    {
-                        selector: 'edge',
-                        style: {
-                            'line-color': TailwindConfig.theme.colors.pink[3].toString()
-                        }
-                    }]
-                }
-                autoungrabify={!active}
-                userZoomingEnabled={active}
-                userPanningEnabled={active}
-            />
+            <React.Fragment>
+                <p className='text-pink-4'>Test</p>
+                < CytoscapeComponent
+                    cy={(cy) => { this.cy = cy; }
+                    }
+                    layout={layout}
+                    elements={elements}
+                    className={"bg-green-0 my-5 rounded-lg " + (active ? "" : "blur")}
+                    style={{
+                        height: height,
+                        width: width
+                    }}
+                    stylesheet={
+                        [
+                            {
+                                selector: 'node',
+                                style: {
+                                    'background-color': TailwindConfig.theme.colors.pink[3].toString(),
+                                    'color': TailwindConfig.theme.colors.pink[4].toString(),
+                                    'text-background-color': TailwindConfig.theme.colors.green[0].toString(),
+                                    'text-background-opacity': '.5',
+                                    'text-background-padding': '5px',
+                                    'label': 'data(label)'
+                                }
+                            },
+                            {
+                                selector: 'edge',
+                                style: {
+                                    'line-color': TailwindConfig.theme.colors.pink[3].toString()
+                                }
+                            }]
+                    }
+                    autoungrabify={!active}
+                    userZoomingEnabled={active}
+                    userPanningEnabled={active}
+                />
+            </React.Fragment>
 
         );
     }
