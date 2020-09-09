@@ -3,7 +3,7 @@
 <div id='app' class='bg-black '>
 
     
-    <%= react_component 'Graph', {message: 'test', nodes: @blog_posts.all, edges: @internal_links.all} %>
+    <%= react_component 'Graph', { nodes: @blog_posts.all, edges: @internal_links.all, blog_post_path: blog_posts_path} %>
     
     <div class='panelWrapper app-body'>
 

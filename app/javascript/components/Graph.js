@@ -159,7 +159,7 @@ class Graph extends React.Component {
     }
 
     routeTo(link) {
-        window.location = this.props.blog_post_route + link
+        window.location = `${this.props.blog_post_path}/${link}`
     }
 }
 
