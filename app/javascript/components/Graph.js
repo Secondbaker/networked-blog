@@ -25,10 +25,12 @@ class Graph extends React.Component {
 
         let components =
             <React.Fragment>
-                <If condition={!active}>
+                <If condition={!active} className='flex'>
                     <p className='text-pink-4'>"What is this graph?"</p>
-                    <button className='font-bold py-2 px-4 rounded bg-green-3 text-pink-4 hover:bg-green-4'>More info</button>
-                    <button className='font-bold py-2 px-4 rounded bg-green-3 text-pink-4 hover:bg-green-4'>I get it</button>
+                    <div>
+                        <a href='/about'><button className='font-bold py-2 px-4 mx-5 rounded bg-green-3 text-pink-4 hover:bg-green-4'>More info</button></a>
+                        <button onClick={this.toggleActive} className='font-bold py-2 px-4 mx-5 rounded bg-green-3 text-pink-4 hover:bg-green-4'>I get it</button>
+                    </div>
                 </If>
                 < CytoscapeComponent
                     cy={(cy) => { this.cy = cy; }
@@ -63,6 +65,7 @@ class Graph extends React.Component {
                     autoungrabify={!active}
                     userZoomingEnabled={active}
                     userPanningEnabled={active}
+                    boxSelectionEnabled={active}
                 />
             </React.Fragment>
 
@@ -136,7 +139,7 @@ class Graph extends React.Component {
 
     prepareGraph = async () => {
         this.centerGraph();
-        this.cy.on('tap', this.toggleActive);
+
     }
     centerGraph = async () => {
         console.log('Centering graph');
