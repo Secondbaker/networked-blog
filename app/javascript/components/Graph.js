@@ -25,12 +25,15 @@ class Graph extends React.Component {
 
         let components =
             <React.Fragment>
-                <If condition={!active} className='flex'>
-                    <p className='text-pink-4'>"What is this graph?"</p>
-                    <div>
+                <If condition={!active} >
+                    <div className='flex items-center justify-center'>
+                        <p className='text-pink-4'>"What is this graph?"</p>
+                    </div>
+                    <div className='flex items-center justify-center'>
                         <a href='/about'><button className='font-bold py-2 px-4 mx-5 rounded bg-green-3 text-pink-4 hover:bg-green-4'>More info</button></a>
                         <button onClick={this.toggleActive} className='font-bold py-2 px-4 mx-5 rounded bg-green-3 text-pink-4 hover:bg-green-4'>I get it</button>
                     </div>
+
                 </If>
                 < CytoscapeComponent
                     cy={(cy) => { this.cy = cy; }
