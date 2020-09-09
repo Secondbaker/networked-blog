@@ -150,9 +150,16 @@ class Graph extends React.Component {
     }
 
     toggleActive(e) {
+        if (!this.state.active) {
+            this.cy.on('tap', 'node', (e) => this.routeTo(e.target.id()))
+        }
         e.preventDefault();
         console.log('Taggle octave');
         this.setState({ active: true });
+    }
+
+    routeTo(link) {
+        window.location = this.props.blog_post_route + link
     }
 }
 
