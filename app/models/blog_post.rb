@@ -90,7 +90,7 @@ class BlogPost < ApplicationRecord
     end
     
     def internal_link_regex
-        /\[\[.+\]\]/
+        InternalLink.regex
     end
 
     def update_links
