@@ -23,10 +23,13 @@ class Graph extends React.Component {
 
         let { layout, elements, height, width, active } = this.state;
 
-
-        return (
+        let components =
             <React.Fragment>
-                <p className='text-pink-4'>Test</p>
+                <If condition={!active}>
+                    <p className='text-pink-4'>"What is this graph?"</p>
+                    <button className='font-bold py-2 px-4 rounded bg-green-3 text-pink-4 hover:bg-green-4'>More info</button>
+                    <button className='font-bold py-2 px-4 rounded bg-green-3 text-pink-4 hover:bg-green-4'>I get it</button>
+                </If>
                 < CytoscapeComponent
                     cy={(cy) => { this.cy = cy; }
                     }
@@ -63,7 +66,7 @@ class Graph extends React.Component {
                 />
             </React.Fragment>
 
-        );
+        return components;
     }
 
     componentDidMount() {
