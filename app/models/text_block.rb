@@ -11,8 +11,13 @@ class TextBlock < ApplicationRecord
         puts InternalLink.regex
         puts self.body
         self.body.gsub!(InternalLink.regex).each do |link|
-            puts 'Found a link:  #{link}'
+            puts "Found a link:  #{link}"
             InternalLink.recursive_check link
         end
+    end
+
+    def display
+        puts 'displaying'
+
     end
 end

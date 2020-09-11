@@ -45,7 +45,7 @@ class InternalLink < ApplicationRecord
                 #we get the corresponding BlogPost
                 post = BlogPost.find_or_create_by(name: post_name)
                 #and we return it in the proper format
-                return "[[#{post.id}]]"
+                return "[[{name: #{post.name}, id: #{post.id}}]]"
             end
 
             index += 1
@@ -53,8 +53,8 @@ class InternalLink < ApplicationRecord
         text
     end
 
-    #scans the text_block for text that looks like internal links
-    def self.convertToIDs text_block
+    #scans the string for text that looks like internal links
+    def self.convertToIDs string
         
     end
 
