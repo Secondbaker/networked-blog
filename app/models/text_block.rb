@@ -3,18 +3,25 @@ class TextBlock < ApplicationRecord
     acts_as_list scope: :blog_post
     has_many :internal_links, foreign_key: 'source_id', dependent: :destroy
     has_many :destinations, through: :internal_links, foreign_key: 'destination_id', class_name: 'BlogPost'
-    before_save :check_for_links
+    before_save :handle_internal_links
 
-    def check_for_links
-        puts 'checking for links'
-        puts 'They\'ll look like this: '
-        puts InternalLink.regex
-        puts self.body
-        self.body.gsub!(InternalLink.regex).each do |link|
-            puts "Found a link:  #{link}"
-            InternalLink.recursive_check link
+    def handle_internal_links
+        self.prune_links
+        
+    end
+
+    def prune_links
+        self.internal_links.each do |link|
+            puts "making sure #{link.inspect} has a destination"
+            unless(BlogPost.find_by(id: link.destination_id))
+                self.internal_links.remove(link)
+                link.destroy
+
+            end
         end
     end
+
+    
 
     def display
         puts 'displaying'

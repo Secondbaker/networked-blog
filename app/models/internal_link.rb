@@ -53,6 +53,7 @@ class InternalLink < ApplicationRecord
         text
     end
 
+
     #scans the string for text that looks like internal links
     def self.convertToIDs string
         
