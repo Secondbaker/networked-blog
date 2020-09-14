@@ -8,6 +8,8 @@ class BlogPost < ApplicationRecord
     before_save :unlink_all, :convert_links
     after_save :update_links
 
+    before_destroy :destroy_links
+
     validates_uniqueness_of :name
     
     def self.min_links
@@ -71,6 +73,11 @@ class BlogPost < ApplicationRecord
     
 
     private
+
+    def destroy_links
+        self.internal_links.destroy_all
+    end
+
     def render_internal_links text
         output = ''
         index = 0

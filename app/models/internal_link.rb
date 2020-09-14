@@ -3,6 +3,8 @@ class InternalLink < ApplicationRecord
     belongs_to :destination, class_name: 'BlogPost', optional: true, counter_cache: true
     before_create :set_destination_name
 
+    before_destroy :re
+
     def self.regex
         /\[\[.+\]\]/
     end
