@@ -3,7 +3,7 @@ class BlogPost < ApplicationRecord
     has_many :sources, through: :internal_links, foreign_key: 'source_id', class_name: 'TextBlock'
     
     has_many :text_blocks, -> { order(position: :asc) }, dependent: :destroy
-
+    has_many :destinations, through: :text_blocks, foreign_key: 'destination_id', class_name: 'BlogPost'
 
     before_save :unlink_all, :convert_links
     after_save :update_links
