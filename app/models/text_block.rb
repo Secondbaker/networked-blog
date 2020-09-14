@@ -14,7 +14,7 @@ class TextBlock < ApplicationRecord
         self.internal_links.each do |link|
             puts "making sure #{link.inspect} has a destination"
             unless(BlogPost.find_by(id: link.destination_id))
-                self.internal_links.remove(link)
+                puts self.internal_links.methods
                 link.destroy
 
             end
