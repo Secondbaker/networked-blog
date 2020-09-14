@@ -75,6 +75,7 @@ class BlogPost < ApplicationRecord
     private
 
     def destroy_links
+        puts "Destroying Links"
         self.internal_links.destroy_all
     end
 

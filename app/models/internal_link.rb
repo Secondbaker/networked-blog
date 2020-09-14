@@ -3,7 +3,7 @@ class InternalLink < ApplicationRecord
     belongs_to :destination, class_name: 'BlogPost', optional: true, counter_cache: true
     before_create :set_destination_name
 
-    before_destroy :re
+    before_destroy :remove_sources
 
     def self.regex
         /\[\[.+\]\]/
@@ -66,5 +66,8 @@ class InternalLink < ApplicationRecord
         self.destination_name = self.destination.name
     end
 
+    def remove_sources
+        puts "source: #{self.source} and methods #{self.source.methods}"
+    end
     
 end
