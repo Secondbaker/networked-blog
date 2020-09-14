@@ -67,7 +67,8 @@ class InternalLink < ApplicationRecord
     end
 
     def remove_sources
-        puts "source: #{self.source} and methods #{self.source.methods}"
+        puts "Removing source"
+        self.update(source: nil)
     end
     
 end
