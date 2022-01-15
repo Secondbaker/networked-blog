@@ -19,7 +19,7 @@
     "dompurify": "^2.0.12",
     "expo-blur": "^8.1.2",
     "jquery": "^3.5.1",
-    "marked": "^1.1.0",
+    "marked": "^4.0.10",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-autosize-textarea": "^7.1.0",
